@@ -1,0 +1,47 @@
+name: Format with black and lint with Flake8
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'p3/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'p3/**'
+
+jobs:
+  format:
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        name: Install Python 3.9
+        with:
+          python-version: "3.9"
+      - name: Install black
+        run: |
+          pip install black==22.12.0
+      - name: Run black formatter
+        run: |
+          black ./p3
+      - name: Commit formatting changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "style: automated code formatting with black"
+          commit_user_name: "Github Actions Black"
+          status_options: '--untracked-files=no'
+  lint:
+    needs: format
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        name: Install Python 3.9
+        with:
+          python-version: "3.9"
+      - name: Install flake8 and plugins
+        run: |
+          pip install flake8 flake8-pyproject flake8-black flake8-bandit
+      - name: Run flake8 on the package only
+        run: |
+          flake8 ./p3
+
