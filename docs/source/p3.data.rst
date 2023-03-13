@@ -1,0 +1,10 @@
+p3.data package
+===============
+
+Module contents
+---------------
+
+.. automodule:: p3.data
+    :members:
+    :undoc-members:
+    :show-inheritance:

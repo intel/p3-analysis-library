@@ -1,0 +1,10 @@
+p3.metrics package
+==================
+
+Module contents
+---------------
+
+.. automodule:: p3.metrics
+    :members:
+    :undoc-members:
+    :show-inheritance:

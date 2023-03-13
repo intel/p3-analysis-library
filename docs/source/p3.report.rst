@@ -1,0 +1,10 @@
+p3.report package
+=================
+
+Module contents
+---------------
+
+.. automodule:: p3.report
+    :members:
+    :undoc-members:
+    :show-inheritance:

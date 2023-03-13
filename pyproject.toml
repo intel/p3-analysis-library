@@ -1,0 +1,63 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools >= 61.0"]
+
+[project]
+authors = [
+  {"name" = "Intel Corporation", "email" = "none@xyz.com"}
+]
+description = "Performance Portability API"
+dynamic = ["version", "readme"]
+keywords = ["performance", "portability"]
+name = "p3"
+requires-python = ">=3.8"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10"
+]
+dependencies = [
+  "numpy",
+  "pandas",
+  "matplotlib>=3.6.3",
+  "jsonschema",
+]
+
+[project.optional-dependencies]
+dev = [
+  "black>=22.3.0",
+  "sphinx",
+  "sphinx-gallery",
+  "flake8",
+  "flake8-pyproject",
+  "flake8-black",
+  "flake8-bandit",
+  "pre-commit",
+  "bandit"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["p3*"]
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"]}
+version = {attr = "p3.__version__"}
+
+[tool.flake8]
+max-line-length = 79
+ignore = ["E203", "W503"]
+exclude = [
+  "docs/source/conf.py",
+  "examples",
+  "case-studies",
+  "tests"
+]
+per-file-ignores = [
+  "p3/__init__.py:F401",
+]
+
+[tool.black]
+line-length = 79
+extend-exclude = "docs|examples|case-studies|tests"

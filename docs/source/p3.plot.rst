@@ -1,0 +1,10 @@
+p3.plot package
+===============
+
+Module contents
+---------------
+
+.. automodule:: p3.plot
+    :members:
+    :undoc-members:
+    :show-inheritance:

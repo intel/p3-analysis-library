@@ -1,0 +1,20 @@
+p3 package
+==========
+
+Subpackages
+-----------
+
+.. toctree::
+
+    p3.data
+    p3.metrics
+    p3.plot
+    p3.report
+
+Module contents
+---------------
+
+.. automodule:: p3
+    :members:
+    :undoc-members:
+    :show-inheritance:
