@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Collecting P3 Data &#8212; P3 Analysis Library  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples/index.html" />
+    <link rel="prev" title="Introduction to P3 Analysis" href="introduction.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">P3 Analysis Library</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction to P3 Analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Collecting P3 Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="case-studies/index.html">Case Studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="p3.html">p3 package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notices-and-disclaimers.html">Notices and Disclaimers</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="introduction.html" title="previous chapter">Introduction to P3 Analysis</a></li>
+      <li>Next: <a href="examples/index.html" title="next chapter">Examples</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="collecting-p3-data">
+<h1>Collecting P3 Data<a class="headerlink" href="#collecting-p3-data" title="Permalink to this heading">¶</a></h1>
+<p>The P3 Analysis Library operates on data stored in pandas DataFrames, and
+expects columns to have specific names. The simplest way to work with the
+library is to collect and store data in a compatible format (e.g. in a CSV
+file).</p>
+<section id="performance-data">
+<h2>Performance Data<a class="headerlink" href="#performance-data" title="Permalink to this heading">¶</a></h2>
+<p>Each row in the DataFrame represents an individual run of an application.</p>
+<p>The following fields have special meaning:</p>
+<ul class="simple">
+<li><p><em>date</em>: The date when the result was recorded.</p></li>
+<li><p><em>fom</em>: The figure-of-merit (e.g. time to solution, throughput).</p></li>
+<li><p><em>application</em>: The name of the application.</p></li>
+<li><p><em>problem</em>: The name of the problem that was run.</p></li>
+<li><p><em>platform</em>: The name of the platform on which the application was run.</p></li>
+<li><p><em>coverage_key</em>: A unique identifier into the coverage DataFrame.</p></li>
+</ul>
+<p>It is recommended not to store <em>application</em>, <em>problem</em> and <em>platform</em> fields
+when results are initially collected, and to instead construct them using the
+<a class="reference internal" href="p3.data.html#p3.data.projection" title="p3.data.projection"><code class="xref py py-func docutils literal notranslate"><span class="pre">p3.data.projection()</span></code></a> function. This makes it simpler to re-use the
+same data across multiple analyses using different meanings of <em>application</em>,
+<em>problem</em>, and <em>platform</em>.</p>
+<p>Fields commonly used to define an <em>application</em> include:</p>
+<ul class="simple">
+<li><p>The application name.</p></li>
+<li><p>The current git commit.</p></li>
+<li><p>The current git branch.</p></li>
+<li><p>Application-specific configuration options.</p></li>
+</ul>
+<p>Fields commonly used to define a <em>problem</em> include:</p>
+<ul class="simple">
+<li><p>The problem name.</p></li>
+<li><p>The problem size.</p></li>
+<li><p>The name of an input file.</p></li>
+</ul>
+<p>Fields commonly used to define a <em>platform</em> include:</p>
+<ul class="simple">
+<li><p>The hostname.</p></li>
+<li><p>The target architecture.</p></li>
+<li><p>The compiler version.</p></li>
+</ul>
+</section>
+<section id="coverage-data">
+<h2>Coverage Data<a class="headerlink" href="#coverage-data" title="Permalink to this heading">¶</a></h2>
+<p>Each row in the DataFrame represents a collection of source code used to
+compile the application associated with a set of performance records.</p>
+<p>Coverage is described by two fields:</p>
+<ul class="simple">
+<li><p><em>coverage_key</em>: A unique identifier acting as a key.</p></li>
+<li><p><em>coverage</em>: A JSON string describing the source code used.</p></li>
+</ul>
+<p>The JSON string format follows the schema <a class="reference external" href="https://raw.githubusercontent.com/intel/p3-analysis-library/master/p3/data/coverage-0.1.0.schema">here</a>, and should be considered
+experimental.</p>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy; Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/data.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

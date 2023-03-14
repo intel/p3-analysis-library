@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>BabelStream Navigation Chart &#8212; P3 Analysis Library  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="p3 package" href="../../p3.html" />
+    <link rel="prev" title="BabelStream Cascade Plot" href="plot_babelstream_cascade.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">P3 Analysis Library</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction to P3 Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Collecting P3 Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Case Studies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../p3.html">p3 package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notices-and-disclaimers.html">Notices and Disclaimers</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Case Studies</a><ul>
+  <li><a href="index.html">BabelStream</a><ul>
+      <li>Previous: <a href="plot_babelstream_cascade.html" title="previous chapter">BabelStream Cascade Plot</a></li>
+      <li>Next: <a href="../../p3.html" title="next chapter">p3 package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-case-studies-babelstream-plot-babelstream-navchart-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="babelstream-navigation-chart">
+<span id="sphx-glr-case-studies-babelstream-plot-babelstream-navchart-py"></span><h1>BabelStream Navigation Chart<a class="headerlink" href="#babelstream-navigation-chart" title="Permalink to this heading">¶</a></h1>
+<p>A navigation chart of BabelStream data.</p>
+<p>This example uses real application data collected with the BabelStream
+benchmark. However, programming language and platform names have been removed.
+The original data is available from <a class="reference external" href="https://github.com/UoB-HPC/BabelStream">https://github.com/UoB-HPC/BabelStream</a>.</p>
+<section id="load-data-into-pandas">
+<h2>Load Data into Pandas<a class="headerlink" href="#load-data-into-pandas" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">p3</span>
+
+
+<span class="c1"># Load data from BabelStream results</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">performance_csv</span><span class="p">)</span>
+<span class="n">df_cov</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">coverage_csv</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that, unlike a <a class="reference external" href="../plot_babelstream_cascade">cascade plot</a>, plotting a navigation chart requires
+both performance and coverage data.</p>
+</section>
+<section id="project-labels-into-expected-forms">
+<h2>Project Labels into Expected Forms<a class="headerlink" href="#project-labels-into-expected-forms" title="Permalink to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="../../p3.data.html#p3.data.projection" title="p3.data.projection"><code class="xref py py-func docutils literal notranslate"><span class="pre">p3.data.projection()</span></code></a> method can be used to project column names
+from the original data into names required by the P3 Analysis Library.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">p3</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">projection</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">problem</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">platform</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;arch&quot;</span><span class="p">],</span> <span class="n">application</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;language&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Our BabelStream data contains only one problem, and the “name” field is
+always “BabelStream”. Other BabelStream case studies may feature multiple
+array sizes, which could also be used here.</p>
+<p>The platforms can be identified by the “arch” column, which stores an
+architecture name.</p>
+<p>For this case study, we treat each implementation of BabelStream as a
+different application (consistent with the definition of “application”
+<a class="reference external" href="../../introduction.html#terminology">here</a>). Each implementation of BabelStream is identified by the language it
+is written in.</p>
+</section>
+<section id="calculate-p3-metrics">
+<h2>Calculate P3 Metrics<a class="headerlink" href="#calculate-p3-metrics" title="Permalink to this heading">¶</a></h2>
+<section id="application-efficiency">
+<h3>Application Efficiency<a class="headerlink" href="#application-efficiency" title="Permalink to this heading">¶</a></h3>
+<p>Application efficiency values show which application(s) are most effective
+at utilizing a given platform. In the below, any row with an ‘app eff’ of
+0 represents an application that did not run correctly for a given
+(problem, platform) combination; any row with an <cite>app eff</cite> of 1 represents
+an application achieving the best-known performance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">effs</span> <span class="o">=</span> <span class="n">p3</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">application_efficiency</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">effs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>        problem    platform application           fom   app eff
+0   BabelStream  Platform A  Language 0  2.050000e+11  0.404722
+1   BabelStream  Platform A  Language 1  1.740000e+11  0.476828
+2   BabelStream  Platform A  Language 2           NaN  0.000000
+3   BabelStream  Platform A  Language 3  8.296800e+10  1.000000
+4   BabelStream  Platform A  Language 4  1.070000e+11  0.775402
+5   BabelStream  Platform B  Language 0  4.520000e+11  0.632743
+6   BabelStream  Platform B  Language 1  3.040000e+11  0.940789
+7   BabelStream  Platform B  Language 2           NaN  0.000000
+8   BabelStream  Platform B  Language 3  4.440000e+11  0.644144
+9   BabelStream  Platform B  Language 4  2.860000e+11  1.000000
+10  BabelStream  Platform C  Language 0  2.480000e+11  0.995968
+11  BabelStream  Platform C  Language 1  2.500000e+11  0.988000
+12  BabelStream  Platform C  Language 2           NaN  0.000000
+13  BabelStream  Platform C  Language 3  2.470000e+11  1.000000
+14  BabelStream  Platform C  Language 4           NaN  0.000000
+15  BabelStream  Platform D  Language 0  1.900000e+11  0.952632
+16  BabelStream  Platform D  Language 1  1.810000e+11  1.000000
+17  BabelStream  Platform D  Language 2           NaN  0.000000
+18  BabelStream  Platform D  Language 3  2.570000e+11  0.704280
+19  BabelStream  Platform D  Language 4           NaN  0.000000
+20  BabelStream  Platform E  Language 0  2.460000e+11  0.991870
+21  BabelStream  Platform E  Language 1  2.440000e+11  1.000000
+22  BabelStream  Platform E  Language 2           NaN  0.000000
+23  BabelStream  Platform E  Language 3           NaN  0.000000
+24  BabelStream  Platform E  Language 4           NaN  0.000000
+25  BabelStream  Platform F  Language 0  1.060000e+11  0.859594
+26  BabelStream  Platform F  Language 1  9.111700e+10  1.000000
+27  BabelStream  Platform F  Language 2           NaN  0.000000
+28  BabelStream  Platform F  Language 3           NaN  0.000000
+29  BabelStream  Platform F  Language 4           NaN  0.000000
+30  BabelStream  Platform G  Language 0  9.760000e+11  1.000000
+31  BabelStream  Platform G  Language 1           NaN  0.000000
+32  BabelStream  Platform G  Language 2           NaN  0.000000
+33  BabelStream  Platform G  Language 3           NaN  0.000000
+34  BabelStream  Platform G  Language 4           NaN  0.000000
+35  BabelStream  Platform H  Language 0  1.440000e+11  1.000000
+36  BabelStream  Platform H  Language 1  1.520000e+11  0.947368
+37  BabelStream  Platform H  Language 2  1.500000e+11  0.960000
+38  BabelStream  Platform H  Language 3           NaN  0.000000
+39  BabelStream  Platform H  Language 4  1.510000e+11  0.953642
+40  BabelStream  Platform I  Language 0  5.530000e+11  0.996383
+41  BabelStream  Platform I  Language 1  5.570000e+11  0.989228
+42  BabelStream  Platform I  Language 2  5.520000e+11  0.998188
+43  BabelStream  Platform I  Language 3  5.520000e+11  0.998188
+44  BabelStream  Platform I  Language 4  5.510000e+11  1.000000
+45  BabelStream  Platform J  Language 0  7.740000e+11  1.000000
+46  BabelStream  Platform J  Language 1  8.280000e+11  0.934783
+47  BabelStream  Platform J  Language 2  8.330000e+11  0.929172
+48  BabelStream  Platform J  Language 3  8.290000e+11  0.933655
+49  BabelStream  Platform J  Language 4  8.390000e+11  0.922527
+50  BabelStream  Platform K  Language 0  5.280000e+11  1.000000
+51  BabelStream  Platform K  Language 1  5.540000e+11  0.953069
+52  BabelStream  Platform K  Language 2  5.560000e+11  0.949640
+53  BabelStream  Platform K  Language 3  5.550000e+11  0.951351
+54  BabelStream  Platform K  Language 4  5.540000e+11  0.953069
+</pre></div>
+</div>
+</section>
+<section id="code-divergence">
+<h3>Code Divergence<a class="headerlink" href="#code-divergence" title="Permalink to this heading">¶</a></h3>
+<p>Code divergence values show how much code is re-used across the platforms
+targeted by a specific application. For BabelStream, only Language 0
+has a non-zero divergence, as it is the only implementation containing
+different code paths for different platforms.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">div</span> <span class="o">=</span> <span class="n">p3</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">divergence</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df_cov</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>       problem application  divergence
+0  BabelStream  Language 0    0.057906
+1  BabelStream  Language 1    0.000000
+2  BabelStream  Language 2    0.000000
+3  BabelStream  Language 3    0.000000
+4  BabelStream  Language 4    0.000000
+</pre></div>
+</div>
+</section>
+<section id="performance-portability">
+<h3>Performance Portability<a class="headerlink" href="#performance-portability" title="Permalink to this heading">¶</a></h3>
+<p>Performance portability values show the average efficiency achieved when
+using all platforms in the set. An application must run across all platforms
+to achieve a non-zero performance portability score. For BabelStream,
+Language 0 is the only programming model that runs across all 11 platforms.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span> <span class="o">=</span> <span class="n">p3</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">pp</span><span class="p">(</span><span class="n">effs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>       problem application    app pp
+0  BabelStream  Language 0  0.828301
+1  BabelStream  Language 1  0.000000
+2  BabelStream  Language 2  0.000000
+3  BabelStream  Language 3  0.000000
+4  BabelStream  Language 4  0.000000
+</pre></div>
+</div>
+</section>
+</section>
+<section id="generate-a-navigation-chart">
+<h2>Generate a Navigation Chart<a class="headerlink" href="#generate-a-navigation-chart" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">p3</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">navchart</span><span class="p">(</span><span class="n">pp</span><span class="p">,</span> <span class="n">div</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;navchart.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_babelstream_navchart_001.png" srcset="../../_images/sphx_glr_plot_babelstream_navchart_001.png" alt="plot babelstream navchart" class = "sphx-glr-single-img"/><p>The plot shows the performance portability and code convergence values for
+each implementation of BabelStream. Code convergence is simply (1 – code
+divergence).</p>
+<p>The top-right corner of a navigation chart represents the ideal, where an
+application achieves the best performance across all platforms of interest
+using a single source code. The top-left corner represents an application
+that achieves the best performance but without reusing any code across
+platforms. Any points along the x-axis are unportable (i.e. there is at least
+one platform of interest where it does not run).</p>
+<p>For BabelStream, Language 0 is the only implementation that runs across all
+platforms and is therefore the only point not on the x-axis. All other
+implementations are plotted at (1, 0) because although they use exactly the
+same source code to target all platforms, there is at least one platform
+where they do not run.</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.443 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-case-studies-babelstream-plot-babelstream-navchart-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/7b9e708df771ebd154427a5a10ba5150/plot_babelstream_navchart.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_babelstream_navchart.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/cda5bdd84eac85cdf77eb751d123eeaa/plot_babelstream_navchart.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_babelstream_navchart.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy; Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.1.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="../../_sources/case-studies/babelstream/plot_babelstream_navchart.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

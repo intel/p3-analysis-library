@@ -1,0 +1,45 @@
+
+
+.. _sphx_glr_examples_navchart:
+
+Navigation Charts
+-----------------
+
+Navigation charts show the performance portability and code convergence of each
+application, highlighting the tradeoff between performance (portability) and
+programmer productivity.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A simple navigation chart.">
+
+.. only:: html
+
+  .. image:: /examples/navchart/images/thumb/sphx_glr_plot_simple_navchart_thumb.png
+    :alt: Simple Navigation Chart
+
+  :ref:`sphx_glr_examples_navchart_plot_simple_navchart.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Simple Navigation Chart</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /examples/navchart/plot_simple_navchart
+

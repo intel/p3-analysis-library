@@ -1,0 +1,64 @@
+
+
+.. _sphx_glr_case-studies_babelstream:
+
+BabelStream
+-----------
+
+`BabelStream`_ is a popular benchmark for measuring the achievable memory
+bandwidth. Implementations are available using multiple programming languages.
+
+.. _BabelStream: https://github.com/UoB-HPC/BabelStream
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A cascade plot of BabelStream data.">
+
+.. only:: html
+
+  .. image:: /case-studies/babelstream/images/thumb/sphx_glr_plot_babelstream_cascade_thumb.png
+    :alt: BabelStream Cascade Plot
+
+  :ref:`sphx_glr_case-studies_babelstream_plot_babelstream_cascade.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">BabelStream Cascade Plot</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A navigation chart of BabelStream data.">
+
+.. only:: html
+
+  .. image:: /case-studies/babelstream/images/thumb/sphx_glr_plot_babelstream_navchart_thumb.png
+    :alt: BabelStream Navigation Chart
+
+  :ref:`sphx_glr_case-studies_babelstream_plot_babelstream_navchart.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">BabelStream Navigation Chart</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /case-studies/babelstream/plot_babelstream_cascade
+   /case-studies/babelstream/plot_babelstream_navchart
+
