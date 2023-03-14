@@ -1,0 +1,38 @@
+{
+    "creators": [
+        {
+            "orcid": "0000-0003-0237-3823",
+            "affiliation": "Intel Corporation",
+            "name": "Pennycook, S. John"
+        },
+        {
+            "orcid": "0000-0001-9482-3558",
+            "name": "Sewall, Jason"
+        },
+        {
+            "orcid": "0000-0002-3836-207X",
+            "name": "Jacobsen, Douglas"
+        },
+        {
+            "orcid": "0000-0002-6439-4171",
+            "affiliation": "University of Bristol",
+            "name": "Deakin, Tom"
+        },
+        {
+            "orcid": "0000-0002-9133-3462",
+            "affiliation": "Intel Corporation",
+            "name": "Zamora, Yuliana"
+        },
+        {
+            "orcid": "0000-0002-1903-9242",
+            "affiliation": "Intel Corporation",
+            "name": "Lee, Kin Long Kelvin"
+        }
+    ],
+
+    "license": "MIT",
+
+    "title": "Performance, Portability and Productivity Analysis Library",
+
+    "keywords": ["Performance", "Portability", "Productivity", "P3"]
+}
