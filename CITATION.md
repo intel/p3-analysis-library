@@ -1,8 +1,28 @@
 # Citing the P3 Analysis Library
 
-DOIs for citing the library itself will be generated for each [release][1].
+To cite the library itself, please use:
 
-[1]: https://github.com/intel/p3-analysis-library/releases.
+```bibtex
+@software{p3-analysis-library,
+  author       = {Pennycook, S. John and
+                  Sewall, Jason and
+                  Jacobsen, Douglas and
+                  Deakin, Tom and
+                  Zamora, Yuliana and
+                  Lee, Kin Long Kelvin},
+  title        = {{Performance, Portability and Productivity Analysis 
+                   Library}},
+  month        = mar,
+  year         = 2023,
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.7733678},
+  url          = {https://doi.org/10.5281/zenodo.7733678}
+}
+```
+
+Additional DOIs are generated for each [release][1].
+
+[1]: https://github.com/intel/p3-analysis-library/releases
 
 ## Citing Specific Functionality
 
