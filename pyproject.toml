@@ -4,7 +4,12 @@ requires = ["setuptools >= 61.0"]
 
 [project]
 authors = [
-  {"name" = "Intel Corporation", "email" = "none@xyz.com"}
+  {"name" = "S. John Pennycook", "email" = "john.pennycook@intel.com"},
+  {"name" = "Jason Sewall"},
+  {"name" = "Douglas Jacobsen"},
+  {"name" = "Tom Deakin", "email" = "tom.deakin@bristol.ac.uk"},
+  {"name" = "Yuliana Zamora", "email" = "yuliana.zamora@intel.com"},
+  {"name" = "Kin Long Kelvin Lee", "email" = "kin.long.kelvin.lee@intel.com"}
 ]
 description = "Performance, Portability and Productivity Analysis Library"
 dynamic = ["version", "readme"]
