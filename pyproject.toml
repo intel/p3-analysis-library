@@ -6,9 +6,9 @@ requires = ["setuptools >= 61.0"]
 authors = [
   {"name" = "Intel Corporation", "email" = "none@xyz.com"}
 ]
-description = "Performance Portability API"
+description = "Performance, Portability and Productivity Analysis Library"
 dynamic = ["version", "readme"]
-keywords = ["performance", "portability"]
+keywords = ["performance", "portability", "productivity"]
 name = "p3"
 requires-python = ">=3.8"
 classifiers = [
