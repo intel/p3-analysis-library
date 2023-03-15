@@ -17,7 +17,9 @@ data.
 
 ## Dependencies
 
-- matplotlib
+- jsonschema
+- numpy
+- matplotlib >= 3.6.3
 - pandas
 - Python >= 3.8
 
