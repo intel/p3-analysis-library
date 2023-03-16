@@ -9,6 +9,7 @@ data.
 ## Table of Contents
 
 - [Dependencies](#dependencies)
+- [Installation](#installation)
 - [Getting Started](#getting-started)
 - [Contribute](#contribute)
 - [License](#license)
@@ -20,6 +21,9 @@ data.
 - matplotlib
 - pandas
 - Python >= 3.8
+
+## Installation
+To install, run `pip install .` or `python setup.py install`.
 
 ## Getting Started
 
