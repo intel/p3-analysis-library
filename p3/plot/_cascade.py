@@ -273,6 +273,14 @@ def cascade(df, eff=None, **kwargs):
               - Colormap, string, or list
               - Colormap for platforms
 
+            * - `plat_cols`
+              - string
+              - Number of columns for platform key
+
+            * - `plat_loc`
+              - string
+              - Position for platform key (north, south, west, east, off)
+
     Raises
     ------
     ValueError
@@ -294,6 +302,9 @@ def cascade(df, eff=None, **kwargs):
 
     default_markers = getattr(matplotlib.markers.MarkerStyle, "filled_markers")
     kwargs.setdefault("app_markers", default_markers)
+
+    kwargs.setdefault("plat_cols", 4)
+    kwargs.setdefault("plat_loc", "south")
 
     # Choose the efficiency column based on eff parameter and available columns
     efficiency_columns = []
@@ -348,6 +359,11 @@ def cascade(df, eff=None, **kwargs):
     # Choose labels for each platform
     plat_labels = dict(zip(platforms, string.ascii_uppercase))
 
+    # Set the number of columns in the platform key (if set)
+    # and possibly change the location
+    plat_cols = kwargs["plat_cols"]
+    plat_loc = kwargs["plat_loc"]
+
     # Plot the efficiency cascade in the top-left (0, 0)
     app_handles = _efficiency_cascade(
         axes[0][0], df, eff_column, app_colors, app_markers
@@ -381,13 +397,30 @@ def cascade(df, eff=None, **kwargs):
     plat_handles = [
         mpatches.Patch(color=plat_colors[p], label=p) for p in platforms
     ]
-    fig.legend(
-        handles=plat_handles,
-        loc="upper center",
-        bbox_to_anchor=(0.5, 0.0),
-        handler_map={mpatches.Patch: legend_helper},
-        handlelength=1.0,
-        ncols=4,
-    )
+
+    # Plot the platforms legend in one of north, south, east or 
+    # west (or off). Default to south
+    if plat_loc != "off":
+        if plat_loc == "north":
+            bbox_loc="lower center"
+            bbox_anc=(0.5, 0.9)
+        elif plat_loc == "east":
+            bbox_loc="center left"
+            bbox_anc=(1.0, 0.5)
+        elif plat_loc == "west":
+            bbox_loc="center right"
+            bbox_anc=(0.0, 0.5)
+        else:
+            bbox_loc="upper center"
+            bbox_anc=(0.5, 0.0)
+
+        fig.legend(
+            handles=plat_handles,
+            loc=bbox_loc,
+            bbox_to_anchor=bbox_anc,
+            handler_map={mpatches.Patch: legend_helper},
+            handlelength=1.0,
+            ncols=plat_cols,
+        )
 
     return axes[0][0], axes[0][1], axes[1][0]
