@@ -392,14 +392,11 @@ def cascade(df, eff=None, **kwargs):
         handles=app_handles, loc="upper left", bbox_to_anchor=(1, 1), ncol=1
     )
 
-    # Attach the platform legend to the bottom of the figure
+    # Attach the platform legend to the position requested by kwargs
     legend_helper = _PlatformLegendHandler(plat_colors, plat_labels)
     plat_handles = [
         mpatches.Patch(color=plat_colors[p], label=p) for p in platforms
     ]
-
-    # Plot the platforms legend in one of north, south, east or 
-    # west (or off). Default to south
     if plat_legend_loc != "off":
         if plat_legend_loc == "north":
             bbox_loc="lower center"
