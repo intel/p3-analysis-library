@@ -274,12 +274,12 @@ def cascade(df, eff=None, **kwargs):
               - Colormap for platforms
 
             * - `plat_cols`
-              - string
-              - Number of columns for platform key
+              - int, default: 4
+              - Number of columns for platform legend
 
             * - `plat_loc`
-              - string
-              - Position for platform key (north, south, west, east, off)
+              - string, {'south', 'north', 'west', 'east', 'off'}
+              - Position for platform legend
 
     Raises
     ------
