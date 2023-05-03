@@ -402,20 +402,24 @@ def cascade(df, eff=None, **kwargs):
     if not isinstance(plat_legend_loc, str):
         raise ValueError("'plat_legend_loc' must be a string")
     if plat_legend_loc not in ["north", "east", "south", "west", "off"]:
-        raise ValueError("'plat_legend_loc' must be 'north', 'east', 'south', 'west', or 'off'")
+        msg = (
+            "'plat_legend_loc' must be 'north', 'east', 'south', 'west', "
+            "or 'off'"
+        )
+        raise ValueError(msg)
     if plat_legend_loc != "off":
         if plat_legend_loc == "north":
-            bbox_loc="lower center"
-            bbox_anc=(0.5, 0.9)
+            bbox_loc = "lower center"
+            bbox_anc = (0.5, 0.9)
         elif plat_legend_loc == "east":
-            bbox_loc="center left"
-            bbox_anc=(1.0, 0.5)
+            bbox_loc = "center left"
+            bbox_anc = (1.0, 0.5)
         elif plat_legend_loc == "west":
-            bbox_loc="center right"
-            bbox_anc=(0.0, 0.5)
+            bbox_loc = "center right"
+            bbox_anc = (0.0, 0.5)
         else:
-            bbox_loc="upper center"
-            bbox_anc=(0.5, 0.0)
+            bbox_loc = "upper center"
+            bbox_anc = (0.5, 0.0)
 
         fig.legend(
             handles=plat_handles,
