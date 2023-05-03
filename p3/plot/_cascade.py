@@ -397,6 +397,12 @@ def cascade(df, eff=None, **kwargs):
     plat_handles = [
         mpatches.Patch(color=plat_colors[p], label=p) for p in platforms
     ]
+    if not isinstance(plat_legend_ncols, int):
+        raise ValueError("'plat_legend_ncols' must be an integer")
+    if not isinstance(plat_legend_loc, str):
+        raise ValueError("'plat_legend_loc' must be a string")
+    if plat_legend_loc not in ["north", "east", "south", "west", "off"]:
+        raise ValueError("'plat_legend_loc' must be 'north', 'east', 'south', 'west', or 'off'")
     if plat_legend_loc != "off":
         if plat_legend_loc == "north":
             bbox_loc="lower center"
