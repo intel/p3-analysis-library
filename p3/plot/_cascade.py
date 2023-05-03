@@ -273,11 +273,11 @@ def cascade(df, eff=None, **kwargs):
               - Colormap, string, or list
               - Colormap for platforms
 
-            * - `plat_cols`
+            * - `plat_legend_ncols`
               - int, default: 4
               - Number of columns for platform legend
 
-            * - `plat_loc`
+            * - `plat_legend_loc`
               - string, {'south', 'north', 'west', 'east', 'off'}
               - Position for platform legend
 
@@ -303,8 +303,8 @@ def cascade(df, eff=None, **kwargs):
     default_markers = getattr(matplotlib.markers.MarkerStyle, "filled_markers")
     kwargs.setdefault("app_markers", default_markers)
 
-    kwargs.setdefault("plat_cols", 4)
-    kwargs.setdefault("plat_loc", "south")
+    kwargs.setdefault("plat_legend_ncols", 4)
+    kwargs.setdefault("plat_legend_loc", "south")
 
     # Choose the efficiency column based on eff parameter and available columns
     efficiency_columns = []
@@ -361,8 +361,8 @@ def cascade(df, eff=None, **kwargs):
 
     # Set the number of columns in the platform key (if set)
     # and possibly change the location
-    plat_cols = kwargs["plat_cols"]
-    plat_loc = kwargs["plat_loc"]
+    plat_legend_ncols = kwargs["plat_legend_ncols"]
+    plat_legend_loc = kwargs["plat_legend_loc"]
 
     # Plot the efficiency cascade in the top-left (0, 0)
     app_handles = _efficiency_cascade(
@@ -400,14 +400,14 @@ def cascade(df, eff=None, **kwargs):
 
     # Plot the platforms legend in one of north, south, east or 
     # west (or off). Default to south
-    if plat_loc != "off":
-        if plat_loc == "north":
+    if plat_legend_loc != "off":
+        if plat_legend_loc == "north":
             bbox_loc="lower center"
             bbox_anc=(0.5, 0.9)
-        elif plat_loc == "east":
+        elif plat_legend_loc == "east":
             bbox_loc="center left"
             bbox_anc=(1.0, 0.5)
-        elif plat_loc == "west":
+        elif plat_legend_loc == "west":
             bbox_loc="center right"
             bbox_anc=(0.0, 0.5)
         else:
@@ -420,7 +420,7 @@ def cascade(df, eff=None, **kwargs):
             bbox_to_anchor=bbox_anc,
             handler_map={mpatches.Patch: legend_helper},
             handlelength=1.0,
-            ncols=plat_cols,
+            ncols=plat_legend_ncols,
         )
 
     return axes[0][0], axes[0][1], axes[1][0]
