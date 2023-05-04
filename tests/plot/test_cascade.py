@@ -60,6 +60,8 @@ class TestCascade(unittest.TestCase):
         cascade(df, plat_legend_ncols=1)
         with self.assertRaises(ValueError):
             cascade(df, plat_legend_ncols="1")
+        with self.assertRaises(ValueError):
+            cascade(df, plat_legend_ncols=0)
 
         cascade(df, plat_legend_loc="north")
         with self.assertRaises(ValueError):

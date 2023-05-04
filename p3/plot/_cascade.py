@@ -399,6 +399,8 @@ def cascade(df, eff=None, **kwargs):
     ]
     if not isinstance(plat_legend_ncols, int):
         raise ValueError("'plat_legend_ncols' must be an integer")
+    if not plat_legend_ncols >= 1:
+        raise ValueError("'plat_legend_ncols' must be >= 1")
     if not isinstance(plat_legend_loc, str):
         raise ValueError("'plat_legend_loc' must be a string")
     if plat_legend_loc not in ["north", "east", "south", "west", "off"]:
