@@ -76,7 +76,7 @@ print(effs)
 # -----------------------
 
 fig = plt.figure(figsize=(6, 5))
-ax = p3.plot.cascade(effs) 
+p3.plot.cascade(effs)
 plt.savefig("cascade.png", bbox_inches="tight")
 
 # %%

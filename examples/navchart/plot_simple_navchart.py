@@ -56,5 +56,5 @@ cd = pd.DataFrame(cd_data)
 
 # Generate a navigation chart
 fig = plt.figure(figsize=(5, 5))
-ax = p3.plot.navchart(pp, cd)
+p3.plot.navchart(pp, cd)
 plt.savefig("navchart.png")

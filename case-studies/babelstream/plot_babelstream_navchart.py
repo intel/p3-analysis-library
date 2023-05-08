@@ -105,7 +105,7 @@ print(pp)
 # ---------------------------
 
 fig = plt.figure(figsize=(5, 5))
-ax = p3.plot.navchart(pp, div)
+p3.plot.navchart(pp, div)
 plt.savefig("navchart.png")
 
 # %%

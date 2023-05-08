@@ -72,5 +72,5 @@ df = pd.DataFrame(data)
 
 # Generate a cascade plot
 fig = plt.figure(figsize=(6, 5))
-ax = p3.plot.cascade(df)
+p3.plot.cascade(df)
 plt.savefig("cascade.png", bbox_inches="tight")
