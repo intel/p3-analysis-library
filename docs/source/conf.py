@@ -43,6 +43,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.mathjax',
     'sphinx_gallery.gen_gallery',
+    'sphinx.ext.intersphinx',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -197,4 +198,8 @@ sphinx_gallery_conf = {
      'examples_dirs': ['../../examples','../../case-studies'],
      'gallery_dirs': ['examples','case-studies'],
      'image_scrapers': (tight_scraper(), ),
+}
+
+intersphinx_mapping = {
+    "matplotlib": ('https://matplotlib.org/stable/', None),
 }

@@ -14,6 +14,59 @@ import p3.metrics
 import string
 
 from p3._utils import _require_columns, _require_numeric
+from p3.plot._common import Plot
+
+
+class CascadePlot(Plot):
+    """
+    Base class for cascade plot objects.
+    """
+
+    def __init__(self, backend):
+        super().__init__(backend)
+
+
+class CascadePlotMatplotlib(CascadePlot):
+    """
+    Cascade plot object for :py:mod:`matplotlib`.
+    """
+
+    def __init__(self, fig, axes):
+        super().__init__("matplotlib")
+        self.fig = fig
+        self.axes = axes
+
+    def get_figure(self):
+        """
+        Returns
+        -------
+        :py:class:`matplotlib.figure.Figure`
+            The :py:class:`matplotlib.figure.Figure` used for the plot.
+        """
+        return self.fig
+
+    def get_axes(self, subplot="eff"):
+        """
+        Parameters
+        ----------
+        subplot: {'eff', 'pp', 'plat'}
+            The name of the requested subplot. The options correspond to the
+            efficiency cascade, performance portability bar chart, and platform
+            chart, respectively.
+
+        Returns
+        -------
+        :py:class:`matplotlib.axes.Axes`
+            The :py:class:`matplotlib.axes.Axes` used for the specified
+            subplot.
+        """
+        if subplot == "eff":
+            return self.axes[0][0]
+        if subplot == "pp":
+            return self.axes[0][1]
+        if subplot == "plat":
+            return self.axes[1][0]
+        raise ValueError("Unrecognized subplot name: '%s'" % subplot)
 
 
 class _PlatformLegendHandler(matplotlib.legend_handler.HandlerBase):
@@ -281,6 +334,12 @@ def cascade(df, eff=None, **kwargs):
               - string, {'south', 'north', 'west', 'east', 'off'}
               - Position for platform legend
 
+    Returns
+    -------
+    CascadePlot
+        An object providing direct access to backend-specific components
+        of the cascade plot.
+
     Raises
     ------
     ValueError
@@ -432,4 +491,4 @@ def cascade(df, eff=None, **kwargs):
             ncols=plat_legend_ncols,
         )
 
-    return axes[0][0], axes[0][1], axes[1][0]
+    return CascadePlotMatplotlib(fig, axes)
