@@ -15,4 +15,4 @@ jobs:
         uses: gsactions/commit-message-checker@v2
         with:
           pattern: 'Signed-off-by:'
-          error: "Commit message does not include DCO signature; see CONTRIBUTING.md!"
+          error: "Commit message does not include DCO signature; please see CONTRIBUTING.md."
