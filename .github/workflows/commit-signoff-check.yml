@@ -14,7 +14,7 @@ jobs:
       - name: Searching for "Signed-off"
         uses: gsactions/commit-message-checker@v2
         with:
-          pattern: 'Signed-off-by:'
+          pattern: 'Signed-off-by: \S+( \S+)* <\S+@\S+>'
           error: "Commit message does not include DCO signature; please see CONTRIBUTING.md."
           excludeDescription: 'true'
           excludeTitle: 'true'
