@@ -16,3 +16,6 @@ jobs:
         with:
           pattern: 'Signed-off-by:'
           error: "Commit message does not include DCO signature; please see CONTRIBUTING.md."
+          excludeDescription: 'true'
+          excludeTitle: 'true'
+          checkAllCommitMessages: 'true'
