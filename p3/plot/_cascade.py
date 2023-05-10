@@ -273,6 +273,14 @@ def cascade(df, eff=None, **kwargs):
               - Colormap, string, or list
               - Colormap for platforms
 
+            * - `plat_legend_ncols`
+              - int, default: 4
+              - Number of columns for platform legend
+
+            * - `plat_legend_loc`
+              - string, {'south', 'north', 'west', 'east', 'off'}
+              - Position for platform legend
+
     Raises
     ------
     ValueError
@@ -294,6 +302,9 @@ def cascade(df, eff=None, **kwargs):
 
     default_markers = getattr(matplotlib.markers.MarkerStyle, "filled_markers")
     kwargs.setdefault("app_markers", default_markers)
+
+    kwargs.setdefault("plat_legend_ncols", 4)
+    kwargs.setdefault("plat_legend_loc", "south")
 
     # Choose the efficiency column based on eff parameter and available columns
     efficiency_columns = []
@@ -348,6 +359,11 @@ def cascade(df, eff=None, **kwargs):
     # Choose labels for each platform
     plat_labels = dict(zip(platforms, string.ascii_uppercase))
 
+    # Set the number of columns in the platform key (if set)
+    # and possibly change the location
+    plat_legend_ncols = kwargs["plat_legend_ncols"]
+    plat_legend_loc = kwargs["plat_legend_loc"]
+
     # Plot the efficiency cascade in the top-left (0, 0)
     app_handles = _efficiency_cascade(
         axes[0][0], df, eff_column, app_colors, app_markers
@@ -376,18 +392,44 @@ def cascade(df, eff=None, **kwargs):
         handles=app_handles, loc="upper left", bbox_to_anchor=(1, 1), ncol=1
     )
 
-    # Attach the platform legend to the bottom of the figure
+    # Attach the platform legend to the position requested by kwargs
     legend_helper = _PlatformLegendHandler(plat_colors, plat_labels)
     plat_handles = [
         mpatches.Patch(color=plat_colors[p], label=p) for p in platforms
     ]
-    fig.legend(
-        handles=plat_handles,
-        loc="upper center",
-        bbox_to_anchor=(0.5, 0.0),
-        handler_map={mpatches.Patch: legend_helper},
-        handlelength=1.0,
-        ncols=4,
-    )
+    if not isinstance(plat_legend_ncols, int):
+        raise ValueError("'plat_legend_ncols' must be an integer")
+    if not plat_legend_ncols >= 1:
+        raise ValueError("'plat_legend_ncols' must be >= 1")
+    if not isinstance(plat_legend_loc, str):
+        raise ValueError("'plat_legend_loc' must be a string")
+    if plat_legend_loc not in ["north", "east", "south", "west", "off"]:
+        msg = (
+            "'plat_legend_loc' must be 'north', 'east', 'south', 'west', "
+            "or 'off'"
+        )
+        raise ValueError(msg)
+    if plat_legend_loc != "off":
+        if plat_legend_loc == "north":
+            bbox_loc = "lower center"
+            bbox_anc = (0.5, 0.9)
+        elif plat_legend_loc == "east":
+            bbox_loc = "center left"
+            bbox_anc = (1.0, 0.5)
+        elif plat_legend_loc == "west":
+            bbox_loc = "center right"
+            bbox_anc = (0.0, 0.5)
+        else:
+            bbox_loc = "upper center"
+            bbox_anc = (0.5, 0.0)
+
+        fig.legend(
+            handles=plat_handles,
+            loc=bbox_loc,
+            bbox_to_anchor=bbox_anc,
+            handler_map={mpatches.Patch: legend_helper},
+            handlelength=1.0,
+            ncols=plat_legend_ncols,
+        )
 
     return axes[0][0], axes[0][1], axes[1][0]
