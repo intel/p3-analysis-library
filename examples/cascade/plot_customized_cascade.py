@@ -7,10 +7,30 @@ Customized Cascade
 
 A customized cascade plot.
 
-This example demonstrates how to use the
-:py:class:`p3.plot.CascadePlot` object returned by
-:py:func:`p3.plot.cascade` to access underlying matplotlib objects
-and use them to customize the plot.
+In this example, we show how to customize a cascade plot by changing the limits
+of the y-axis. Although the default limit (of 1) is useful for comparing many
+plots side-by-side, in practice it is often useful to be able to zoom-in on
+specific regions of data. For example, when dealing with applications that do
+not achieve very high levels of architectural efficiency, setting a lower
+maximum value for the y-axis can improve readability.
+
+Instead of trying to expose all possible customization options as arguments to
+:py:func:`p3.plot.cascade`, the function returns a
+:py:class:`p3.plot.CascadePlot` object that provides direct access to library
+internals. When using the :py:mod:`matplotlib` backend it is possible to
+access the :py:class:`matplotlib.axes.Axes` that were used and subsequently
+call any number of :py:mod:`matplotlib` functions. In our example, we can
+use :py:meth:`matplotlib.axes.Axes.set_ylim` to update the y-axis.
+
+.. NOTE::
+   :py:mod:`matplotlib` is currently the only backend supported by the P3
+   Analysis Library, but this is subject to change.
+
+.. TIP::
+   If you have any trouble customizing a plot, or the
+   :py:class:`p3.plot.CascadePlot` object does not provide access to the internals
+   you are looking for, then please `open an issue
+   <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
 
 import matplotlib.pyplot as plt

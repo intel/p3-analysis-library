@@ -7,9 +7,31 @@ Customized Navigation Chart
 
 A customized navigation chart.
 
-This example demonstrates how to use the :py:class:`p3.plot.NavChart` object
-returned by :py:func:`p3.plot.navchart` to access underlying matplotlib objects
-and use them to customize the chart.
+In this example, we show how to customize a navigation chart by increasing the
+number of axis ticks and by annotating one of the datapoints. Adjusting the
+number of axis ticks can improve a reader's ability to discern between two
+similar values, while annotations can be useful to draw attention to certain
+points and/or provide some additional context.
+
+Instead of trying to expose all possible customization options as arguments to
+:py:func:`p3.plot.navchart`, the function returns a
+:py:class:`p3.plot.NavChart` object that provides direct access to library
+internals. When using the :py:mod:`matplotlib` backend it is possible to
+access the :py:class:`matplotlib.axes.Axes` that were used and subsequently
+call any number of :py:mod:`matplotlib` functions. In our example, we can
+use :py:meth:`matplotlib.axes.Axes.set_xticks` and
+:py:meth:`matplotlib.axes.Axes.set_yticks` to control the ticks, and can use
+:py:meth:`matplotlib.axes.Axes.annotate` for annotations.
+
+.. NOTE::
+   :py:mod:`matplotlib` is currently the only backend supported by the P3
+   Analysis Library, but this is subject to change.
+
+.. TIP::
+   If you have any trouble customizing a navigation chart, or the
+   :py:class:`p3.plot.NavChart` object does not provide access to the internals
+   you are looking for, then please `open an issue
+   <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
 
 import matplotlib.pyplot as plt
