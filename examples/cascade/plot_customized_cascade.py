@@ -31,20 +31,18 @@ for (i, platform) in enumerate(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
         "Unportable",
         "Single Target",
         "Multi-Target",
-        "Consistent (30%)",
-        "Consistent (70%)",
+        "Consistent (3%)",
+        "Consistent (7%)",
         "Inconsistent",
     ]
     eff = [0] * 6
-    eff[0] = 1 if i == 0 else 0
-    eff[1] = 1 if i == 0 else 0.1
-    eff[2] = 0.1 if i % 2 else 1
-    eff[3] = 0.3
-    eff[4] = 0.7
-    eff[5] = (i + 1) * 0.1
-    data["app eff"] += eff
-    data["arch eff"] += [0] * 6
-    data["fom"] += [0] * 6
+    eff[0] = 0.1 if i == 0 else 0
+    eff[1] = 0.1 if i == 0 else 0.01
+    eff[2] = 0.01 if i % 2 else 0.1
+    eff[3] = 0.03
+    eff[4] = 0.07
+    eff[5] = (i + 1) * 0.01
+    data["arch eff"] += eff
 # sphinx_gallery_end_ignore
 
 # Read performance efficiency data into pandas DataFrame
@@ -55,8 +53,9 @@ fig = plt.figure(figsize=(6, 5))
 cascade = p3.plot.cascade(df)
 
 # Customize the cascade plot
-# In this example, we adjust the range of the y-axis
-cascade.get_axes("eff").set_ylim([0, 0.5])
-cascade.get_axes("pp").set_ylim([0, 0.5])
+# In this example, we adjust the range of the y-axis to improve readability
+# This may be necessary for studies using architectural efficiency
+cascade.get_axes("eff").set_ylim([0, 0.12])
+cascade.get_axes("pp").set_ylim([0, 0.12])
 
 plt.savefig("customized-cascade.png", bbox_inches="tight")
