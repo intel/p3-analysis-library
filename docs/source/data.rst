@@ -1,6 +1,19 @@
 Collecting P3 Data
 ==================
 
+The flowchart below shows how P3 analysis can be broken down into three tasks:
+
+1. Collecting performance data from benchmarking.
+2. Building a representation of the source code used (i.e. coverage data).
+3. Using the P3 Analysis Library to compute metrics and produce graphs.
+
+.. image:: p3-analysis-flowchart.svg
+  :alt: P3 analysis flowchart
+
+Since applications may support a wide range of platforms and compilation
+options, it is recommended to store performance and coverage data in some sort
+of database, to simplify the process of looking up specific results.
+
 The P3 Analysis Library operates on data stored in pandas DataFrames, and
 expects columns to have specific names. The simplest way to work with the
 library is to collect and store data in a compatible format (e.g. in a CSV
