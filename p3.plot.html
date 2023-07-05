@@ -126,6 +126,14 @@ options (e.g. colors and markers).</p>
 <td><p>Colormap, string, or list</p></td>
 <td><p>Colormap for platforms</p></td>
 </tr>
+<tr class="row-odd"><td><p><cite>plat_legend_ncols</cite></p></td>
+<td><p>int, default: 4</p></td>
+<td><p>Number of columns for platform legend</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>plat_legend_loc</cite></p></td>
+<td><p>string, {‘south’, ‘north’, ‘west’, ‘east’, ‘off’}</p></td>
+<td><p>Position for platform legend</p></td>
+</tr>
 </tbody>
 </table>
 </p></li>
@@ -133,7 +141,8 @@ options (e.g. colors and markers).</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – If any of the required columns are missing from <cite>df</cite>.</p></li>
+<li><p><strong>ValueError</strong> – If any of the required columns are missing from <cite>df</cite>.
+    If <cite>eff</cite> is set to any value other than “app” or “arch”.</p></li>
 <li><p><strong>TypeError</strong> – If any of the values in the efficiency column(s) is non-numeric.</p></li>
 </ul>
 </dd>
@@ -195,7 +204,8 @@ options (e.g. colors and markers).</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – If any of the required columns are missing from <cite>pp</cite> or <cite>cd</cite>.</p></li>
+<li><p><strong>ValueError</strong> – If any of the required columns are missing from <cite>pp</cite> or <cite>cd</cite>.
+    If <cite>eff</cite> is set to any value other than “app” or “arch”.</p></li>
 <li><p><strong>TypeError</strong> – If any of the values in the “pp” column(s) of <cite>pp</cite> or the
     “divergence” column of <cite>cd</cite> are non-numeric.</p></li>
 </ul>

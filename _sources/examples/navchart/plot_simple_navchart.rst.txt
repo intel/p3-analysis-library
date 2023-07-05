@@ -76,7 +76,7 @@ of the P3 space and reasoning about how to reach development goals.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.176 seconds)
+   **Total running time of the script:** ( 0 minutes  0.189 seconds)
 
 
 .. _sphx_glr_download_examples_navchart_plot_simple_navchart.py:

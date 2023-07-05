@@ -5,8 +5,8 @@
 
 Computation times
 =================
-**00:00.999** total execution time for **examples_cascade** files:
+**00:00.828** total execution time for **examples_cascade** files:
 
 +--------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_cascade_plot_simple_cascade.py` (``plot_simple_cascade.py``) | 00:00.999 | 0.0 MB |
+| :ref:`sphx_glr_examples_cascade_plot_simple_cascade.py` (``plot_simple_cascade.py``) | 00:00.828 | 0.0 MB |
 +--------------------------------------------------------------------------------------+-----------+--------+

@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="181.09593mm"
+   height="178.94766mm"
+   viewBox="0 0 181.09593 178.94766"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="p3-analysis-flowchart.svg"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
+   inkscape:export-filename="C:\Users\sjpennyc\OneDrive - Intel Corporation\Desktop\p3-analysis-flowchart.png"
+   inkscape:export-xdpi="71.822113"
+   inkscape:export-ydpi="71.822113">
+  <defs
+     id="defs2">
+    <symbol
+       id="Document">
+      <title
+         id="title37">Document</title>
+      <desc
+         id="desc39">A document or report</desc>
+      <path
+         d="m 3.96875,9.2604167 h 31.75 V 25.135417 C 22.489583,23.8125 17.197917,34.395833 3.96875,27.78125 Z"
+         style="stroke-width:0.529167"
+         id="path41" />
+    </symbol>
+    <symbol
+       id="ManualOperation">
+      <title
+         id="title44">Manual Operation</title>
+      <desc
+         id="desc46">An offline process (at &quot;human speed&quot;).</desc>
+      <path
+         d="m 3.96875,9.2604167 h 31.75 l -7.9375,21.1666663 h -15.875 z"
+         style="stroke-width:0.529167px"
+         id="path48" />
+    </symbol>
+    <symbol
+       id="MagneticDisk">
+      <title
+         id="title213">Magnetic Disk (Database)</title>
+      <desc
+         id="desc215">A magnetic disk. (ISO)</desc>
+      <path
+         d="m 9.2604167,6.6145833 a 17.197917,17.197917 0 0 1 21.1666663,0 V 33.072917 a 17.197917,17.197917 0 0 1 -21.1666663,0 z"
+         style="stroke-width:0.529167"
+         id="path217" />
+      <path
+         d="m 30.427083,6.6145833 a 17.197917,17.197917 0 0 1 -21.1666663,0"
+         style="fill:none;stroke-width:0.529167;stroke-linecap:butt"
+         id="path219" />
+      <path
+         d="m 30.427083,10.583333 a 17.197917,17.197917 0 0 1 -21.1666663,0"
+         style="fill:none;stroke-width:0.529167;stroke-linecap:butt"
+         id="path221" />
+      <path
+         d="m 30.427083,14.552083 a 17.197917,17.197917 0 0 1 -21.1666663,0"
+         style="fill:none;stroke-width:0.529167;stroke-linecap:butt"
+         id="path223" />
+    </symbol>
+    <symbol
+       id="ManualInput">
+      <title
+         id="title95">Manual Input</title>
+      <desc
+         id="desc97">Information input by online keyboards, switches, etc.</desc>
+      <path
+         d="m 3.96875,17.197917 31.75,-5.291667 v 15.875 h -31.75 z"
+         style="stroke-width:0.529167"
+         id="path99" />
+    </symbol>
+    <symbol
+       id="PredefinedProcess">
+      <title
+         id="title204">Predefined Process</title>
+      <desc
+         id="desc206">A formally defined sub-process.</desc>
+      <rect
+         x="3.96875"
+         y="9.260417"
+         width="31.75"
+         height="21.166666"
+         style="stroke-width:0.529167"
+         id="rect208" />
+      <rect
+         x="9.260417"
+         y="9.260417"
+         width="21.166666"
+         height="21.166666"
+         style="stroke-width:0.529167"
+         id="rect210" />
+    </symbol>
+    <symbol
+       id="Display">
+      <title
+         id="title81">Display</title>
+      <desc
+         id="desc83">Information display by online indicators, video devices, printers, etc.</desc>
+      <path
+         d="M 3.96875,19.84375 A 26.458333,26.458333 0 0 1 14.552083,9.2604167 H 31.75 a 15.875,15.875 0 0 1 0,21.1666663 H 14.552083 A 26.458333,26.458333 0 0 1 3.96875,19.84375 Z"
+         style="stroke-width:0.529167px"
+         id="path85" />
+    </symbol>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="227.24156"
+     inkscape:cy="303.83505"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-10.173512,-10.630526)">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:0.999998, 0.5;stroke-dashoffset:0"
+       id="rect4247-7"
+       width="161.4308"
+       height="33.141422"
+       x="29.588638"
+       y="156.18677" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:0.999998, 0.50000000000000000;stroke-dashoffset:0"
+       id="rect4247-1"
+       width="52.384827"
+       height="91.406181"
+       x="138.63461"
+       y="17.372519" />
+    <rect
+       style="opacity:1;fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:1, 0.50000000000000000;stroke-dashoffset:0"
+       id="rect4247"
+       width="52.384827"
+       height="117.33132"
+       x="10.423512"
+       y="17.372519"
+       inkscape:export-xdpi="71.822113"
+       inkscape:export-ydpi="71.822113" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 165.59057,90.861775 V 118.31567 H 105.75574"
+       id="path4243"
+       inkscape:connector-type="orthogonal"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#g4239" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 36.543672,118.50054 h 53.468152 v -0.18487"
+       id="path4245"
+       inkscape:connector-type="orthogonal"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 52.090234,172.75754 H 106.88049"
+       id="path4114"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 106.88049,172.75754 h 60.67018"
+       id="path4116"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g4239"
+       transform="translate(-4.5709795,-5.3168247)">
+      <use
+         xlink:href="#MagneticDisk"
+         style="fill:#ffffff;stroke:#000000"
+         id="use760"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%"
+         transform="translate(85.778358,106.31284)" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="105.54046"
+         y="107.01592"
+         id="text986-7"><tspan
+           sodipodi:role="line"
+           x="105.54046"
+           y="107.01592"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+           id="tspan984-9"
+           dy="0">P3 Databases</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="15.206032"
+       y="14.694017"
+       id="text642-6"><tspan
+         sodipodi:role="line"
+         id="tspan640-8"
+         x="15.206032"
+         y="14.694017"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583"><tspan
+   style="font-weight:bold;font-size:4.93889px"
+   id="tspan897">Task 1</tspan>: Benchmark</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="145.29213"
+       y="14.226173"
+       id="text909"><tspan
+         sodipodi:role="line"
+         id="tspan907"
+         x="145.29213"
+         y="14.226173"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583"><tspan
+   style="font-weight:bold;font-size:4.93889px"
+   id="tspan905">Task 2</tspan>: Coverage</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="88.247368"
+       y="153.48621"
+       id="text915"><tspan
+         sodipodi:role="line"
+         id="tspan913"
+         x="88.247368"
+         y="153.48621"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.264583"><tspan
+   style="font-weight:bold;font-size:4.93889px"
+   id="tspan911">Task 3</tspan>: P3 Analysis</tspan></text>
+    <g
+       id="g4214"
+       transform="translate(0.10422644,-0.33246145)">
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 36.511699,62.775173 V 90.637854"
+         id="path4108"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0"
+         inkscape:connection-start="#g4097"
+         inkscape:connection-end="#g4102" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 36.511699,90.637854 V 118.50054"
+         id="path4110"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0"
+         inkscape:connection-start="#g4102"
+         inkscape:connection-end="#use3959" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 36.511699,34.912489 V 62.775173"
+         id="path4106"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0"
+         inkscape:connection-start="#g4092"
+         inkscape:connection-end="#g4097" />
+      <g
+         id="g4092">
+        <g
+           id="g962"
+           transform="translate(0.45602235)">
+          <use
+             xlink:href="#Document"
+             style="fill:#ffffff;stroke:#000000"
+             id="use624-4"
+             x="0"
+             y="0"
+             width="100%"
+             height="100%"
+             transform="translate(16.988026,14.396989)" />
+          <use
+             xlink:href="#Document"
+             style="fill:#ffffff;stroke:#000000"
+             id="use624"
+             x="0"
+             y="0"
+             width="100%"
+             height="100%"
+             transform="translate(15.435828,16.200244)" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="36.503258"
+           y="33.564777"
+           id="text642"><tspan
+             sodipodi:role="line"
+             id="tspan640"
+             x="36.503258"
+             y="33.564777"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583">Source</tspan><tspan
+             sodipodi:role="line"
+             x="36.503258"
+             y="38.905445"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan958">Code</tspan></text>
+      </g>
+      <g
+         id="g4097"
+         transform="translate(0,2.1049916)">
+        <use
+           xlink:href="#ManualOperation"
+           style="fill:#ffffff;stroke:#000000"
+           id="use674"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           transform="translate(16.667949,40.826432)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="36.491199"
+           y="61.977253"
+           id="text968"><tspan
+             sodipodi:role="line"
+             x="36.491199"
+             y="61.977253"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan966">Compile</tspan></text>
+      </g>
+      <g
+         id="g4102"
+         transform="translate(0,2.7533864)">
+        <use
+           xlink:href="#ManualOperation"
+           style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+           id="use3957"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           transform="translate(16.667949,68.040718)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="36.487583"
+           y="89.623207"
+           id="text986"><tspan
+             sodipodi:role="line"
+             x="36.487583"
+             y="89.623207"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan984">Run</tspan></text>
+      </g>
+      <g
+         id="g4188">
+        <use
+           xlink:href="#ManualOperation"
+           style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+           id="use3959"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           transform="translate(16.667949,98.656793)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="36.447792"
+           y="114.00849"
+           id="text986-3"><tspan
+             sodipodi:role="line"
+             x="36.447792"
+             y="114.00849"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan1012">Extract</tspan><tspan
+             sodipodi:role="line"
+             x="36.447792"
+             y="119.34916"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan3961">Figure</tspan><tspan
+             sodipodi:role="line"
+             x="36.447792"
+             y="124.68983"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan1069">of Merit</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g4705"
+       transform="translate(-12.054453,-10.296739)">
+      <g
+         id="g4040"
+         transform="translate(-43.297663,14.407185)">
+        <use
+           xlink:href="#ManualInput"
+           style="fill:#ffffff;stroke:#000000"
+           id="use794"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           transform="translate(87.5986,148.8272)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="107.36277"
+           y="171.3549"
+           id="text642-2"><tspan
+             sodipodi:role="line"
+             x="107.36277"
+             y="171.3549"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan958-4">Script</tspan></text>
+      </g>
+      <g
+         id="g4077"
+         transform="translate(0,3.1818718)">
+        <use
+           xlink:href="#Display"
+           style="fill:#ffffff;stroke:#000000"
+           id="use853"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           transform="translate(159.7434,160.02864)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="182.74907"
+           y="180.99274"
+           id="text986-75"><tspan
+             sodipodi:role="line"
+             x="182.74907"
+             y="180.99274"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan984-6">Graphs</tspan></text>
+      </g>
+      <g
+         id="g4084"
+         transform="translate(0,-10.181608)">
+        <use
+           xlink:href="#PredefinedProcess"
+           style="fill:#ffffff;stroke:#000000"
+           id="use823"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           transform="translate(99.09119,173.39212)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="119.01969"
+           y="188.9711"
+           id="text4068"><tspan
+             sodipodi:role="line"
+             x="119.01969"
+             y="188.9711"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan4066">P3</tspan><tspan
+             sodipodi:role="line"
+             x="119.01969"
+             y="194.31177"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan4072">Analysis</tspan><tspan
+             sodipodi:role="line"
+             x="119.01969"
+             y="199.65244"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan4070">Library</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g4234"
+       transform="translate(-0.76354298)">
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 165.59057,62.509154 0,28.352621"
+         id="path4173"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0"
+         inkscape:connection-start="#g4146"
+         inkscape:connection-end="#use4124" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 165.59057,34.177587 V 62.488108"
+         id="path4122"
+         inkscape:connector-type="polyline"
+         inkscape:connector-curvature="0" />
+      <g
+         id="g4138"
+         transform="translate(129.07887,-0.75595238)">
+        <g
+           id="g4130"
+           transform="translate(0.45602235)">
+          <use
+             xlink:href="#Document"
+             style="fill:#ffffff;stroke:#000000"
+             id="use4126"
+             x="0"
+             y="0"
+             width="100%"
+             height="100%"
+             transform="translate(16.988026,14.396989)" />
+          <use
+             xlink:href="#Document"
+             style="fill:#ffffff;stroke:#000000"
+             id="use4128"
+             x="0"
+             y="0"
+             width="100%"
+             height="100%"
+             transform="translate(15.435828,16.200244)" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="36.503258"
+           y="33.564777"
+           id="text4136"><tspan
+             sodipodi:role="line"
+             id="tspan4132"
+             x="36.503258"
+             y="33.564777"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583">Source</tspan><tspan
+             sodipodi:role="line"
+             x="36.503258"
+             y="38.905445"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan4134">Code</tspan></text>
+      </g>
+      <g
+         id="g4146"
+         transform="translate(129.07887,1.8389721)">
+        <use
+           xlink:href="#ManualOperation"
+           style="fill:#ffffff;stroke:#000000"
+           id="use4140"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           transform="translate(16.667949,40.826432)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="36.60265"
+           y="61.739883"
+           id="text4144"><tspan
+             sodipodi:role="line"
+             x="36.60265"
+             y="61.739883"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan4164">Analyze</tspan></text>
+      </g>
+      <g
+         id="g4181"
+         transform="translate(-6.5000004e-7,-26.882816)">
+        <use
+           xlink:href="#ManualOperation"
+           style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+           id="use4124"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%"
+           transform="translate(145.74682,97.900841)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="165.573"
+           y="116.14396"
+           id="text4162"><tspan
+             sodipodi:role="line"
+             x="165.573"
+             y="116.14396"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan4160">Extract</tspan><tspan
+             sodipodi:role="line"
+             x="165.573"
+             y="121.48463"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.264583"
+             id="tspan4171">Coverage</tspan></text>
+      </g>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 101.42878,137.91107 v 7.88445 H 18.842501 v 27.12786 h 17.506155"
+       id="path4811" />
+  </g>
+</svg>

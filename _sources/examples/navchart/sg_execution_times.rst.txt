@@ -5,8 +5,8 @@
 
 Computation times
 =================
-**00:00.176** total execution time for **examples_navchart** files:
+**00:00.189** total execution time for **examples_navchart** files:
 
 +-----------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_navchart_plot_simple_navchart.py` (``plot_simple_navchart.py``) | 00:00.176 | 0.0 MB |
+| :ref:`sphx_glr_examples_navchart_plot_simple_navchart.py` (``plot_simple_navchart.py``) | 00:00.189 | 0.0 MB |
 +-----------------------------------------------------------------------------------------+-----------+--------+
