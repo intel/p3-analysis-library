@@ -29,8 +29,8 @@ use :py:meth:`matplotlib.axes.Axes.set_xticks` and
 
 .. TIP::
    If you have any trouble customizing a navigation chart, or the
-   :py:class:`p3.plot.NavChart` object does not provide access to the internals
-   you are looking for, then please `open an issue
+   :py:class:`~p3.plot.backend.NavChart` object does not provide access to the
+   internals you are looking for, then please `open an issue
    <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
 

@@ -10,45 +10,7 @@ import pandas as pd
 
 from p3._utils import _require_columns, _require_numeric
 from p3.plot._cascade import _get_colors
-from p3.plot._common import Plot
-
-
-class NavChart(Plot):
-    """
-    Base class for navigation chart objects.
-    """
-
-    def __init__(self, backend):
-        super().__init__(backend)
-
-
-class NavChartMatplotlib(NavChart):
-    """
-    Navigation chart object for :py:mod:`matplotlib`.
-    """
-
-    def __init__(self, fig, axes):
-        super().__init__("matplotlib")
-        self.fig = fig
-        self.axes = axes
-
-    def get_figure(self):
-        """
-        Returns
-        -------
-        :py:class:`matplotlib.figure.Figure`
-            The :py:class:`matplotlib.figure.Figure` used for the chart.
-        """
-        return self.fig
-
-    def get_axes(self):
-        """
-        Returns
-        -------
-        :py:class:`matplotlib.axes.Axes`
-            The :py:class:`matplotlib.axes.Axes` used for the chart.
-        """
-        return self.axes
+from p3.plot.backend.matplotlib import NavChart
 
 
 def navchart(pp, cd, eff=None, goal=None, **kwargs):
@@ -107,7 +69,7 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
 
     Returns
     -------
-    NavChart
+    ~p3.plot.backend.NavChart
         An object providing direct access to backend-specific components
         of the navigation chart.
 
@@ -319,4 +281,4 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
     ax.set_xlim([0, 1])
     fig.legend(loc="upper center", bbox_to_anchor=(0.5, 0.0))
 
-    return NavChartMatplotlib(fig, ax)
+    return NavChart(fig, ax)

@@ -5,6 +5,6 @@ Module contents
 ---------------
 
 .. automodule:: p3.metrics
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

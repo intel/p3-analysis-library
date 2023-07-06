@@ -28,8 +28,8 @@ use :py:meth:`matplotlib.axes.Axes.set_ylim` to update the y-axis.
 
 .. TIP::
    If you have any trouble customizing a plot, or the
-   :py:class:`p3.plot.CascadePlot` object does not provide access to the internals
-   you are looking for, then please `open an issue
+   :py:class:`~p3.plot.backend.CascadePlot` object does not provide access to
+   the internals you are looking for, then please `open an issue
    <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
 
