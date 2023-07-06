@@ -10,6 +10,7 @@ import pandas as pd
 
 from p3._utils import _require_columns, _require_numeric
 from p3.plot._cascade import _get_colors
+from p3.plot.backend.matplotlib import NavChart
 
 
 def navchart(pp, cd, eff=None, goal=None, **kwargs):
@@ -65,6 +66,12 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
             * - `app_markers`
               - list
               - Markers for applications
+
+    Returns
+    -------
+    ~p3.plot.backend.NavChart
+        An object providing direct access to backend-specific components
+        of the navigation chart.
 
     Raises
     ------
@@ -273,3 +280,5 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
     ax.set_ylim([0, 1])
     ax.set_xlim([0, 1])
     fig.legend(loc="upper center", bbox_to_anchor=(0.5, 0.0))
+
+    return NavChart(fig, ax)

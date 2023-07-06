@@ -14,6 +14,7 @@ import p3.metrics
 import string
 
 from p3._utils import _require_columns, _require_numeric
+from p3.plot.backend.matplotlib import CascadePlot
 
 
 class _PlatformLegendHandler(matplotlib.legend_handler.HandlerBase):
@@ -281,6 +282,12 @@ def cascade(df, eff=None, **kwargs):
               - string, {'south', 'north', 'west', 'east', 'off'}
               - Position for platform legend
 
+    Returns
+    -------
+    ~p3.plot.backend.CascadePlot
+        An object providing direct access to backend-specific components
+        of the cascade plot.
+
     Raises
     ------
     ValueError
@@ -432,4 +439,4 @@ def cascade(df, eff=None, **kwargs):
             ncols=plat_legend_ncols,
         )
 
-    return axes[0][0], axes[0][1], axes[1][0]
+    return CascadePlot(fig, axes)
