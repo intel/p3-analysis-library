@@ -10,6 +10,8 @@ jobs:
   check-commit-message:
     name: Check commit message
     runs-on: ubuntu-latest
+    # exclude PR merge commits from sign-off checking workflow
+    if: "!contains(github.event.head_commit.message, 'Merge pull request')"
     steps:
       - name: Searching for "Signed-off"
         uses: gsactions/commit-message-checker@v2
@@ -20,3 +22,4 @@ jobs:
           excludeTitle: 'true'
           checkAllCommitMessages: 'true'
           accessToken: ${{ secrets.GITHUB_TOKEN }}
+
