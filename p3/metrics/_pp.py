@@ -9,6 +9,16 @@ from statistics import harmonic_mean
 from p3._utils import _require_columns, _require_numeric
 
 
+def _hmean(series):
+    """
+    Calculate the harmonic mean of a pandas Series.
+    """
+    # Passing harmonic_mean directly to agg() does not always work; when there
+    # is only one entry in the Series, harmonic_mean tries to call data[0],
+    # which Pandas interprets as a key look-up.
+    return harmonic_mean(list(series))
+
+
 def pp(df):
     r"""
     Calculate performance portability from architectural and/or application
@@ -100,7 +110,7 @@ def pp(df):
     # Calculate performance portability for both types of efficiency
     key = ["problem", "application"]
     groups = df[key + efficiencies].fillna(0.0).groupby(key)
-    pp = groups.agg(harmonic_mean)
+    pp = groups.agg(_hmean)
     pp.reset_index(inplace=True)
     for eff in efficiencies:
         new_column = eff.replace("eff", "pp")
