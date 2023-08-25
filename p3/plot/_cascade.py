@@ -436,11 +436,12 @@ def cascade(df, eff=None, **kwargs):
 
     return axes[0][0], axes[0][1], axes[1][0]
 
+
 def cascade_tex(df, filename, eff=None, **kwargs):
     """
-    Generate TeX file that generates a `cascade`_ using PGFPlots 
-    summarizing the efficiency and performance portability of each 
-    application in a DataFrame, highlighting differences in platform 
+    Generate TeX file that generates a `cascade`_ using PGFPlots
+    summarizing the efficiency and performance portability of each
+    application in a DataFrame, highlighting differences in platform
     support across the applications.
 
     The TeX file can be rendered as a PDF using `pdflatex`.
@@ -454,7 +455,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
         The following columns are always required: "problem", "platform",
         "application". At least one of the following columns is required:
         "app eff" or "arch eff".
-        
+
     filename: string
         A filename for the complete TeX file to be written to.
 
@@ -486,7 +487,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
             * - `plat_cmap`
               - Colormap, string, or list
               - Colormap for platforms
-              
+
             * - `plat_legend_nrows`
               - int, default: 4
               - Number of rows for platform legend
@@ -510,13 +511,32 @@ def cascade_tex(df, filename, eff=None, **kwargs):
     kwargs.setdefault("app_cmap", getattr(plt.cm, "tab10"))
     kwargs.setdefault("plat_cmap", getattr(plt.cm, "RdBu"))
 
-    default_markers = [ '*' , 'x', '+', '-', '|', 'o', 'oplus', 'otimes', 
-                       'star', 'square', 'triangle', 'diamond', 'pentagon' ]
+    default_markers = [
+        "*, mark options={style={solid}}",
+        "*, mark options={style={solid}, scale=1.5}",
+        "triangle*, mark options={style={solid}, scale=1.5, rotate=180}",
+        "triangle*, mark options={style={solid}, scale=1.5}",
+        "triangle*, mark options={style={solid}, scale=1.5, rotate=90}",
+        "triangle*, mark options={style={solid}, scale=1.5, rotate=270}",
+        "pentagon*, mark options={style={solid}, scale=1.5}",
+        "square*, mark options={style={solid}, scale=1.5}",
+        "diamond*, mark options={style={solid}, scale=1.5}",
+        "o, mark options={style={solid}, scale=1.5}",
+        "square, mark options={style={solid}, scale=1.5}",
+        "triangle, mark options={style={solid}, scale=1.5}",
+        "diamond, mark options={style={solid}, scale=1.5}",
+        "pentagon, mark options={style={solid}, scale=1.5}",
+        "oplus, mark options={style={solid}, scale=1.5}",
+        "otimes, mark options={style={solid}, scale=1.5}",
+        "star, mark options={style={solid}, scale=1.5}",
+        "x, mark options={style={solid}, scale=1.5}",
+        "+, mark options={style={solid}, scale=1.5}",
+    ]
     kwargs.setdefault("app_markers", default_markers)
-    
+
     kwargs.setdefault("plat_legend_nrows", 4)
 
-    # Choose the efficiency column based on eff parameter and available 
+    # Choose the efficiency column based on eff parameter and available
     # columns
     efficiency_columns = []
     for column in ["app eff", "arch eff"]:
@@ -540,19 +560,18 @@ def cascade_tex(df, filename, eff=None, **kwargs):
     platforms = df["platform"].unique()
     applications = df["application"].unique()
 
-    # create a mapping between applicaiton names and TeX friendly names 
+    # create a mapping between applicaiton names and TeX friendly names
     # (without spaces and punctuation)
-    map_tab = str.maketrans(
-        '', '', ' !"#$%&\'()*+, -./:;<=>?@[\]^_`{|}~'
-    )  
+    map_tab = str.maketrans("", "", " !\"#$%&'()*+, -./\\:;<=>?@[]^_`{|}~")
     app_to_tex_name = {
-        app: tex for app, tex in zip(
-            applications, 
-            [str(app_name).translate(map_tab) for app_name in applications]
+        app: tex
+        for app, tex in zip(
+            applications,
+            [str(app_name).translate(map_tab) for app_name in applications],
         )
     }
-    
-    # Choose colors for each application and then convert the dictionary to 
+
+    # Choose colors for each application and then convert the dictionary to
     # TeX friendly names and RGB colors
     app_colors = _get_colors(applications, kwargs["app_cmap"])
     app_colors_rgb = {}
@@ -560,11 +579,11 @@ def cascade_tex(df, filename, eff=None, **kwargs):
         app_colors_rgb[app_to_tex_name[k]] = str(
             matplotlib.colors.to_rgb(app_colors[k])
         ).strip("()")
-    
+
     # Build a dictionary of platforms to labels
     plat_labels = dict(zip(platforms, string.ascii_uppercase))
-    
-    # Choose colors for each platform and the convert the dictionary to RGB 
+
+    # Choose colors for each platform and the convert the dictionary to RGB
     # colors using the platform labels
     plat_colors = _get_colors(platforms, kwargs["plat_cmap"])
     plat_colors_rgb = {}
@@ -572,29 +591,28 @@ def cascade_tex(df, filename, eff=None, **kwargs):
         plat_colors_rgb[plat_labels[k]] = str(
             matplotlib.colors.to_rgb(plat_colors[k])
         ).strip("()")
-    
+
     # Choose markers for each application
     markers = kwargs["app_markers"]
     if not isinstance(markers, (list, tuple)):
         raise ValueError("Unsupported type provided for app_markers")
-    
+
     # build a dictionary of app line specifications for TeX
     app_line_specs = {}
     for app, mark in zip(applications, markers):
-        app_line_specs[app] = (
-            f"{app_to_tex_name[app]}, thick, "
-            f"mark options={{style={{solid}}, scale=1.5}}, mark={mark}"
-        )
-    
+        app_line_specs[
+            app
+        ] = f"{app_to_tex_name[app]}, thick, solid, mark={mark}"
+
     # Choose labels for each platform
     plat_labels = dict(zip(platforms, string.ascii_uppercase))
 
-    # Set the number of rows in the platform key (if set) 
-    # NOTE: This is different to matplotlib because PGF plots uses columns, 
+    # Set the number of rows in the platform key (if set)
+    # NOTE: This is different to matplotlib because PGF plots uses columns,
     #       and then transposes (so columns become rows)
     plat_legend_nrows = kwargs["plat_legend_nrows"]
 
-    plotylabel=""
+    plotylabel = ""
     if eff_column == "app eff":
         plotylabel = "Application Efficiency"
     elif eff_column == "arch eff":
@@ -603,7 +621,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
         msg = "Unexpected efficiency column name: %s"
         raise ValueError(msg % (eff_column))
 
-    # Build an dictionary with "application name, [ data ]" for the 
+    # Build an dictionary with "application name, [ data ]" for the
     # efficiency plot
     plot_effs = {}
     for app_name in applications:
@@ -614,13 +632,16 @@ def cascade_tex(df, filename, eff=None, **kwargs):
         xvalues = np.arange(1, len(supported_platforms) + 1)
         plot_effs[app_name] = tuple(zip(xvalues, yvalues))
 
-    # Build a dictionary with "application name, (application name, qp)" 
+    # Build a dictionary with "application name, (application name, qp)"
     # for the pp bar plot
     pp = p3.metrics.pp(df)
-    pp_bars = {app: f"({app}, {app_pp})" for app, app_pp 
-               in zip(pp["application"], pp["app pp"])}
-    
-    # Build a dictionary with "application name, [ A, B, C, etc ]", etc 
+    pp_column = eff_column.replace("eff", "pp")
+    pp_bars = {
+        app: f"({app}, {app_pp})"
+        for app, app_pp in zip(pp["application"], pp[pp_column])
+    }
+
+    # Build a dictionary with "application name, [ A, B, C, etc ]", etc
     # for the platform plot
     plat_plot = {}
     for i, app_name in enumerate(applications):
@@ -632,38 +653,39 @@ def cascade_tex(df, filename, eff=None, **kwargs):
 
     # Build a jinja environment that can parse the TeX template
     latex_jinja_env = jinja2.Environment(
-            block_start_string = r'\BLOCK{',
-            block_end_string = '}',
-            variable_start_string = r'\VAR{',
-            variable_end_string = '}',
-            comment_start_string = r'\#{',
-            comment_end_string = '}',
-            line_statement_prefix = '%-',
-            line_comment_prefix = '%#',
-            trim_blocks = True,
-            autoescape = False,
-            loader = jinja2.FileSystemLoader(os.path.dirname(p3.__file__) + 
-                        "/plot/")
+        block_start_string=r"\BLOCK{",
+        block_end_string="}",
+        variable_start_string=r"\VAR{",
+        variable_end_string="}",
+        comment_start_string=r"\#{",
+        comment_end_string="}",
+        line_statement_prefix="%-",
+        line_comment_prefix="%#",
+        trim_blocks=True,
+        autoescape=True,
+        loader=jinja2.FileSystemLoader(
+            os.path.dirname(p3.__file__) + "/plot/"
+        ),
     )
 
     # Load the template.tex file
     template = latex_jinja_env.get_template("template.tex")
-    
+
     # Render the template using the parameters generated above to a file
     template.stream(
-        plottitle = "",
-        plotheight = '200pt',
-        plotwidth = '200pt',
-        applicationcount = len(applications),
-        platformcount = len(platforms),
-        plotylabel = plotylabel,
-        plat_colors = plat_colors_rgb,
-        app_colors = app_colors_rgb,
-        app_line_specs = app_line_specs,
-        plot_effs = plot_effs,
-        applications = ', '.join(pp["application"]),
-        pp_bars = pp_bars,
-        plat_plot = plat_plot,
-        plat_labels = plat_labels,
-        plat_legend_nrows = plat_legend_nrows
+        plottitle="",
+        plotheight="200pt",
+        plotwidth="200pt",
+        applicationcount=len(applications),
+        platformcount=len(platforms),
+        plotylabel=plotylabel,
+        plat_colors=plat_colors_rgb,
+        app_colors=app_colors_rgb,
+        app_line_specs=app_line_specs,
+        plot_effs=plot_effs,
+        applications=", ".join(pp["application"]),
+        pp_bars=pp_bars,
+        plat_plot=plat_plot,
+        plat_labels=plat_labels,
+        plat_legend_nrows=plat_legend_nrows,
     ).dump(filename)

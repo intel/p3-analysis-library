@@ -12,6 +12,8 @@
     \newcommand{\plotheight}{\VAR{plotheight}}
     \newcommand{\plotwidth}{\VAR{plotwidth}}
     
+    \newcommand{\ymax}{1.1}
+    
     % Parameters for the data
     \newcommand{\applicationcount}{\VAR{applicationcount}}
     \newcommand{\platformcount}{\VAR{platformcount}}
@@ -49,8 +51,10 @@
     %%%% Begin plotting the plot itself
     \begin{groupplot}[
         group style={group size=2 by 2, vertical sep=0cm, horizontal sep=2mm},
-        %height=6cm,
         scaled ticks=false,
+        yticklabel style={
+            /pgf/number format/fixed,
+        },
     ]
 
     %%%% Plot the line graph
@@ -71,7 +75,7 @@
         xmin=0,
         xmax=\platformcountplusone,
         ymin=0,
-        ymax=1.1,
+        ymax=\ymax,
         legend style={at={(1.05,-0.05)}, anchor=north west, legend columns=1},
         legend cell align={left}
     ]
@@ -101,7 +105,7 @@
         xtick=data,
         symbolic x coords={\VAR{applications}},
         ymin=0,
-        ymax=1.1,
+        ymax=\ymax,
         enlarge x limits={abs=10pt}
     ]
 
