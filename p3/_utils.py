@@ -12,7 +12,9 @@ def _require_columns(df, columns):
 
     for column in columns:
         if column not in df:
-            msg = ("DataFrame does not contain a column named '%s'. The following columns are required: %s"
+            msg = (
+                "DataFrame does not contain a column named '%s'. "
+                "The following columns are required: %s"
             )
             raise ValueError(msg % (column, str(columns)))
 
