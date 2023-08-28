@@ -15,22 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-        name: Install Python 3.9
+      - uses: psf/black@stable
         with:
-          python-version: "3.9"
-      - name: Install black
-        run: |
-          pip install black==22.12.0
-      - name: Run black formatter
-        run: |
-          black ./p3
-      - name: Commit formatting changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "style: automated code formatting with black"
-          commit_user_name: "Github Actions Black"
-          status_options: '--untracked-files=no'
+          options: "--check --verbose --diff"
+          src: "./p3"
+          version: "22.12.0"
   lint:
     runs-on: ubuntu-latest
     needs: format
