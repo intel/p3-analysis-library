@@ -68,11 +68,12 @@ for (i, platform) in enumerate(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
 # Read performance efficiency data into pandas DataFrame
 df = pd.DataFrame(data)
 
-# Generate a cascade plot
+# Generate a cascade plot with a custom legend location
 fig = plt.figure(figsize=(6, 5))
-cascade = p3.plot.cascade(df)
+legend_kwargs = { "loc": "center left", "bbox_to_anchor": (0.91, 0.225), "ncols": 2 }
+cascade = p3.plot.cascade(df, plat_legend_kwargs=legend_kwargs)
 
-# Customize the cascade plot
+# Further customize the cascade plot
 # In this example, we adjust the range of the y-axis to improve readability
 # This may be necessary for studies using architectural efficiency
 cascade.get_axes("eff").set_ylim([0, 0.12])
