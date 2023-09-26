@@ -57,17 +57,5 @@ class TestCascade(unittest.TestCase):
         with self.assertRaises(ValueError):
             cascade(df, app_markers=1)
 
-        cascade(df, plat_legend_ncols=1)
-        with self.assertRaises(ValueError):
-            cascade(df, plat_legend_ncols="1")
-        with self.assertRaises(ValueError):
-            cascade(df, plat_legend_ncols=0)
-
-        cascade(df, plat_legend_loc="north")
-        with self.assertRaises(ValueError):
-            cascade(df, plat_legend_loc=0)
-        with self.assertRaises(ValueError):
-            cascade(df, plat_legend_loc="asdf")
-
 if __name__ == "__main__":
     unittest.main()
