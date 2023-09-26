@@ -67,6 +67,18 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
               - list
               - Markers for applications
 
+        .. list-table:: matplotlib Properties
+            :widths: 10, 20, 18
+            :header-rows: 1
+
+            * - Property
+              - Type
+              - Description
+
+            * - `legend_kwargs`
+              - dict
+              - `kwargs` passed to legend
+
     Returns
     -------
     ~p3.plot.backend.NavChart
@@ -97,6 +109,10 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
 
     default_markers = getattr(matplotlib.markers.MarkerStyle, "filled_markers")
     kwargs.setdefault("app_markers", default_markers)
+
+    kwargs.setdefault("legend_kwargs", {})
+    kwargs["legend_kwargs"].setdefault("loc", "upper center")
+    kwargs["legend_kwargs"].setdefault("bbox_to_anchor", (0.5, 0.0))
 
     # Choose the PP column based on eff parameter and available columns
     pp_columns = []
@@ -279,6 +295,7 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
     ax.set_xlabel("Code Convergence")
     ax.set_ylim([0, 1])
     ax.set_xlim([0, 1])
-    fig.legend(loc="upper center", bbox_to_anchor=(0.5, 0.0))
+
+    fig.legend(**kwargs["legend_kwargs"])
 
     return NavChart(fig, ax)
