@@ -32,8 +32,6 @@ The bar chart shows the performance portability of each application.
 .. _Interpreting and Visualizing Performance Portability Metrics: https://doi.org/10.1109/P3HPC51967.2020.00007
 """
 
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 import pandas as pd
 
 import p3
@@ -71,6 +69,5 @@ for (i, platform) in enumerate(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
 df = pd.DataFrame(data)
 
 # Generate a cascade plot
-fig = plt.figure(figsize=(6, 5))
-p3.plot.cascade(df)
-plt.savefig("cascade.png", bbox_inches="tight")
+cascade = p3.plot.cascade(df, size=(6, 5))
+cascade.save("cascade.png")

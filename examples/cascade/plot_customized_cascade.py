@@ -33,7 +33,6 @@ use :py:meth:`matplotlib.axes.Axes.set_ylim` to update the y-axis.
    <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
 
-import matplotlib.pyplot as plt
 import pandas as pd
 
 import p3
@@ -68,15 +67,16 @@ for (i, platform) in enumerate(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
 # Read performance efficiency data into pandas DataFrame
 df = pd.DataFrame(data)
 
-# Generate a cascade plot with a custom legend location
-fig = plt.figure(figsize=(6, 5))
-legend_kwargs = { "loc": "center left", "bbox_to_anchor": (0.91, 0.225), "ncols": 2 }
-cascade = p3.plot.cascade(df, plat_legend_kwargs=legend_kwargs)
+# Generate a cascade plot with custom style options
+legend = p3.plot.Legend(loc="center left", bbox_to_anchor=(0.91, 0.225), ncols=2)
+pstyle = p3.plot.PlatformStyle(colors="GnBu")
+astyle = p3.plot.ApplicationStyle(markers=["x", "s", "p", "h", "H", "v"])
+cascade = p3.plot.cascade(df, size=(6, 5), platform_legend=legend, platform_style=pstyle, application_style=astyle)
 
-# Further customize the cascade plot
+# Further customize the cascade plot using matplotlib
 # In this example, we adjust the range of the y-axis to improve readability
 # This may be necessary for studies using architectural efficiency
 cascade.get_axes("eff").set_ylim([0, 0.12])
 cascade.get_axes("pp").set_ylim([0, 0.12])
 
-plt.savefig("customized-cascade.png", bbox_inches="tight")
+cascade.save("customized-cascade.png")

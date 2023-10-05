@@ -51,6 +51,16 @@ class CascadePlot(CascadePlot):
             return self.axes[1][0]
         raise ValueError("Unrecognized subplot name: '%s'" % subplot)
 
+    def save(self, filename):
+        """
+        Save the plot to the specified file.
+
+        Parameters
+        ----------
+        filename: string
+        """
+        self.fig.savefig(filename, bbox_inches="tight")
+
 
 class NavChart(NavChart):
     """
@@ -79,3 +89,13 @@ class NavChart(NavChart):
             The :py:class:`matplotlib.axes.Axes` used for the chart.
         """
         return self.axes
+
+    def save(self, filename):
+        """
+        Save the plot to the specified file.
+
+        Parameters
+        ----------
+        filename: string
+        """
+        self.fig.savefig(filename, bbox_inches="tight")

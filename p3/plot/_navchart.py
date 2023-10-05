@@ -9,11 +9,12 @@ import numpy as np
 import pandas as pd
 
 from p3._utils import _require_columns, _require_numeric
+from p3.plot._common import Legend, ApplicationStyle
 from p3.plot._cascade import _get_colors
 from p3.plot.backend.matplotlib import NavChart
 
 
-def navchart(pp, cd, eff=None, goal=None, **kwargs):
+def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
     """
     Plot a `navigation chart`_ showing the performance portability and code
     convergence of each application in a DataFrame. The chart highlights the
@@ -43,6 +44,9 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
         "app" or "arch". If no value is provided, the efficiency is selected
         automatically based on the data available in `pp`.
 
+    size: 2-tuple of floats, default: (6, 5)
+        The size of the plot, in backend-specific units.
+
     goal: tuple, optional
         User-defined goal, expressed as (convergence, portability).
         The region between this point and (1, 1) will be highlighted.
@@ -59,25 +63,13 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
               - Type
               - Description
 
-            * - `app_cmap`
-              - Colormap, string, or list
-              - Colormap for applications
+            * - `legend`
+              - p3.plot.Legend
+              - Styling options for platform legend.
 
-            * - `app_markers`
-              - list
-              - Markers for applications
-
-        .. list-table:: matplotlib Properties
-            :widths: 10, 20, 18
-            :header-rows: 1
-
-            * - Property
-              - Type
-              - Description
-
-            * - `legend_kwargs`
-              - dict
-              - `kwargs` passed to legend
+            * - `style`
+              - p3.plot.ApplicationStyle
+              - Styling options for applications.
 
     Returns
     -------
@@ -105,14 +97,19 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
             "Handling multiple problems is currently not implemented."
         )
 
-    kwargs.setdefault("app_cmap", getattr(plt.cm, "tab10"))
+    kwargs.setdefault("legend", Legend())
+    legend = kwargs["legend"]
+    legend.kwargs.setdefault("loc", "upper center")
+    legend.kwargs.setdefault("bbox_to_anchor", (0.5, 0.0))
 
-    default_markers = getattr(matplotlib.markers.MarkerStyle, "filled_markers")
-    kwargs.setdefault("app_markers", default_markers)
-
-    kwargs.setdefault("legend_kwargs", {})
-    kwargs["legend_kwargs"].setdefault("loc", "upper center")
-    kwargs["legend_kwargs"].setdefault("bbox_to_anchor", (0.5, 0.0))
+    kwargs.setdefault("style", ApplicationStyle())
+    style = kwargs["style"]
+    if not style.colors:
+        style.colors = getattr(plt.cm, "tab10")
+    if not style.markers:
+        style.markers = getattr(
+            matplotlib.markers.MarkerStyle, "filled_markers"
+        )
 
     # Choose the PP column based on eff parameter and available columns
     pp_columns = []
@@ -137,9 +134,9 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
     ppcd = pd.merge(pp, cd, on=["problem", "application"], how="inner")
 
     applications = ppcd["application"].unique()
-    app_colors = _get_colors(applications, kwargs["app_cmap"])
+    app_colors = _get_colors(applications, style.colors)
 
-    markers = kwargs["app_markers"]
+    markers = style.markers
     if not isinstance(markers, (list, tuple)):
         raise ValueError("Unsupported type provided for app_markers")
     app_markers = {app: marker for app, marker in zip(applications, markers)}
@@ -147,7 +144,7 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
     # Add a small amount of jitter to make overlapping points less likely
     jitter = np.random.default_rng().uniform(0, 0.01, 2 * len(ppcd))
 
-    fig = plt.gcf()
+    fig = plt.figure(figsize=size)
     ax = plt.gca()
     patch_size = 0.1
     for index, row in ppcd.iterrows():
@@ -296,6 +293,6 @@ def navchart(pp, cd, eff=None, goal=None, **kwargs):
     ax.set_ylim([0, 1])
     ax.set_xlim([0, 1])
 
-    fig.legend(**kwargs["legend_kwargs"])
+    fig.legend(**legend.kwargs)
 
     return NavChart(fig, ax)

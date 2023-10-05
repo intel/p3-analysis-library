@@ -63,12 +63,12 @@ cd_data["divergence"] += [1, 0, 1, 0, 0.3]
 pp = pd.DataFrame(pp_data)
 cd = pd.DataFrame(cd_data)
 
-# Generate a navigation chart with a custom legend location
-fig = plt.figure(figsize=(5, 5))
-legend_kwargs = { "loc": "center left", "bbox_to_anchor": (1.0, 0.5) }
-navchart = p3.plot.navchart(pp, cd, legend_kwargs=legend_kwargs)
+# Generate a navigation chart with custom style options
+legend = p3.plot.Legend(loc="center left", bbox_to_anchor=(1.0, 0.5))
+astyle = p3.plot.ApplicationStyle(markers=["x", "*", "s", "o", "P"])
+navchart = p3.plot.navchart(pp, cd, size=(5, 5), legend=legend, style=astyle)
 
-# Further customize the navigation chart
+# Further customize the navigation chart using matplotlib
 # In this example, we add a label and adjust the ticks
 ax = navchart.get_axes()
 ax.annotate("Balances performance and code re-use.",
@@ -78,4 +78,4 @@ ax.annotate("Balances performance and code re-use.",
 ax.set_xticks([x * 0.1 for x in range(0, 11)])
 ax.set_yticks([y * 0.1 for y in range(0, 11)])
 
-plt.savefig("customized-navchart.png", bbox_inches="tight")
+navchart.save("customized-navchart.png")
