@@ -22,7 +22,6 @@ readily available in the dataset.
 
 # import libraries
 import pandas as pd
-import matplotlib.pyplot as plt
 import p3
 
 #sphinx_gallery_start_ignore
@@ -75,9 +74,8 @@ print(effs)
 # Generate a Cascade Plot
 # -----------------------
 
-fig = plt.figure(figsize=(6, 5))
-p3.plot.cascade(effs)
-plt.savefig("cascade.png", bbox_inches="tight")
+cascade = p3.plot.cascade(effs)
+cascade.save("cascade.png")
 
 # %%
 # The plot shows the *application efficiency* (line chart, left) and
