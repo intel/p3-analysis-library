@@ -44,7 +44,7 @@ def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
         "app" or "arch". If no value is provided, the efficiency is selected
         automatically based on the data available in `pp`.
 
-    size: 2-tuple of floats, default: (6, 5)
+    size: 2-tuple of floats, default: (5, 5)
         The size of the plot, in backend-specific units.
 
     goal: tuple, optional
