@@ -6,4 +6,4 @@ import p3.metrics
 import p3.plot
 import p3.report
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

@@ -3,6 +3,7 @@
 import matplotlib
 import pandas as pd
 from p3.plot import navchart
+from p3.plot import ApplicationStyle
 import unittest
 
 
@@ -51,12 +52,20 @@ class TestNavchart(unittest.TestCase):
         cd = pd.DataFrame(div)
 
         cmap = matplotlib.colormaps["tab10"]
+        astyle = ApplicationStyle()
 
-        navchart(pp, cd, app_cmap=cmap)
-        navchart(pp, cd, app_cmap="tab10")
-        navchart(pp, cd, app_cmap=["blue", "green"])
+        astyle.colors = cmap
+        navchart(pp, cd, style=astyle)
+
+        astyle.colors = "tab10"
+        navchart(pp, cd, style=astyle)
+
+        astyle.colors = ["blue", "green"]
+        navchart(pp, cd, style=astyle)
+
         with self.assertRaises(ValueError):
-            navchart(pp, cd, app_cmap=1)
+            astyle.colors = 1
+            navchart(pp, cd, style=astyle)
 
 
 if __name__ == "__main__":
