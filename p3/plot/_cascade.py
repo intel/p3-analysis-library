@@ -347,6 +347,12 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
             raise ValueError(msg % (eff_column))
     _require_numeric(df, [eff_column])
 
+    # Keep only the most efficient (application, platform) results.
+    key = ["problem", "platform", "application"]
+    groups = df[key + [eff_column]].groupby(key)
+    df = groups.agg(max)
+    df.reset_index(inplace=True)
+
     platforms = df["platform"].unique()
     applications = df["application"].unique()
 
