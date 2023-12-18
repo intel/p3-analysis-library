@@ -134,6 +134,31 @@ class TestPP(unittest.TestCase):
 
         pd.testing.assert_frame_equal(result, expected_df)
 
+    def test_pp_duplicates(self):
+        """p3.data.pp.duplicates"""
+
+        # Regression for case with duplicate result
+        data = {
+            "problem": ["test"] * 4,
+            "platform": ["A", "A", "B", "B"],
+            "application": ["latest"] * 4,
+            "fom": [float("NaN"), 25.0, 1.0, 2.0],
+            "app eff": [0, 1.0, 0.5, 1.0],
+            "arch eff": [0, 0.5, 0.25, 0.5],
+        }
+        df = pd.DataFrame(data)
+
+        result = pp(df)
+
+        expected_data = {
+            "problem": ["test"],
+            "application": ["latest"],
+            "app pp": [1.0],
+            "arch pp": [0.5],
+        }
+        expected_df = pd.DataFrame(expected_data)
+
+        pd.testing.assert_frame_equal(result, expected_df)
 
 if __name__ == "__main__":
     unittest.main()
