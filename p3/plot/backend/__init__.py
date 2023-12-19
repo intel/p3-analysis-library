@@ -13,7 +13,8 @@ Contains backend-specific interfaces for customizing plots.
 __all__ = [
     "Plot",
     "CascadePlot",
-    "CascadePGFPlot" "NavChart",
+    "CascadePGFPlot",
+    "NavChart",
 ]
 
 
