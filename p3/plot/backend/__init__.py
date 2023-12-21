@@ -13,7 +13,6 @@ Contains backend-specific interfaces for customizing plots.
 __all__ = [
     "Plot",
     "CascadePlot",
-    "CascadePGFPlot",
     "NavChart",
 ]
 
@@ -39,15 +38,6 @@ class Plot:
 class CascadePlot(Plot):
     """
     Base class for cascade plot objects.
-    """
-
-    def __init__(self, backend):
-        super().__init__(backend)
-
-
-class CascadePGFPlot(Plot):
-    """
-    Base class for cascade PGF plot objects.
     """
 
     def __init__(self, backend):

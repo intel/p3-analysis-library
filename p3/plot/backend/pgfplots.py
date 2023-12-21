@@ -5,10 +5,10 @@ Contains objects for interacting with plots produced using the
 :py:mod:`pgfplots` backend.
 """
 
-from . import CascadePGFPlot
+from . import CascadePlot
 
 
-class CascadePGFPlot(CascadePGFPlot):
+class CascadePlot(CascadePlot):
     """
     Cascade plot object for :py:mod:`pgfplots`.
     """

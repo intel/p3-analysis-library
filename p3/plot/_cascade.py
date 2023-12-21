@@ -17,8 +17,8 @@ import os
 
 from p3._utils import _require_columns, _require_numeric
 from p3.plot._common import Legend, ApplicationStyle, PlatformStyle
-from p3.plot.backend.matplotlib import CascadePlot
-from p3.plot.backend.pgfplots import CascadePGFPlot
+from p3.plot.backend.matplotlib import CascadePlot as MPLCascadePlot
+from p3.plot.backend.pgfplots import CascadePlot as PGFCascadePlot
 
 
 class _PlatformLegendHandler(matplotlib.legend_handler.HandlerBase):
@@ -437,7 +437,7 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
         **plat_legend.kwargs,
     )
 
-    return CascadePlot(fig, axes)
+    return MPLCascadePlot(fig, axes)
 
 
 def _cascade_tex(df, eff=None, **kwargs):
@@ -691,7 +691,7 @@ def _cascade_tex(df, eff=None, **kwargs):
     template = latex_jinja_env.get_template("template.tex")
 
     # Render the template using the parameters generated above to a file
-    return CascadePGFPlot(
+    return PGFCascadePlot(
         template.stream(
             plottitle="",
             plotheight="200pt",
