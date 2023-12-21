@@ -535,9 +535,6 @@ def _cascade_tex(df, eff=None, **kwargs):
     plat_legend = kwargs["platform_legend"]
     plat_legend.kwargs.setdefault("nrows", 4)
 
-    kwargs.setdefault("application_legend", Legend())
-    app_legend = kwargs["application_legend"]
-
     kwargs.setdefault("platform_style", PlatformStyle())
     plat_style = kwargs["platform_style"]
     if not plat_style.colors:
