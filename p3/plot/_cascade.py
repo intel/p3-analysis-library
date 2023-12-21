@@ -307,9 +307,12 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
             "Handling multiple problems is currently not implemented."
         )
 
+    kwargs.setdefault("backend", "matplotlib")
     backend = kwargs["backend"]
     if backend == "pgfplots":
         return _cascade_tex(df, eff, **kwargs)
+    elif backend != "matplotlib":
+        raise ValueError("'backend' must be 'matplotlib' or 'pgfplots'")
 
     kwargs.setdefault("platform_legend", Legend())
     plat_legend = kwargs["platform_legend"]
