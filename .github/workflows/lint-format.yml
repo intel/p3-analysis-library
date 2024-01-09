@@ -35,4 +35,4 @@ jobs:
       - name: Run flake8 on the package only
         run: |
           flake8 ./p3
-
+permissions: read-all
