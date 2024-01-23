@@ -3,37 +3,7 @@
 
 import json
 import jsonschema
-
-_coverage_schema_id = (
-    "https://raw.githubusercontent.com/intel/"
-    "p3-analysis-library/p3/schema/coverage-0.1.0.schema"
-)
-_coverage_schema = {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": _coverage_schema_id,
-    "title": "Coverage",
-    "description": "Lines of code used in each file of a code base.",
-    "type": "array",
-    "items": {
-        "type": "object",
-        "properties": {
-            "file": {"type": "string"},
-            "regions": {
-                "type": "array",
-                "items": {
-                    "type": "array",
-                    "prefixItems": [
-                        {"type": "integer"},
-                        {"type": "integer"},
-                        {"type": "integer"},
-                    ],
-                    "items": False,
-                },
-            },
-        },
-        "required": ["file", "regions"],
-    },
-}
+import pkgutil
 
 
 def _validate_coverage_json(json_string: str) -> object:
@@ -63,10 +33,20 @@ def _validate_coverage_json(json_string: str) -> object:
 
     instance = json.loads(json_string)
 
+    schema_string = pkgutil.get_data(__name__, "coverage-0.1.0.schema")
+    if not schema_string:
+        msg = "Could not locate coverage schema file"
+        raise RuntimeError(msg)
+
+    schema = json.loads(schema_string)
+
     try:
-        jsonschema.validate(instance=instance, schema=_coverage_schema)
-    except Exception:
+        jsonschema.validate(instance=instance, schema=schema)
+    except jsonschema.exceptions.ValidationError:
         msg = "Coverage string failed schema validation"
         raise ValueError(msg)
+    except jsonschema.exceptions.SchemaError:
+        msg = "coverage-0.1.0.schema is not a valid schema"
+        raise RuntimeError(msg)
 
     return instance
