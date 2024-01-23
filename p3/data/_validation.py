@@ -42,8 +42,11 @@ def _validate_coverage_json(json_string: str) -> object:
 
     try:
         jsonschema.validate(instance=instance, schema=schema)
-    except Exception:
+    except jsonschema.exceptions.ValidationError:
         msg = "Coverage string failed schema validation"
         raise ValueError(msg)
+    except jsonschema.exceptions.SchemaError:
+        msg = "coverage-0.1.0.schema is not a valid schema"
+        raise RuntimeError(msg)
 
     return instance
