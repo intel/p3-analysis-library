@@ -33,7 +33,7 @@ def _validate_coverage_json(json_string: str) -> object:
 
     instance = json.loads(json_string)
 
-    schema_string = pkgutil.get_data(__name__, "coverage-0.1.0.schema")
+    schema_string = pkgutil.get_data(__name__, "coverage-0.2.0.schema")
     if not schema_string:
         msg = "Could not locate coverage schema file"
         raise RuntimeError(msg)
