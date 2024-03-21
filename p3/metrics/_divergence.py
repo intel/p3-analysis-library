@@ -55,15 +55,22 @@ def _coverage_to_divergence(maps):
     linemap = collections.defaultdict(set)
     for p, coverage in enumerate(maps):
         for entry in coverage:
-            fn = entry["file"]
-            for region in entry["regions"]:
-                linemap[(fn, tuple(region))].add(p)
+            unique_fn = (entry["file"], entry["id"])
+            for region in entry["lines"]:
+
+                # If a region is a single integer, it represents one line.
+                if isinstance(region, int):
+                    line = region
+                    linemap[(unique_fn, line)].add(p)
+
+                # If a region is a list, it represents a [start, end] pair.
+                if isinstance(region, list):
+                    for line in range(region[0], region[1]):
+                        linemap[(unique_fn, line)].add(p)
 
     setmap = collections.defaultdict(int)
     for key, platforms in linemap.items():
-        fn, triple = key
-        start, end, num_lines = triple
-        setmap[frozenset(platforms)] += num_lines
+        setmap[frozenset(platforms)] += 1
 
     return _average_distance(setmap)
 
