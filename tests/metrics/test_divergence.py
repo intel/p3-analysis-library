@@ -33,10 +33,9 @@ class TestDivergence(unittest.TestCase):
         json_string = json.dumps(
             [
                 {
-                    "file": "0",
-                    "regions": [
-                        [0, 1, 1],
-                    ],
+                    "file": "file.cpp",
+                    "id": "0",
+                    "lines": [0],
                 }
             ]
         )
@@ -66,10 +65,9 @@ class TestDivergence(unittest.TestCase):
         source1_json_string = json.dumps(
             [
                 {
-                    "file": "0",
-                    "regions": [
-                        [0, 10, 10],
-                    ],
+                    "file": "foo.cpp",
+                    "id": "0",
+                    "lines": [[0, 9]],
                 }
             ]
         )
@@ -77,16 +75,14 @@ class TestDivergence(unittest.TestCase):
         source2_json_string = json.dumps(
             [
                 {
-                    "file": "0",
-                    "regions": [
-                        [0, 10, 10],
-                    ],
+                    "file": "foo.cpp",
+                    "id": "0",
+                    "lines": [[0, 9]],
                 },
                 {
-                    "file": "1",
-                    "regions": [
-                        [0, 10, 10],
-                    ],
+                    "file": "bar.cpp",
+                    "id": "1",
+                    "lines": [[0, 9]],
                 },
             ]
         )
@@ -123,10 +119,9 @@ class TestDivergence(unittest.TestCase):
         json_string = json.dumps(
             [
                 {
-                    "file": "0",
-                    "regions": [
-                        [0, 1, 1],
-                    ],
+                    "file": "file.cpp",
+                    "id": "0",
+                    "lines": [0],
                 }
             ]
         )
@@ -142,6 +137,54 @@ class TestDivergence(unittest.TestCase):
         expected_df = pd.DataFrame(expected_data)
 
         pd.testing.assert_frame_equal(result, expected_df)
+
+    def test_divergence_duplicate(self):
+        """p3.data.divergence.duplicate"""
+        data = {
+            "problem": ["test"] * 2,
+            "platform": ["A", "B"],
+            "application": ["latest"] * 2,
+            "coverage_key": ["source1", "source2"],
+        }
+        df = pd.DataFrame(data)
+
+        source1_json_string = json.dumps(
+            [
+                {
+                    "file": "foo.cpp",
+                    "id": "0",
+                    "lines": [[0, 9]],
+                }
+            ]
+        )
+
+        source2_json_string = json.dumps(
+            [
+                {
+                    "file": "foo.cpp",
+                    "id": "1",
+                    "lines": [[0, 9]],
+                },
+            ]
+        )
+
+        cov = pd.DataFrame(
+            {
+                "coverage_key": ["source1", "source2"],
+                "coverage": [source1_json_string, source2_json_string],
+            }
+        )
+
+        result = divergence(df, cov)
+
+        expected_data = {
+            "problem": ["test"],
+            "application": ["latest"],
+            "divergence": [1.0],
+        }
+        expected_result = pd.DataFrame(expected_data)
+
+        pd.testing.assert_frame_equal(result, expected_result)
 
 
 if __name__ == "__main__":
