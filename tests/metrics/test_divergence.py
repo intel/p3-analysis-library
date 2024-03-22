@@ -148,6 +148,7 @@ class TestDivergence(unittest.TestCase):
         }
         df = pd.DataFrame(data)
 
+        # First file called "foo.cpp" has an id of "0".
         source1_json_string = json.dumps(
             [
                 {
@@ -158,6 +159,8 @@ class TestDivergence(unittest.TestCase):
             ]
         )
 
+        # Second file called "foo.cpp" has a different id ("1").
+        # It should therefore be recognized as a different file.
         source2_json_string = json.dumps(
             [
                 {
