@@ -13,7 +13,7 @@ class TestDivergence(unittest.TestCase):
     """
 
     def test_required_columns(self):
-        """p3.data.divergence.required_columns"""
+        """Check that divergence() validates required columns."""
         df = pd.DataFrame()
         cov = pd.DataFrame()
 
@@ -21,7 +21,7 @@ class TestDivergence(unittest.TestCase):
             divergence(df, cov)
 
     def test_side_effects(self):
-        """p3.data.divergence.side_effects"""
+        """Check that divergence() has no side effects."""
         key = 0
         data = {
             "problem": ["test"] * 2,
@@ -53,7 +53,7 @@ class TestDivergence(unittest.TestCase):
         pd.testing.assert_frame_equal(cov_before, cov_after)
 
     def test_divergence(self):
-        """p3.data.divergence"""
+        """Check that divergence() produces expected results for valid data."""
         data = {
             "problem": ["test"] * 2,
             "platform": ["A", "B"],
@@ -106,7 +106,7 @@ class TestDivergence(unittest.TestCase):
         pd.testing.assert_frame_equal(result, expected_result)
 
     def test_divergence_single(self):
-        """p3.data.divergence.single"""
+        """Check that divergence() does not fail with only one platform."""
         key = 0
         data = {
             "problem": ["test"],
@@ -139,7 +139,7 @@ class TestDivergence(unittest.TestCase):
         pd.testing.assert_frame_equal(result, expected_df)
 
     def test_divergence_duplicate(self):
-        """p3.data.divergence.duplicate"""
+        """Check that divergence() uses both file and id for uniqueness."""
         data = {
             "problem": ["test"] * 2,
             "platform": ["A", "B"],
