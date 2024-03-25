@@ -218,9 +218,9 @@ class CascadePlot(CascadePlot):
         # build a dictionary of app line specifications for TeX
         app_line_specs = {}
         for app, mark in zip(applications, markers):
-            app_line_specs[
-                app
-            ] = f"{app_to_tex_name[app]}, thick, solid, mark={mark}"
+            app_line_specs[app] = (
+                f"{app_to_tex_name[app]}, thick, solid, mark={mark}"
+            )
 
         # Choose labels for each platform
         plat_labels = dict(zip(platforms, string.ascii_uppercase))
