@@ -18,7 +18,6 @@ The original data is available from https://github.com/UoB-HPC/BabelStream.
 
 # import libraries
 import pandas as pd
-import matplotlib.pyplot as plt
 import p3
 
 #sphinx_gallery_start_ignore
@@ -104,9 +103,8 @@ print(pp)
 # Generate a Navigation Chart
 # ---------------------------
 
-fig = plt.figure(figsize=(5, 5))
-ax = p3.plot.navchart(pp, div)
-plt.savefig("navchart.png")
+navchart = p3.plot.navchart(pp, div)
+navchart.save("navchart.png")
 
 # %%
 # The plot shows the performance portability and code convergence values for

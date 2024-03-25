@@ -1,10 +1,18 @@
 p3.plot package
 ===============
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   p3.plot.backend
+
 Module contents
 ---------------
 
 .. automodule:: p3.plot
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

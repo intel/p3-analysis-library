@@ -16,6 +16,8 @@ import jinja2
 import os
 
 from p3._utils import _require_columns, _require_numeric
+from p3.plot._common import Legend, ApplicationStyle, PlatformStyle
+from p3.plot.backend.matplotlib import CascadePlot
 
 
 class _PlatformLegendHandler(matplotlib.legend_handler.HandlerBase):
@@ -227,7 +229,7 @@ def _get_colors(applications, kwarg):
     return {app: color for app, color in zip(applications, colors)}
 
 
-def cascade(df, eff=None, **kwargs):
+def cascade(df, eff=None, size=(6, 5), **kwargs):
     """
     Plot a `cascade`_ summarizing the efficiency and performance
     portability of each application in a DataFrame, highlighting
@@ -251,6 +253,9 @@ def cascade(df, eff=None, **kwargs):
         "app" or "arch". If no value is provided, the efficiency is selected
         automatically based on the data available in `df`.
 
+    size: 2-tuple of floats, default: (6, 5)
+        The size of the plot, in backend-specific units.
+
     **kwargs: properties, optional
         `kwargs` are used to specify properties that control various styling
         options (e.g. colors and markers).
@@ -263,25 +268,27 @@ def cascade(df, eff=None, **kwargs):
               - Type
               - Description
 
-            * - `app_cmap`
-              - Colormap, string, or list
-              - Colormap for applications
+            * - `platform_legend`
+              - p3.plot.Legend
+              - Styling options for platform legend.
 
-            * - `app_markers`
-              - list
-              - Markers for applications
+            * - `application_legend`
+              - p3.plot.Legend
+              - Styling options for application legend.
 
-            * - `plat_cmap`
-              - Colormap, string, or list
-              - Colormap for platforms
+            * - `platform_style`
+              - p3.plot.PlatformStyle
+              - Styling options for platforms.
 
-            * - `plat_legend_ncols`
-              - int, default: 4
-              - Number of columns for platform legend
+            * - `application_style`
+              - p3.plot.ApplicationStyle
+              - Styling options for applications.
 
-            * - `plat_legend_loc`
-              - string, {'south', 'north', 'west', 'east', 'off'}
-              - Position for platform legend
+    Returns
+    -------
+    ~p3.plot.backend.CascadePlot
+        An object providing direct access to backend-specific components
+        of the cascade plot.
 
     Raises
     ------
@@ -299,14 +306,28 @@ def cascade(df, eff=None, **kwargs):
             "Handling multiple problems is currently not implemented."
         )
 
-    kwargs.setdefault("app_cmap", getattr(plt.cm, "tab10"))
-    kwargs.setdefault("plat_cmap", getattr(plt.cm, "RdBu"))
+    kwargs.setdefault("platform_legend", Legend())
+    plat_legend = kwargs["platform_legend"]
+    plat_legend.kwargs.setdefault("ncols", 4)
+    plat_legend.kwargs.setdefault("loc", "upper center")
+    plat_legend.kwargs.setdefault("bbox_to_anchor", (0.5, 0.0))
 
-    default_markers = getattr(matplotlib.markers.MarkerStyle, "filled_markers")
-    kwargs.setdefault("app_markers", default_markers)
+    kwargs.setdefault("application_legend", Legend())
+    app_legend = kwargs["application_legend"]
 
-    kwargs.setdefault("plat_legend_ncols", 4)
-    kwargs.setdefault("plat_legend_loc", "south")
+    kwargs.setdefault("platform_style", PlatformStyle())
+    plat_style = kwargs["platform_style"]
+    if not plat_style.colors:
+        plat_style.colors = getattr(plt.cm, "RdBu")
+
+    kwargs.setdefault("application_style", ApplicationStyle())
+    app_style = kwargs["application_style"]
+    if not app_style.colors:
+        app_style.colors = getattr(plt.cm, "tab10")
+    if not app_style.markers:
+        app_style.markers = getattr(
+            matplotlib.markers.MarkerStyle, "filled_markers"
+        )
 
     # Choose the efficiency column based on eff parameter and available columns
     efficiency_columns = []
@@ -328,11 +349,17 @@ def cascade(df, eff=None, **kwargs):
             raise ValueError(msg % (eff_column))
     _require_numeric(df, [eff_column])
 
+    # Keep only the most efficient (application, platform) results.
+    key = ["problem", "platform", "application"]
+    groups = df[key + [eff_column]].groupby(key)
+    df = groups.agg(max)
+    df.reset_index(inplace=True)
+
     platforms = df["platform"].unique()
     applications = df["application"].unique()
 
     # Create a 2x2 grid of subplots sharing axes
-    fig = plt.gcf()
+    fig = plt.figure(figsize=size)
     ratios = [6, len(applications) * 0.5]
     axes = fig.subplots(
         2,
@@ -347,24 +374,19 @@ def cascade(df, eff=None, **kwargs):
     )
 
     # Choose colors for each application
-    app_colors = _get_colors(applications, kwargs["app_cmap"])
+    app_colors = _get_colors(applications, app_style.colors)
 
     # Choose markers for each application
-    markers = kwargs["app_markers"]
+    markers = app_style.markers
     if not isinstance(markers, (list, tuple)):
         raise ValueError("Unsupported type provided for app_markers")
     app_markers = {app: color for app, color in zip(applications, markers)}
 
     # Choose colors for each platform
-    plat_colors = _get_colors(platforms, kwargs["plat_cmap"])
+    plat_colors = _get_colors(platforms, plat_style.colors)
 
     # Choose labels for each platform
     plat_labels = dict(zip(platforms, string.ascii_uppercase))
-
-    # Set the number of columns in the platform key (if set)
-    # and possibly change the location
-    plat_legend_ncols = kwargs["plat_legend_ncols"]
-    plat_legend_loc = kwargs["plat_legend_loc"]
 
     # Plot the efficiency cascade in the top-left (0, 0)
     app_handles = _efficiency_cascade(
@@ -391,7 +413,11 @@ def cascade(df, eff=None, **kwargs):
 
     # Attach the application legend to the left of the platform chart
     axes[1][0].legend(
-        handles=app_handles, loc="upper left", bbox_to_anchor=(1, 1), ncol=1
+        handles=app_handles,
+        loc="upper left",
+        bbox_to_anchor=(1, 1),
+        ncol=1,
+        **app_legend.kwargs
     )
 
     # Attach the platform legend to the position requested by kwargs
@@ -399,42 +425,14 @@ def cascade(df, eff=None, **kwargs):
     plat_handles = [
         mpatches.Patch(color=plat_colors[p], label=p) for p in platforms
     ]
-    if not isinstance(plat_legend_ncols, int):
-        raise ValueError("'plat_legend_ncols' must be an integer")
-    if not plat_legend_ncols >= 1:
-        raise ValueError("'plat_legend_ncols' must be >= 1")
-    if not isinstance(plat_legend_loc, str):
-        raise ValueError("'plat_legend_loc' must be a string")
-    if plat_legend_loc not in ["north", "east", "south", "west", "off"]:
-        msg = (
-            "'plat_legend_loc' must be 'north', 'east', 'south', 'west', "
-            "or 'off'"
-        )
-        raise ValueError(msg)
-    if plat_legend_loc != "off":
-        if plat_legend_loc == "north":
-            bbox_loc = "lower center"
-            bbox_anc = (0.5, 0.9)
-        elif plat_legend_loc == "east":
-            bbox_loc = "center left"
-            bbox_anc = (1.0, 0.5)
-        elif plat_legend_loc == "west":
-            bbox_loc = "center right"
-            bbox_anc = (0.0, 0.5)
-        else:
-            bbox_loc = "upper center"
-            bbox_anc = (0.5, 0.0)
+    fig.legend(
+        handles=plat_handles,
+        handler_map={mpatches.Patch: legend_helper},
+        handlelength=1.0,
+        **plat_legend.kwargs
+    )
 
-        fig.legend(
-            handles=plat_handles,
-            loc=bbox_loc,
-            bbox_to_anchor=bbox_anc,
-            handler_map={mpatches.Patch: legend_helper},
-            handlelength=1.0,
-            ncols=plat_legend_ncols,
-        )
-
-    return axes[0][0], axes[0][1], axes[1][0]
+    return CascadePlot(fig, axes)
 
 
 def cascade_tex(df, filename, eff=None, **kwargs):
@@ -476,6 +474,35 @@ def cascade_tex(df, filename, eff=None, **kwargs):
               - Type
               - Description
 
+            * - `platform_legend`
+              - p3.plot.Legend
+              - Styling options for platform legend.
+
+            * - `application_legend`
+              - p3.plot.Legend
+              - Styling options for application legend.
+
+            * - `platform_style`
+              - p3.plot.PlatformStyle
+              - Styling options for platforms.
+
+            * - `application_style`
+              - p3.plot.ApplicationStyle
+              - Styling options for applications.
+
+>>> REMOVE
+    **kwargs: properties, optional
+        `kwargs` are used to specify properties that control various styling
+        options (e.g. colors and markers).
+
+        .. list-table:: Properties
+            :widths: 10, 20, 18
+            :header-rows: 1
+
+            * - Property
+              - Type
+              - Description
+
             * - `app_cmap`
               - Colormap, string, or list
               - Colormap for applications
@@ -491,6 +518,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
             * - `plat_legend_nrows`
               - int, default: 4
               - Number of rows for platform legend
+>>> END REMOVE
 
     Raises
     ------
@@ -508,9 +536,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
             "Handling multiple problems is currently not implemented."
         )
 
-    kwargs.setdefault("app_cmap", getattr(plt.cm, "tab10"))
-    kwargs.setdefault("plat_cmap", getattr(plt.cm, "RdBu"))
-
+    # Define 19 default markers for LaTeX plots
     default_markers = [
         "*, mark options={style={solid}}",
         "*, mark options={style={solid}, scale=1.5}",
@@ -532,12 +558,27 @@ def cascade_tex(df, filename, eff=None, **kwargs):
         "x, mark options={style={solid}, scale=1.5}",
         "+, mark options={style={solid}, scale=1.5}",
     ]
-    kwargs.setdefault("app_markers", default_markers)
 
-    kwargs.setdefault("plat_legend_nrows", 4)
+    kwargs.setdefault("platform_legend", Legend())
+    plat_legend = kwargs["platform_legend"]
+    plat_legend.kwargs.setdefault("nrows", 4)
+    
+    kwargs.setdefault("application_legend", Legend())
+    app_legend = kwargs["application_legend"]
 
-    # Choose the efficiency column based on eff parameter and available
-    # columns
+    kwargs.setdefault("platform_style", PlatformStyle())
+    plat_style = kwargs["platform_style"]
+    if not plat_style.colors:
+        plat_style.colors = getattr(plt.cm, "RdBu")
+
+    kwargs.setdefault("application_style", ApplicationStyle())
+    app_style = kwargs["application_style"]
+    if not app_style.colors:
+        app_style.colors = getattr(plt.cm, "tab10")
+    if not app_style.markers:
+        app_style.markers = default_markers
+
+    # Choose the efficiency column based on eff parameter and available columns
     efficiency_columns = []
     for column in ["app eff", "arch eff"]:
         if column in df:
@@ -557,6 +598,12 @@ def cascade_tex(df, filename, eff=None, **kwargs):
             raise ValueError(msg % (eff_column))
     _require_numeric(df, [eff_column])
 
+    # Keep only the most efficient (application, platform) results.
+    key = ["problem", "platform", "application"]
+    groups = df[key + [eff_column]].groupby(key)
+    df = groups.agg(max)
+    df.reset_index(inplace=True)
+
     platforms = df["platform"].unique()
     applications = df["application"].unique()
 
@@ -573,7 +620,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
 
     # Choose colors for each application and then convert the dictionary to
     # TeX friendly names and RGB colors
-    app_colors = _get_colors(applications, kwargs["app_cmap"])
+    app_colors = _get_colors(applications, app_style.colors)
     app_colors_rgb = {}
     for k in app_colors:
         app_colors_rgb[app_to_tex_name[k]] = str(
@@ -583,9 +630,9 @@ def cascade_tex(df, filename, eff=None, **kwargs):
     # Build a dictionary of platforms to labels
     plat_labels = dict(zip(platforms, string.ascii_uppercase))
 
-    # Choose colors for each platform and the convert the dictionary to RGB
+    # Choose colors for each platform and then convert the dictionary to RGB
     # colors using the platform labels
-    plat_colors = _get_colors(platforms, kwargs["plat_cmap"])
+    plat_colors = _get_colors(platforms, plat_style.colors)
     plat_colors_rgb = {}
     for k in plat_colors:
         plat_colors_rgb[plat_labels[k]] = str(
@@ -593,7 +640,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
         ).strip("()")
 
     # Choose markers for each application
-    markers = kwargs["app_markers"]
+    markers = app_style.markers
     if not isinstance(markers, (list, tuple)):
         raise ValueError("Unsupported type provided for app_markers")
 
@@ -610,8 +657,8 @@ def cascade_tex(df, filename, eff=None, **kwargs):
     # Set the number of rows in the platform key (if set)
     # NOTE: This is different to matplotlib because PGF plots uses columns,
     #       and then transposes (so columns become rows)
-    plat_legend_nrows = kwargs["plat_legend_nrows"]
-
+    plat_legend_nrows = plat_legend.kwargs["nrows"]
+    
     plotylabel = ""
     if eff_column == "app eff":
         plotylabel = "Application Efficiency"

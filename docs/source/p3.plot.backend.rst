@@ -1,0 +1,21 @@
+p3.plot.backend package
+=======================
+
+Submodules
+----------
+
+p3.plot.backend.matplotlib module
+---------------------------------
+
+.. automodule:: p3.plot.backend.matplotlib
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: p3.plot.backend
+   :members:
+   :undoc-members:
+   :show-inheritance:

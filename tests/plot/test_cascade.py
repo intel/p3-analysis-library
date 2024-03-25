@@ -3,6 +3,7 @@
 import matplotlib
 import pandas as pd
 from p3.plot import cascade
+from p3.plot import ApplicationStyle, PlatformStyle
 import unittest
 
 
@@ -41,33 +42,41 @@ class TestCascade(unittest.TestCase):
         df = pd.DataFrame(data)
         cmap = matplotlib.colormaps["tab10"]
 
-        cascade(df, app_cmap=cmap)
-        cascade(df, app_cmap="tab10")
-        cascade(df, app_cmap=["blue", "green"])
-        with self.assertRaises(ValueError):
-            cascade(df, app_cmap=1)
+        astyle = ApplicationStyle()
+        pstyle = PlatformStyle()
 
-        cascade(df, plat_cmap=cmap)
-        cascade(df, plat_cmap="tab10")
-        cascade(df, plat_cmap=["blue", "green"])
-        with self.assertRaises(ValueError):
-            cascade(df, plat_cmap=1)
+        astyle.colors = cmap
+        cascade(df, application_style=astyle)
 
-        cascade(df, app_markers=[">", "<"])
-        with self.assertRaises(ValueError):
-            cascade(df, app_markers=1)
+        astyle.colors = "tab10"
+        cascade(df, application_style=astyle)
 
-        cascade(df, plat_legend_ncols=1)
+        astyle.colors = ["blue", "green"]
+        cascade(df, application_style=astyle)
         with self.assertRaises(ValueError):
-            cascade(df, plat_legend_ncols="1")
-        with self.assertRaises(ValueError):
-            cascade(df, plat_legend_ncols=0)
+            astyle.colors = 1
+            cascade(df, application_style=astyle)
 
-        cascade(df, plat_legend_loc="north")
+        pstyle.colors = cmap
+        cascade(df, platform_style=pstyle)
+
+        pstyle.colors = "tab10"
+        cascade(df, platform_style=pstyle)
+
+        pstyle.colors = ["blue", "green"]
+        cascade(df, platform_style=pstyle)
+
         with self.assertRaises(ValueError):
-            cascade(df, plat_legend_loc=0)
+            pstyle.colors = 1
+            cascade(df, platform_style=pstyle)
+
+        astyle = ApplicationStyle()
+        astyle.markers = [">", "<"]
+        cascade(df, application_style=astyle)
+
         with self.assertRaises(ValueError):
-            cascade(df, plat_legend_loc="asdf")
+            astyle.markers = 1
+            cascade(df, application_style=astyle)
 
 if __name__ == "__main__":
     unittest.main()

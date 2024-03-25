@@ -83,6 +83,12 @@ def pp(df):
         if not df[eff].fillna(0).between(0, 1).all():
             raise ValueError("%s must in range [0, 1]" % eff)
 
+    # Keep only the most efficient (application, platform) results.
+    key = ["problem", "platform", "application"]
+    groups = df[key + efficiencies].groupby(key)
+    df = groups.agg(max)
+    df.reset_index(inplace=True)
+
     # Add a "did not run" value for applications that did not run
     rows = []
     combination_keys = ["problem", "platform", "application"]
