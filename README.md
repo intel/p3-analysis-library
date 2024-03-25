@@ -1,6 +1,7 @@
 # Performance, Portability and Productivity Analysis Library
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7733678.svg)](https://doi.org/10.5281/zenodo.7733678)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8310/badge)](https://www.bestpractices.dev/projects/8310)
 
 The Performance, Portability, and Productivity Analysis Library (P3 Analysis
 Library) enables a simpler workflow for the collection and interpretation of P3

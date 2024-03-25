@@ -42,3 +42,10 @@ Documentation
 
 .. _Package Reference: p3.html
 
+Contribute
+##########
+
+Contributions to the P3 Analysis Library are welcome in the form of issues and
+pull requests. Please see the `GitHub repository`_ for more information.
+
+.. _GitHub repository: https://github.com/intel/p3-analysis-library/blob/main/CONTRIBUTING.md
