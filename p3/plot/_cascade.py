@@ -18,6 +18,7 @@ import os
 from p3._utils import _require_columns, _require_numeric
 from p3.plot._common import Legend, ApplicationStyle, PlatformStyle
 from p3.plot.backend.matplotlib import CascadePlot
+from p3.plot.backend.pgfplots import CascadePGFPlot
 
 
 class _PlatformLegendHandler(matplotlib.legend_handler.HandlerBase):
@@ -306,6 +307,10 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
             "Handling multiple problems is currently not implemented."
         )
 
+    backend = kwargs["backend"]
+    if backend == "pgfplots":
+        return _cascade_tex(df, eff, **kwargs)
+
     kwargs.setdefault("platform_legend", Legend())
     plat_legend = kwargs["platform_legend"]
     plat_legend.kwargs.setdefault("ncols", 4)
@@ -417,7 +422,7 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
         loc="upper left",
         bbox_to_anchor=(1, 1),
         ncol=1,
-        **app_legend.kwargs
+        **app_legend.kwargs,
     )
 
     # Attach the platform legend to the position requested by kwargs
@@ -429,13 +434,13 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
         handles=plat_handles,
         handler_map={mpatches.Patch: legend_helper},
         handlelength=1.0,
-        **plat_legend.kwargs
+        **plat_legend.kwargs,
     )
 
     return CascadePlot(fig, axes)
 
 
-def cascade_tex(df, filename, eff=None, **kwargs):
+def _cascade_tex(df, eff=None, **kwargs):
     """
     Generate TeX file that generates a `cascade`_ using PGFPlots
     summarizing the efficiency and performance portability of each
@@ -453,9 +458,6 @@ def cascade_tex(df, filename, eff=None, **kwargs):
         The following columns are always required: "problem", "platform",
         "application". At least one of the following columns is required:
         "app eff" or "arch eff".
-
-    filename: string
-        A filename for the complete TeX file to be written to.
 
     eff: string, optional
         The efficiency value to use when plotting the cascade. Must be either
@@ -489,36 +491,6 @@ def cascade_tex(df, filename, eff=None, **kwargs):
             * - `application_style`
               - p3.plot.ApplicationStyle
               - Styling options for applications.
-
->>> REMOVE
-    **kwargs: properties, optional
-        `kwargs` are used to specify properties that control various styling
-        options (e.g. colors and markers).
-
-        .. list-table:: Properties
-            :widths: 10, 20, 18
-            :header-rows: 1
-
-            * - Property
-              - Type
-              - Description
-
-            * - `app_cmap`
-              - Colormap, string, or list
-              - Colormap for applications
-
-            * - `app_markers`
-              - list
-              - Markers for applications
-
-            * - `plat_cmap`
-              - Colormap, string, or list
-              - Colormap for platforms
-
-            * - `plat_legend_nrows`
-              - int, default: 4
-              - Number of rows for platform legend
->>> END REMOVE
 
     Raises
     ------
@@ -562,7 +534,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
     kwargs.setdefault("platform_legend", Legend())
     plat_legend = kwargs["platform_legend"]
     plat_legend.kwargs.setdefault("nrows", 4)
-    
+
     kwargs.setdefault("application_legend", Legend())
     app_legend = kwargs["application_legend"]
 
@@ -658,7 +630,7 @@ def cascade_tex(df, filename, eff=None, **kwargs):
     # NOTE: This is different to matplotlib because PGF plots uses columns,
     #       and then transposes (so columns become rows)
     plat_legend_nrows = plat_legend.kwargs["nrows"]
-    
+
     plotylabel = ""
     if eff_column == "app eff":
         plotylabel = "Application Efficiency"
@@ -719,20 +691,22 @@ def cascade_tex(df, filename, eff=None, **kwargs):
     template = latex_jinja_env.get_template("template.tex")
 
     # Render the template using the parameters generated above to a file
-    template.stream(
-        plottitle="",
-        plotheight="200pt",
-        plotwidth="200pt",
-        applicationcount=len(applications),
-        platformcount=len(platforms),
-        plotylabel=plotylabel,
-        plat_colors=plat_colors_rgb,
-        app_colors=app_colors_rgb,
-        app_line_specs=app_line_specs,
-        plot_effs=plot_effs,
-        applications=", ".join(pp["application"]),
-        pp_bars=pp_bars,
-        plat_plot=plat_plot,
-        plat_labels=plat_labels,
-        plat_legend_nrows=plat_legend_nrows,
-    ).dump(filename)
+    return CascadePGFPlot(
+        template.stream(
+            plottitle="",
+            plotheight="200pt",
+            plotwidth="200pt",
+            applicationcount=len(applications),
+            platformcount=len(platforms),
+            plotylabel=plotylabel,
+            plat_colors=plat_colors_rgb,
+            app_colors=app_colors_rgb,
+            app_line_specs=app_line_specs,
+            plot_effs=plot_effs,
+            applications=", ".join(pp["application"]),
+            pp_bars=pp_bars,
+            plat_plot=plat_plot,
+            plat_labels=plat_labels,
+            plat_legend_nrows=plat_legend_nrows,
+        )
+    )
