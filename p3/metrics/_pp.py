@@ -86,7 +86,7 @@ def pp(df):
     # Keep only the most efficient (application, platform) results.
     key = ["problem", "platform", "application"]
     groups = df[key + efficiencies].groupby(key)
-    df = groups.agg(max)
+    df = groups.agg("max")
     df.reset_index(inplace=True)
 
     # Add a "did not run" value for applications that did not run
