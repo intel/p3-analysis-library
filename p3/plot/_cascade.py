@@ -90,9 +90,9 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
 
     kwargs.setdefault("backend", "matplotlib")
     backend = kwargs["backend"]
-    if backend == "pgfplots":
-        return PGFCascadePlot(df, eff, **kwargs)
-    elif backend == "matplotlib":
+    if backend == "matplotlib":
         return MPLCascadePlot(df, eff, size, **kwargs)
+    elif backend == "pgfplots":
+        return PGFCascadePlot(df, eff, **kwargs)
     else:
         raise ValueError("'backend' must be 'matplotlib' or 'pgfplots'")

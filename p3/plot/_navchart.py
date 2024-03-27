@@ -3,6 +3,7 @@
 
 from p3._utils import _require_columns, _require_numeric
 from p3.plot.backend.matplotlib import NavChart as MPLNavChart
+from p3.plot.backend.pgfplots import NavChart as PGFNavChart
 
 
 def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
@@ -92,5 +93,7 @@ def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
     backend = kwargs["backend"]
     if backend == "matplotlib":
         return MPLNavChart(pp, cd, eff, size, goal, **kwargs)
+    elif backend == "pgfplots":
+        return PGFNavChart(pp, cd, eff, **kwargs)
     else:
-        raise ValueError("'backend' must be 'matplotlib'")
+        raise ValueError("'backend' must be 'matplotlib' or 'pgfplots'")

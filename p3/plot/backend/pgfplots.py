@@ -10,10 +10,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import p3.metrics
 import string
+import pandas as pd
 import jinja2
 import os
 
-from . import CascadePlot
+from . import CascadePlot, NavChart
 from p3._utils import _require_numeric
 from p3.plot._common import Legend, ApplicationStyle, PlatformStyle
 
@@ -286,12 +287,12 @@ class CascadePlot(CascadePlot):
             trim_blocks=True,
             autoescape=True,
             loader=jinja2.FileSystemLoader(
-                os.path.dirname(p3.__file__) + "/plot/"
+                os.path.dirname(p3.__file__) + "/plot/backend/pgftemplates/"
             ),
         )
 
         # Load the template.tex file
-        template = latex_jinja_env.get_template("template.tex")
+        template = latex_jinja_env.get_template("cascade.tex")
 
         # Render the template using the parameters generated above to a file
         self.stream = template.stream(
@@ -311,6 +312,182 @@ class CascadePlot(CascadePlot):
             plat_labels=plat_labels,
             plat_legend_nrows=plat_legend_nrows,
         )
+
+    def save(self, filename):
+        """
+        Save the plot to the specified file.
+
+        Parameters
+        ----------
+        filename: string
+        """
+        self.stream.dump(filename)
+
+
+class NavChart(NavChart):
+    """
+    Navigation chart object for :py:mod:`matplotlib`.
+    """
+
+    def __init__(self, pp, cd, eff=None, stream=None, **kwargs):
+        super().__init__("pgfplots")
+
+        # Define 19 default markers for LaTeX plots
+        default_markers = [
+            "*, mark options={style={solid}}",
+            "*, mark options={style={solid}, scale=1.5}",
+            "triangle*, mark options={style={solid}, scale=1.5, rotate=180}",
+            "triangle*, mark options={style={solid}, scale=1.5}",
+            "triangle*, mark options={style={solid}, scale=1.5, rotate=90}",
+            "triangle*, mark options={style={solid}, scale=1.5, rotate=270}",
+            "pentagon*, mark options={style={solid}, scale=1.5}",
+            "square*, mark options={style={solid}, scale=1.5}",
+            "diamond*, mark options={style={solid}, scale=1.5}",
+            "o, mark options={style={solid}, scale=1.5}",
+            "square, mark options={style={solid}, scale=1.5}",
+            "triangle, mark options={style={solid}, scale=1.5}",
+            "diamond, mark options={style={solid}, scale=1.5}",
+            "pentagon, mark options={style={solid}, scale=1.5}",
+            "oplus, mark options={style={solid}, scale=1.5}",
+            "otimes, mark options={style={solid}, scale=1.5}",
+            "star, mark options={style={solid}, scale=1.5}",
+            "x, mark options={style={solid}, scale=1.5}",
+            "+, mark options={style={solid}, scale=1.5}",
+        ]
+
+        # Set up a default Legend, but no customisation is available yet
+        kwargs.setdefault("legend", Legend())
+        # legend = kwargs["legend"]
+
+        kwargs.setdefault("style", ApplicationStyle())
+        style = kwargs["style"]
+        if not style.colors:
+            style.colors = getattr(plt.cm, "tab10")
+        if not style.markers:
+            style.markers = default_markers
+
+        # Choose the PP column based on eff parameter and available columns
+        pp_columns = []
+        for column in ["app pp", "arch pp"]:
+            if column in pp:
+                pp_columns.append(column)
+        if len(pp_columns) == 0:
+            msg = "DataFrame does not contain an 'app pp' or 'arch pp' column."
+            raise ValueError(msg)
+
+        if eff is None:
+            pp_column = pp_columns[0]
+        else:
+            if eff not in ["app", "arch"]:
+                raise ValueError("'eff' must be 'app' or 'arch'.")
+            pp_column = eff + " eff"
+            if pp_column not in pp:
+                msg = "DataFrame does not contain an '%s' column."
+                raise ValueError(msg % (pp_column))
+        _require_numeric(pp, [pp_column])
+
+        ppcd = pd.merge(pp, cd, on=["problem", "application"], how="inner")
+
+        applications = ppcd["application"].unique()
+
+        # create a mapping between applicaiton names and TeX friendly names
+        # (without spaces and punctuation)
+        map_tab = str.maketrans("", "", " !\"#$%&'()*+, -./\\:;<=>?@[]^_`{|}~")
+        app_to_tex_name = {
+            app: tex
+            for app, tex in zip(
+                applications,
+                [
+                    str(app_name).translate(map_tab)
+                    for app_name in applications
+                ],
+            )
+        }
+
+        # Choose colors for each application and then convert the dictionary to
+        # TeX friendly names and RGB colors
+        app_colors = self.__get_colors(applications, style.colors)
+        app_colors_rgb = {}
+        for k in app_colors:
+            app_colors_rgb[app_to_tex_name[k]] = str(
+                matplotlib.colors.to_rgb(app_colors[k])
+            ).strip("()")
+
+        markers = style.markers
+        if not isinstance(markers, (list, tuple)):
+            raise ValueError("Unsupported type provided for app_markers")
+
+        # build a dictionary of app line specifications for TeX
+        app_mark_specs = dict(zip(applications, markers))
+
+        plotylabel = ""
+        if pp_column == "app pp":
+            plotylabel = "Performance Portability (App. Eff.)"
+        elif pp_column == "arch pp":
+            plotylabel = "Performance Portability (Arch. Eff.)"
+
+        # Build a dictionary with "application name, marker"
+        # Build a dictionary with "application name, coords"
+        app_coords = {}
+        for index, row in ppcd.iterrows():
+            app_name = row["application"]
+            app_pp = row[pp_column]
+            convergence = 1 - row["divergence"]
+            app_coords[app_name] = f"({convergence}, {app_pp})"
+
+        """print("COORDS")
+        print(app_coords)
+        print("MARK SPECS")
+        print(app_mark_specs)
+        print("COLORS")
+        print(app_colors_rgb)"""
+
+        # Build a jinja environment that can parse the TeX template
+        latex_jinja_env = jinja2.Environment(
+            block_start_string=r"\BLOCK{",
+            block_end_string="}",
+            variable_start_string=r"\VAR{",
+            variable_end_string="}",
+            comment_start_string=r"\#{",
+            comment_end_string="}",
+            line_statement_prefix="%-",
+            line_comment_prefix="%#",
+            trim_blocks=True,
+            autoescape=True,
+            loader=jinja2.FileSystemLoader(
+                os.path.dirname(p3.__file__) + "/plot/backend/pgftemplates/"
+            ),
+        )
+
+        # Load the template.tex file
+        template = latex_jinja_env.get_template("navchart.tex")
+
+        self.stream = template.stream(
+            plotheight="200pt",
+            plotwidth="200pt",
+            plotylabel=plotylabel,
+            applications=app_to_tex_name,
+            app_colors=app_colors_rgb,
+            app_mark_specs=app_mark_specs,
+            app_coords=app_coords,
+        )
+
+    def __get_colors(self, applications, kwarg):
+        """
+        Assign a color to each application based on supplied kwarg.
+        """
+        if isinstance(kwarg, str):
+            cmap = getattr(plt.cm, kwarg)
+        elif isinstance(kwarg, list):
+            cmap = matplotlib.colors.ListedColormap(kwarg)
+        elif isinstance(kwarg, matplotlib.colors.Colormap):
+            cmap = kwarg
+        else:
+            raise ValueError("Unsupported type provided for colormap.")
+
+        cmap = cmap.resampled(len(applications))
+        colors = cmap(np.linspace(0, 1, len(applications)))
+        return {app: color for app, color in zip(applications, colors)}
 
     def save(self, filename):
         """
