@@ -27,6 +27,7 @@ dependencies = [
   "pandas",
   "matplotlib>=3.6.3",
   "jsonschema",
+  "jinja2"
 ]
 
 [project.optional-dependencies]
