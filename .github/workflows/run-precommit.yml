@@ -3,12 +3,8 @@ name: Run pre-commit hooks
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'p3/**'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'p3/**'
 
 jobs:
   pre-commit:
