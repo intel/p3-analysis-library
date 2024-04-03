@@ -10,7 +10,7 @@ jobs:
   pre-commit:
     strategy:
       matrix:
-        py_version: ["3.8", "3.9", "3.10"]
+        py_version: ["3.9", "3.10"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
