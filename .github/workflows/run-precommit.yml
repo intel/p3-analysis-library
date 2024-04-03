@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v5
-        name: Install Python 3.10
+        name: Install Python v${{ matrix.py_version }}
         with:
           python-version: ${{ matrix.py_version }}
           cache: 'pip'
