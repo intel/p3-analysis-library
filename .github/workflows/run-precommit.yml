@@ -1,4 +1,4 @@
-name: Format with black and lint with Flake8
+name: Run pre-commit hooks
 
 on:
   push:
@@ -26,5 +26,7 @@ jobs:
       - uses: pre-commit/action@v3.0.1
         name: Configure and run pre-commit on changed files
         with:
+          # the intention with this is to run pre-commit only
+          # on the diff submitted with this PR
           extra_args: --color=always --from-ref ${{ github.event.pull_request.base.sha }} --to-ref ${{ github.event.pull_request.head.sha }}
 permissions: read-all
