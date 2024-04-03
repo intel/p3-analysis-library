@@ -43,20 +43,3 @@ include = ["p3*"]
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"]}
 version = {attr = "p3.__version__"}
-
-[tool.flake8]
-max-line-length = 79
-ignore = ["E203", "W503"]
-exclude = [
-  "docs/source/conf.py",
-  "examples",
-  "case-studies",
-  "tests"
-]
-per-file-ignores = [
-  "p3/__init__.py:F401",
-]
-
-[tool.black]
-line-length = 79
-extend-exclude = "docs|examples|case-studies|tests"
