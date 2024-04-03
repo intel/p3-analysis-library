@@ -2,13 +2,14 @@
 # SPDX-License-Identifier: MIT
 
 import collections
-import p3.metrics
-import p3.plot
-import matplotlib.pyplot as plt
 import os
 
-from p3.metrics._divergence import _coverage_string_to_json
+import matplotlib.pyplot as plt
+
+import p3.metrics
+import p3.plot
 from p3._utils import _require_columns
+from p3.metrics._divergence import _coverage_string_to_json
 
 
 def _tmpdir(prefix):
@@ -17,7 +18,7 @@ def _tmpdir(prefix):
     """
     suffix = 0
     while True:
-        name = "{0}{1:0>3}".format(prefix, suffix)
+        name = f"{prefix}{suffix:0>3}"
         if not os.path.exists(name):
             break
         suffix += 1
@@ -47,7 +48,7 @@ def _sort_by_app_order(df, app_order):
 
     order = df.join(sort_index).sort_values(by=["sort_index"]).index
     df = df.loc[order]
-    df.reset_index(inplace=True, drop=True)
+    df.reset_index(inplace=True, drop=True)  # add style change
     return df
 
 
@@ -101,13 +102,14 @@ def snapshot(df, cov, directory=None):
         If the directory specified by `directory` already exists.
     """
     _require_columns(
-        df, ["problem", "platform", "application", "coverage_key"]
+        df,
+        ["problem", "platform", "application", "coverage_key"],
     )
     _require_columns(cov, ["coverage_key", "coverage"])
 
     if len(df["problem"].unique()) > 1:
         raise NotImplementedError(
-            "Handling multiple problems is currently not implemented."
+            "Handling multiple problems is currently not implemented.",
         )
 
     cwd = os.getcwd()
@@ -134,7 +136,9 @@ def snapshot(df, cov, directory=None):
 
     # Limit the plots to the latest results
     snap = effs.drop_duplicates(
-        ["platform", "application"], keep="last", ignore_index=True
+        ["platform", "application"],
+        keep="last",
+        ignore_index=True,
     ).dropna()
     snap = _sort_by_app_order(snap, app_order)
 
@@ -160,7 +164,9 @@ def snapshot(df, cov, directory=None):
     p3df = df.join(cov.set_index("coverage_key"), on="coverage_key")
     p3df["coverage"] = p3df["coverage"].apply(_coverage_string_to_json)
     p3df = p3df.drop_duplicates(
-        ["platform", "application"], keep="last", ignore_index=True
+        ["platform", "application"],
+        keep="last",
+        ignore_index=True,
     ).dropna()
 
     # This function is defined inline so that it can access the platform name.
@@ -185,7 +191,7 @@ def snapshot(df, cov, directory=None):
         return setmap
 
     groups = p3df[["problem", "application", "coverage"]].groupby(
-        ["problem", "application"]
+        ["problem", "application"],
     )
     setmaps = groups.agg(coverage_to_setmap)
     setmaps.reset_index(inplace=True)
@@ -200,11 +206,11 @@ td,th{padding-left:10px;padding-right:10px}body{margin:24px}html{font-family:'Gi
     html += ["<html>"]
     html += ['<meta charset="UTF-8">']
     html += [
-        '<meta name="viewport" content="width=device-width, initial-scale=1.0">'  # noqa: E501
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0">',  # noqa: E501
     ]
     html += ['<meta http-equiv="X-UA-Compatible" content="ie=edge">']
     html += [
-        "<title>Performance, Portability & Productivity (P3) Snapshot</title>"
+        "<title>Performance, Portability & Productivity (P3) Snapshot</title>",
     ]
     html += [f"<style>{css}</style>"]
 
@@ -232,7 +238,7 @@ td,th{padding-left:10px;padding-right:10px}body{margin:24px}html{font-family:'Gi
                 </figcaption>
             </figure>
         </div>
-    </section>"""
+    </section>""",
     ]
 
     html += ["<section>"]
@@ -244,7 +250,7 @@ td,th{padding-left:10px;padding-right:10px}body{margin:24px}html{font-family:'Gi
                 <th>Application</th>
                 <th>Platform Set</th>
                 <th>LOC</th>
-            </tr>"""
+            </tr>""",
     ]
     for index, row in setmaps.iterrows():
         application = row["application"]
@@ -252,7 +258,7 @@ td,th{padding-left:10px;padding-right:10px}body{margin:24px}html{font-family:'Gi
             pstring = "{" + ", ".join(platforms) + "}"
             html += ["<tr>"]
             html += [
-                f"<td>{application}</td><td>{pstring}</td><td>{lines}</td>"
+                f"<td>{application}</td><td>{pstring}</td><td>{lines}</td>",
             ]
             html += ["</tr>"]
     html += ["</table>"]
