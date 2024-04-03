@@ -10,6 +10,8 @@ import os
 from p3.metrics._divergence import _coverage_string_to_json
 from p3._utils import _require_columns
 
+import importlib  # add unused import
+
 
 def _tmpdir(prefix):
     """
@@ -47,7 +49,7 @@ def _sort_by_app_order(df, app_order):
 
     order = df.join(sort_index).sort_values(by=["sort_index"]).index
     df = df.loc[order]
-    df.reset_index(inplace=True, drop=True)
+    df.reset_index(inplace=True, drop=True)  # add style change
     return df
 
 
@@ -100,9 +102,7 @@ def snapshot(df, cov, directory=None):
     FileExistsError
         If the directory specified by `directory` already exists.
     """
-    _require_columns(
-        df, ["problem", "platform", "application", "coverage_key"]
-    )
+    _require_columns(df, ["problem", "platform", "application", "coverage_key"])
     _require_columns(cov, ["coverage_key", "coverage"])
 
     if len(df["problem"].unique()) > 1:
@@ -203,9 +203,7 @@ td,th{padding-left:10px;padding-right:10px}body{margin:24px}html{font-family:'Gi
         '<meta name="viewport" content="width=device-width, initial-scale=1.0">'  # noqa: E501
     ]
     html += ['<meta http-equiv="X-UA-Compatible" content="ie=edge">']
-    html += [
-        "<title>Performance, Portability & Productivity (P3) Snapshot</title>"
-    ]
+    html += ["<title>Performance, Portability & Productivity (P3) Snapshot</title>"]
     html += [f"<style>{css}</style>"]
 
     # now start working on the material
@@ -251,9 +249,7 @@ td,th{padding-left:10px;padding-right:10px}body{margin:24px}html{font-family:'Gi
         for platforms, lines in row["setmap"].items():
             pstring = "{" + ", ".join(platforms) + "}"
             html += ["<tr>"]
-            html += [
-                f"<td>{application}</td><td>{pstring}</td><td>{lines}</td>"
-            ]
+            html += [f"<td>{application}</td><td>{pstring}</td><td>{lines}</td>"]
             html += ["</tr>"]
     html += ["</table>"]
     html += ["</body>"]
