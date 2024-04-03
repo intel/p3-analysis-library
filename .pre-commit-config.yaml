@@ -56,7 +56,7 @@ repos:
           ]
         args:
           [
-            "--extend-ignore=S105,E203,W503",
+            "--extend-ignore=S105,E203,W503,E701",
             "--per-file-ignores=__init__.py:F401",
           ]
         exclude: 'docs/source/conf.py|examples|case-studies|tests'
