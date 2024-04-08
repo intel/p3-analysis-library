@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: MIT
 
 from p3._utils import _require_columns, _require_numeric
-from p3.plot.backend.matplotlib import NavChart as MPLNavChart
 
 
 def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
@@ -91,6 +90,10 @@ def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
     kwargs.setdefault("backend", "matplotlib")
     backend = kwargs["backend"]
     if backend == "matplotlib":
-        return MPLNavChart(pp, cd, eff, size, goal, **kwargs)
+        from p3.plot.backend.matplotlib import NavChart
+
+        return NavChart(pp, cd, eff, size, goal, **kwargs)
     else:
-        raise ValueError("'backend' must be 'matplotlib'")
+        raise ValueError(
+            "'backend' must be one of the supported backends: 'matplotlib'",
+        )

@@ -324,7 +324,8 @@ class CascadePlot(CascadePlot):
             return self.axes[0][1]
         if subplot == "plat":
             return self.axes[1][0]
-        raise ValueError("Unrecognized subplot name: '%s'" % subplot)  # noqa
+        msg = "Unrecognized subplot name: '%s'"
+        raise ValueError(msg % (subplot))
 
     def __efficiency_cascade(self, ax, df, eff_column, colors, markers):
         """

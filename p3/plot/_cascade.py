@@ -7,7 +7,6 @@
 # SPDX-License-Identifier: MIT
 
 from p3._utils import _require_columns
-from p3.plot.backend.matplotlib import CascadePlot as MPLCascadePlot
 
 
 def cascade(df, eff=None, size=(6, 5), **kwargs):
@@ -90,6 +89,10 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
     kwargs.setdefault("backend", "matplotlib")
     backend = kwargs["backend"]
     if backend == "matplotlib":
-        return MPLCascadePlot(df, eff, size, **kwargs)
+        from p3.plot.backend.matplotlib import CascadePlot
+
+        return CascadePlot(df, eff, size, **kwargs)
     else:
-        raise ValueError("'backend' must be 'matplotlib'")
+        raise ValueError(
+            "'backend' must be one of the supported backends: 'matplotlib'",
+        )
