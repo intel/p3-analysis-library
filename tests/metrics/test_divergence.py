@@ -13,7 +13,7 @@ class TestDivergence(unittest.TestCase):
     """
 
     def test_required_columns(self):
-        """p3.data.divergence.required_columns"""
+        """Check that divergence() validates required columns."""
         df = pd.DataFrame()
         cov = pd.DataFrame()
 
@@ -21,7 +21,7 @@ class TestDivergence(unittest.TestCase):
             divergence(df, cov)
 
     def test_side_effects(self):
-        """p3.data.divergence.side_effects"""
+        """Check that divergence() has no side effects."""
         key = 0
         data = {
             "problem": ["test"] * 2,
@@ -33,10 +33,9 @@ class TestDivergence(unittest.TestCase):
         json_string = json.dumps(
             [
                 {
-                    "file": "0",
-                    "regions": [
-                        [0, 1, 1],
-                    ],
+                    "file": "file.cpp",
+                    "id": "0",
+                    "lines": [0],
                 }
             ]
         )
@@ -54,7 +53,7 @@ class TestDivergence(unittest.TestCase):
         pd.testing.assert_frame_equal(cov_before, cov_after)
 
     def test_divergence(self):
-        """p3.data.divergence"""
+        """Check that divergence() produces expected results for valid data."""
         data = {
             "problem": ["test"] * 2,
             "platform": ["A", "B"],
@@ -66,10 +65,9 @@ class TestDivergence(unittest.TestCase):
         source1_json_string = json.dumps(
             [
                 {
-                    "file": "0",
-                    "regions": [
-                        [0, 10, 10],
-                    ],
+                    "file": "foo.cpp",
+                    "id": "0",
+                    "lines": [[0, 9]],
                 }
             ]
         )
@@ -77,16 +75,14 @@ class TestDivergence(unittest.TestCase):
         source2_json_string = json.dumps(
             [
                 {
-                    "file": "0",
-                    "regions": [
-                        [0, 10, 10],
-                    ],
+                    "file": "foo.cpp",
+                    "id": "0",
+                    "lines": [[0, 9]],
                 },
                 {
-                    "file": "1",
-                    "regions": [
-                        [0, 10, 10],
-                    ],
+                    "file": "bar.cpp",
+                    "id": "1",
+                    "lines": [[0, 9]],
                 },
             ]
         )
@@ -110,7 +106,7 @@ class TestDivergence(unittest.TestCase):
         pd.testing.assert_frame_equal(result, expected_result)
 
     def test_divergence_single(self):
-        """p3.data.divergence.single"""
+        """Check that divergence() does not fail with only one platform."""
         key = 0
         data = {
             "problem": ["test"],
@@ -123,10 +119,9 @@ class TestDivergence(unittest.TestCase):
         json_string = json.dumps(
             [
                 {
-                    "file": "0",
-                    "regions": [
-                        [0, 1, 1],
-                    ],
+                    "file": "file.cpp",
+                    "id": "0",
+                    "lines": [0],
                 }
             ]
         )
@@ -142,6 +137,57 @@ class TestDivergence(unittest.TestCase):
         expected_df = pd.DataFrame(expected_data)
 
         pd.testing.assert_frame_equal(result, expected_df)
+
+    def test_divergence_duplicate(self):
+        """Check that divergence() uses both file and id for uniqueness."""
+        data = {
+            "problem": ["test"] * 2,
+            "platform": ["A", "B"],
+            "application": ["latest"] * 2,
+            "coverage_key": ["source1", "source2"],
+        }
+        df = pd.DataFrame(data)
+
+        # First file called "foo.cpp" has an id of "0".
+        source1_json_string = json.dumps(
+            [
+                {
+                    "file": "foo.cpp",
+                    "id": "0",
+                    "lines": [[0, 9]],
+                }
+            ]
+        )
+
+        # Second file called "foo.cpp" has a different id ("1").
+        # It should therefore be recognized as a different file.
+        source2_json_string = json.dumps(
+            [
+                {
+                    "file": "foo.cpp",
+                    "id": "1",
+                    "lines": [[0, 9]],
+                },
+            ]
+        )
+
+        cov = pd.DataFrame(
+            {
+                "coverage_key": ["source1", "source2"],
+                "coverage": [source1_json_string, source2_json_string],
+            }
+        )
+
+        result = divergence(df, cov)
+
+        expected_data = {
+            "problem": ["test"],
+            "application": ["latest"],
+            "divergence": [1.0],
+        }
+        expected_result = pd.DataFrame(expected_data)
+
+        pd.testing.assert_frame_equal(result, expected_result)
 
 
 if __name__ == "__main__":
