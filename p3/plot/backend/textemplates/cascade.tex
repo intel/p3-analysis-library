@@ -1,0 +1,145 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+
+\usepgfplotslibrary{colormaps}
+
+\pgfplotsset{compat=1.9}
+\usetikzlibrary{pgfplots.groupplots}
+
+\begin{document}
+\begin{tikzpicture}
+    % Set the size of the main (NW) plot, all other sizes are calculated accordingly
+    \newcommand{\plotheight}{\VAR{plotheight}}
+    \newcommand{\plotwidth}{\VAR{plotwidth}}
+
+    \newcommand{\ymax}{1.1}
+
+    % Parameters for the data
+    \newcommand{\applicationcount}{\VAR{applicationcount}}
+    \newcommand{\platformcount}{\VAR{platformcount}}
+
+    % Application Efficiency or Architectural Efficiency?
+    \newcommand{\plottitle}{\VAR{plottitle}} % This can be set to title the plot
+    \newcommand{\plotylabel}{\VAR{plotylabel}}
+
+    %%% Define colors for applications
+    \BLOCK{for key, value in app_colors.items()}\definecolor{\VAR{key}}{rgb}{\VAR{value}}
+    \BLOCK{endfor}
+
+    %%% Define colors for platforms
+    \BLOCK{for key, value in plat_colors.items()}\definecolor{\VAR{key}}{rgb}{\VAR{value}}
+    \BLOCK{endfor}
+
+    % Macros used to calculate various macros based on the parameters above
+    % macro is used to plot the platform plot
+    \pgfmathtruncatemacro\platformcountplusone{\platformcount + 1}
+    % sets the height of the platform ordering plot
+    \pgfmathsetlengthmacro\platorderheight{(15 * \applicationcount) + 10}
+    % sets the width of platform boxes
+    \pgfmathsetlengthmacro\platboxwidth{(\plotwidth - 20) / (\platformcount + 2)}
+    % sets the width of the performance portability bars
+    \pgfmathsetlengthmacro\ppwidth{20 * \applicationcount}
+    % position the platforms legend at the halfway point
+    \pgfmathsetmacro\platlegmid{(\platformcount + 1) / 2}
+
+    %%% Set up a style for the platforms box
+    \tikzset{platform/.style={black,draw=black,shape=rectangle,minimum width=\platboxwidth, minimum height=15pt}}
+
+    %%% Set up a style for the platforms legend
+    \pgfplotsset{/pgfplots/platform legend/.style={legend image code/.code={ \node [draw, black,fill=#1,shape=rectangle, minimum size=1.5em] { #1 }; } } }
+
+    %%%% Begin plotting the plot itself
+    \begin{groupplot}[
+            group style={group size=2 by 2, vertical sep=0cm, horizontal sep=2mm},
+            scaled ticks=false,
+            yticklabel style={
+                /pgf/number format/fixed,
+            },
+        ]
+
+        %%%% Plot the line graph
+        \nextgroupplot[
+            title=\plottitle,
+            width=\plotwidth,
+            height=\plotheight,
+            scale only axis,
+            grid=both,
+            grid style={line width=.1pt, draw=gray!10},
+            major grid style={line width=.2pt,draw=gray!50},
+            xtick={1,...,\platformcount},
+            ylabel=\plotylabel,
+            xmajorticks=false,
+            yminorticks=true,
+            minor y tick num={4},
+            enlarge x limits,
+            xmin=0,
+            xmax=\platformcountplusone,
+            ymin=0,
+            ymax=\ymax,
+            legend style={at={(1.05,-0.05)}, anchor=north west, legend columns=1},
+            legend cell align={left}
+        ]
+
+        \BLOCK{for key, value in plot_effs.items()}\addplot[\VAR{app_line_specs[key]}] coordinates {
+            \BLOCK{for e in value}\VAR{e}
+            \BLOCK{endfor}};
+        \addlegendentry{\VAR{key}}
+        \BLOCK{endfor}
+
+        %%%% Plot the PP graph
+        \nextgroupplot[
+            width=\ppwidth,
+            height=\plotheight,
+            scale only axis,
+            bar width=10pt,
+            grid=both,
+            grid style={line width=.1pt, draw=gray!10},
+            major grid style={line width=.2pt,draw=gray!50},
+            yminorticks=true,
+            minor y tick num={4},
+            xmajorticks=false,
+            xmajorgrids=false,
+            ylabel={Performance Portability},
+            ylabel style={rotate=-180},
+            yticklabel pos=right,
+            xtick=data,
+            symbolic x coords={\VAR{applications}},
+            ymin=0,
+            ymax=\ymax,
+            enlarge x limits={abs=10pt}
+        ]
+
+        \BLOCK{for key, value in pp_bars.items()}\addplot+[ybar, \VAR{app_line_specs[key]}] coordinates { \VAR{value} };
+        \BLOCK{endfor}
+
+        %%%% Plot the platform ordering
+        \nextgroupplot[
+            width=\plotwidth,
+            height=\platorderheight,
+            scale only axis,
+            ymajorticks=false,
+            yminorticks=false,
+            xlabel={Platforms},
+            xtick align=outside,
+            xtick={1,...,\platformcount},
+            samples at={0,\platformcountplusone},
+            legend entries={},
+            enlarge y limits={abs=10pt},
+            legend style={at={(axis cs:\platlegmid,-2.8)}, anchor=north, legend columns=\VAR{plat_legend_nrows}, transpose legend=true},
+            legend cell align={left}
+        ]
+
+        \BLOCK{for key, value in plat_plot.items()}\addplot+[forget plot, \VAR{app_line_specs[key]}] {\VAR{loop.revindex0}}
+        \BLOCK{for plat in value}node [pos=\VAR{loop.index}/\platformcountplusone,platform,fill=\VAR{plat}] {\VAR{plat}}
+        \BLOCK{endfor};
+        \BLOCK{endfor}
+
+        %%% Build the platform key
+        \BLOCK{for key, value in plat_labels.items()}\addlegendimage{platform legend={ \VAR{value} }} \addlegendentry{\VAR{key}}
+        \BLOCK{endfor}
+
+    \end{groupplot}
+
+\end{tikzpicture}
+
+\end{document}

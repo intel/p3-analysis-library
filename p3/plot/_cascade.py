@@ -9,7 +9,7 @@
 from p3._utils import _require_columns
 
 
-def cascade(df, eff=None, size=(6, 5), **kwargs):
+def cascade(df, eff=None, **kwargs):
     """
     Plot a `cascade`_ summarizing the efficiency and performance
     portability of each application in a DataFrame, highlighting
@@ -33,12 +33,9 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
         "app" or "arch". If no value is provided, the efficiency is selected
         automatically based on the data available in `df`.
 
-    size: 2-tuple of floats, default: (6, 5)
-        The size of the plot, in backend-specific units.
-
     **kwargs: properties, optional
         `kwargs` are used to specify properties that control various styling
-        options (e.g. colors and markers).
+        options (e.g. size, colors and markers).
 
         .. list-table:: Properties
             :widths: 10, 20, 18
@@ -47,6 +44,10 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
             * - Property
               - Type
               - Description
+
+            * - `size`
+              -  2-tuple of floats, default: (6, 5)
+              -  The size of the plot, in backend-specific units.
 
             * - `platform_legend`
               - p3.plot.Legend
@@ -91,8 +92,13 @@ def cascade(df, eff=None, size=(6, 5), **kwargs):
     if backend == "matplotlib":
         from p3.plot.backend.matplotlib import CascadePlot
 
-        return CascadePlot(df, eff, size, **kwargs)
+        return CascadePlot(df, eff, **kwargs)
+    elif backend == "pgfplots":
+        from p3.plot.backend.pgfplots import CascadePlot
+
+        return CascadePlot(df, eff, **kwargs)
     else:
         raise ValueError(
-            "'backend' must be one of the supported backends: 'matplotlib'",
+            "'backend' must be one of the supported backends: ",
+            "'matplotlib', 'pgfplots'",
         )

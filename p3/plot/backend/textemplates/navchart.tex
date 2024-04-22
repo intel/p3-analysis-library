@@ -1,0 +1,95 @@
+\documentclass{standalone}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}
+    % Set the size of the plot
+    \newcommand{\plotheight}{\VAR{plotheight}}
+    \newcommand{\plotwidth}{\VAR{plotwidth}}
+
+    % Application Efficiency or Architectural Efficiency?
+    \newcommand{\plotylabel}{\VAR{plotylabel}}
+
+    %%% Define colors for applications
+    \BLOCK{for key, value in app_colors.items()}\definecolor{\VAR{key}}{rgb}{\VAR{value}}
+    \BLOCK{endfor}
+
+    %%% Plot the space first, for the arrows to have reference points
+    \begin{axis}
+        [
+            xticklabel style={/pgf/number format/.cd, fixed, fixed zerofill, precision=1},
+            yticklabel style={/pgf/number format/.cd, fixed, fixed zerofill, precision=1},
+            width=\plotwidth,
+            height=\plotheight,
+            name=NavChart,
+            xlabel={Code Convergence},
+            ylabel=\plotylabel,
+            xmin=0,
+            xmax=1,
+            ymin=0,
+            ymax=1,
+            xmajorgrids=true,
+            ymajorgrids=true,
+            grid style={dashed,gray},
+        ]
+    \end{axis}
+
+    %%% Plot the guide arrows around the plot
+
+    % Specialization Arrow
+    \begin{scope}[transparency group, opacity=0.5]
+        \draw [violet, line width=1em, -{Triangle[width=1.5em,length=1em]}] ([yshift=1em]NavChart.north) -- ([yshift=1em]NavChart.north west) ;
+    \end{scope}
+    \draw [draw opacity=0.0] ([yshift=1em]NavChart.north) -- ([yshift=1em]NavChart.north west) node [midway, color=black, font=\scriptsize] {Specialization} ;
+
+    % Abstraction Arrow
+    \begin{scope}[transparency group, opacity=0.5]
+        \draw [blue, line width=1em, -{Triangle[width=1.5em,length=1em]}] ([yshift=1em]NavChart.north) -- ([yshift=1em]NavChart.north east) ;
+    \end{scope}
+    \draw [draw opacity=0.0] ([yshift=1em]NavChart.north) -- ([yshift=1em]NavChart.north east) node [midway, color=black, font=\scriptsize] {Abstraction} ;
+
+    % Regression Arrow
+    \begin{scope}[transparency group, opacity=0.5]
+        \draw [pink, line width=1em, -{Triangle[width=1.5em,length=1em]}] ([xshift=1em]NavChart.east) -- ([xshift=1em]NavChart.south east) ;
+    \end{scope}
+    \draw [draw opacity=0.0] ([xshift=1em]NavChart.east) -- ([xshift=1em]NavChart.south east) node [midway, rotate=90, color=black, font=\scriptsize] {Regression} ;
+
+    % Optimization Arrow
+    \begin{scope}[transparency group, opacity=0.5]
+        \draw [ForestGreen, line width=1em, -{Triangle[width=1.5em,length=1em]}] ([xshift=1em]NavChart.east) -- ([xshift=1em]NavChart.north east) ;
+    \end{scope}
+    \draw [draw opacity=0.0] ([xshift=1em]NavChart.east) -- ([xshift=1em]NavChart.north east) node [midway, rotate=90, color=black, font=\scriptsize] {Optimization} ;
+
+    % Unportable Line
+    \begin{scope}[transparency group, opacity=0.3]
+        \draw [red, line width=0.5em] ([xshift=-0.3em]NavChart.south west) -- ([xshift=0.3em]NavChart.south east) ;
+    \end{scope}
+    \draw [draw opacity=0.0] (NavChart.south west) -- (NavChart.south east) node [midway, color=black, yshift=0.5em, font=\scriptsize] {Unportable} ;
+
+    % Plot each variant on the plot in a separate axis on top of the previous axis.
+    \begin{axis}
+        [
+            xmin=0,
+            xmax=1,
+            ymin=0,
+            ymax=1,
+            ticks=none,
+            width=\plotwidth,
+            height=\plotheight,
+            legend style={at={(0.5,-0.2)},anchor=north},
+            legend cell align={left}
+        ]
+
+        \BLOCK{for key, value in applications.items()}\addplot+ [semithick, \VAR{value}, mark options={fill=\VAR{value}}, mark=\VAR{app_mark_specs[key]}] coordinates { \VAR{app_coords[key]} };
+        \addlegendentry{\VAR{key}}
+        \addplot+ [forget plot, semithick, \VAR{value}, only marks, mark size=8, mark=square] coordinates { \VAR{app_coords[key]} };
+
+        \BLOCK{endfor}
+
+    \end{axis}
+\end{tikzpicture}
+\end{document}
