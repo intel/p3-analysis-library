@@ -52,7 +52,7 @@ def _sort_by_app_order(df, app_order):
     return df
 
 
-def snapshot(df, cov, directory=None):
+def snapshot(df, cov=None, directory=None):
     """
     Generate an HTML report representing a snapshot of P3 characteristics.
 
@@ -68,10 +68,15 @@ def snapshot(df, cov, directory=None):
     df: DataFrame
         A pandas DataFrame storing performance efficiency data.
         The following columns are always required: "problem", "platform",
-        "application", "coverage_key". At least one of the following columns
+        "application". At least one of the following columns
         is required: "app eff" or "arch eff".
 
-    cov: DataFrame
+        If `cov` is None, a "coverage" column is required. Values of the
+        "coverage" column must be coverage traces adhering to the P3 Analysis
+        Library coverage schema. Otherwise, a "coverage_key" column is
+        required.
+
+    cov: DataFrame, optional
         A pandas DataFrame storing coverage data. The following columns are
         required: "coverage_key", "coverage".
 
@@ -86,13 +91,13 @@ def snapshot(df, cov, directory=None):
     Raises
     ------
     ValueError
-        If any of the required columns are missing from `df` or `cov`.
-        If any value in the "coverage" column of `cov` fails to validate
-        against the P3 coverage schema.
+        If any of the required columns are missing.
+        If any coverage string fails to validate against the P3 coverage
+        schema.
 
     TypeError
         If any of the values in the "fom" column of `df` are non-numeric.
-        If any of the values in the "coverage" column of `cov` are not strings.
+        If any of the values in the "coverage" is not a JSON string.
 
     PermissionError
         If the directory specified by `directory` or any of the files generated
@@ -103,9 +108,13 @@ def snapshot(df, cov, directory=None):
     """
     _require_columns(
         df,
-        ["problem", "platform", "application", "coverage_key"],
+        ["problem", "platform", "application"],
     )
-    _require_columns(cov, ["coverage_key", "coverage"])
+    if cov is None:
+        _require_columns(df, ["coverage"])
+    else:
+        _require_columns(df, ["coverage_key"])
+        _require_columns(cov, ["coverage_key", "coverage"])
 
     if len(df["problem"].unique()) > 1:
         raise NotImplementedError(
