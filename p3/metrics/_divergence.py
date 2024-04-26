@@ -57,7 +57,6 @@ def _coverage_to_divergence(maps):
         for entry in coverage:
             unique_fn = (entry["file"], entry["id"])
             for region in entry["lines"]:
-
                 # If a region is a single integer, it represents one line.
                 if isinstance(region, int):
                     line = region
@@ -82,7 +81,7 @@ def _coverage_string_to_json(string):
     return _validate_coverage_json(string)
 
 
-def divergence(df, cov):
+def divergence(df, cov=None):
     r"""
     Calculate code divergence.
 
@@ -120,12 +119,14 @@ def divergence(df, cov):
     ----------
     df: DataFrame
         A pandas DataFrame storing performance data. The following columns are
-        required: "problem", "platform", "application", "coverage_key".
+        required: "problem", "platform", "application".
 
-        Values of the "coverage_key" column are used as keys, to identify
-        corresponding coverage traces stored in the `cov` DataFrame.
+        If `cov` is None, a "coverage" column is required. Values of the
+        "coverage" column must be coverage traces adhering to the P3 Analysis
+        Library coverage schema. Otherwise, a "coverage_key" column is
+        required.
 
-    cov: DataFrame
+    cov: DataFrame, optional
         A pandas DataFrame storing coverage data. The following columns are
         required: "coverage_key", "coverage".
 
@@ -136,27 +137,30 @@ def divergence(df, cov):
     -------
     DataFrame
         A new pandas DataFrame storing the code divergence values calculated
-        from the coverage data provided in `cov` and the configuration data
-        provided in `df`.
+        from the configuration and coverage data provided.
 
     Raises
     ------
     ValueError
-        If any of the required columns are missing from `df`.
-        If any value in the "coverage" column of `cov` fails to validate
-        against the P3 coverage schema.
+        If any of the required columns are missing.
+        If any coverage string fails to validate against the P3 coverage
+        schema.
 
     TypeError
-        If any value in the "coverage" column of `cov` is not a JSON string.
+        If any value in the "coverage" column is not a JSON string.
 
     """
-    _require_columns(
-        df, ["problem", "platform", "application", "coverage_key"]
-    )
-    _require_columns(cov, ["coverage_key", "coverage"])
+    _require_columns(df, ["problem", "platform", "application"])
+    if cov is None:
+        # The original df must already contain coverage information
+        _require_columns(df, ["coverage"])
+        p3df = df.copy()
+    else:
+        # Expand original df by substituting the sha for its coverage string
+        _require_columns(df, ["coverage_key"])
+        _require_columns(cov, ["coverage_key", "coverage"])
+        p3df = df.join(cov.set_index("coverage_key"), on="coverage_key")
 
-    # Expand the original df by substituting the sha for its coverage string
-    p3df = df.join(cov.set_index("coverage_key"), on="coverage_key")
     p3df["coverage"] = p3df["coverage"].apply(_coverage_string_to_json)
 
     key = ["problem", "application"]
