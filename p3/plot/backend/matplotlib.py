@@ -235,6 +235,12 @@ class CascadePlot(CascadePlot):
         markers = app_style.markers
         if not isinstance(markers, (list, tuple)):
             raise ValueError("Unsupported type provided for app_markers")
+        if len(applications) > len(markers):
+            raise RuntimeError(
+                f"The number of applications ({len(applications)}) is greater "
+                f"than the number of markers ({len(markers)}). "
+                + "Please adjust the ApplicationStyle.",
+            )
         app_markers = {app: color for app, color in zip(applications, markers)}
 
         # Choose colors for each platform
@@ -566,6 +572,12 @@ class NavChart(NavChart):
         markers = style.markers
         if not isinstance(markers, (list, tuple)):
             raise ValueError("Unsupported type provided for app_markers")
+        if len(applications) > len(markers):
+            raise RuntimeError(
+                f"The number of applications ({len(applications)}) is greater "
+                f"than the number of markers ({len(markers)}). "
+                + "Please adjust the ApplicationStyle.",
+            )
         app_markers = {
             app: marker for app, marker in zip(applications, markers)
         }
