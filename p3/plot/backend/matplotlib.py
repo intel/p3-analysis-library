@@ -247,6 +247,11 @@ class CascadePlot(CascadePlot):
         plat_colors = self.__get_colors(platforms, plat_style.colors)
 
         # Choose labels for each platform
+        if len(platforms) > len(string.ascii_uppercase):
+            raise RuntimeError(
+                "The number of platforms supported by cascade plots is "
+                + f"currently limited to {len(string.ascii_uppercase)}.",
+            )
         plat_labels = dict(zip(platforms, string.ascii_uppercase))
 
         # Plot the efficiency cascade in the top-left (0, 0)
