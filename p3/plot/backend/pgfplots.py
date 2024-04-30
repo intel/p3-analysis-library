@@ -5,7 +5,6 @@ Contains objects for interacting with plots produced using the
 :py:mod:`pgfplots` backend.
 """
 
-import os
 import string
 
 import jinja2
@@ -19,54 +18,78 @@ from p3._utils import _require_numeric
 from p3.plot._common import ApplicationStyle, Legend, PlatformStyle
 from p3.plot.backend import CascadePlot, NavChart
 
+# Define 19 default markers for LaTeX plots
+_pgfplots_markers = [
+    "*, mark options={style={solid}}",
+    "*, mark options={style={solid}, scale=1.5}",
+    "triangle*, mark options={style={solid}, scale=1.5, rotate=180}",
+    "triangle*, mark options={style={solid}, scale=1.5}",
+    "triangle*, mark options={style={solid}, scale=1.5, rotate=90}",
+    "triangle*, mark options={style={solid}, scale=1.5, rotate=270}",
+    "pentagon*, mark options={style={solid}, scale=1.5}",
+    "square*, mark options={style={solid}, scale=1.5}",
+    "diamond*, mark options={style={solid}, scale=1.5}",
+    "o, mark options={style={solid}, scale=1.5}",
+    "square, mark options={style={solid}, scale=1.5}",
+    "triangle, mark options={style={solid}, scale=1.5}",
+    "diamond, mark options={style={solid}, scale=1.5}",
+    "pentagon, mark options={style={solid}, scale=1.5}",
+    "oplus, mark options={style={solid}, scale=1.5}",
+    "otimes, mark options={style={solid}, scale=1.5}",
+    "star, mark options={style={solid}, scale=1.5}",
+    "x, mark options={style={solid}, scale=1.5}",
+    "+, mark options={style={solid}, scale=1.5}",
+]
+
+
+def _get_colors(applications, kwarg):
+    """
+    Assign a color to each application based on supplied kwarg.
+    """
+    if isinstance(kwarg, str):
+        cmap = getattr(plt.cm, kwarg)
+    elif isinstance(kwarg, list):
+        cmap = matplotlib.colors.ListedColormap(kwarg)
+    elif isinstance(kwarg, matplotlib.colors.Colormap):
+        cmap = kwarg
+    else:
+        raise ValueError("Unsupported type provided for colormap.")
+
+    cmap = cmap.resampled(len(applications))
+    colors = cmap(np.linspace(0, 1, len(applications)))
+    return {app: color for app, color in zip(applications, colors)}
+
+
+def _get_tex_template(filename):
+    latex_jinja_env = jinja2.Environment(
+        block_start_string=r"\BLOCK{",
+        block_end_string="}",
+        variable_start_string=r"\VAR{",
+        variable_end_string="}",
+        comment_start_string=r"\#{",
+        comment_end_string="}",
+        line_statement_prefix="%-",
+        line_comment_prefix="%#",
+        trim_blocks=True,
+        autoescape=True,
+        loader=jinja2.FileSystemLoader(
+            p3.__path__[0] + "/plot/backend/templates/",
+        ),
+    )
+
+    # Load the template
+    return latex_jinja_env.get_template(filename)
+
 
 class CascadePlot(CascadePlot):
     """
     Cascade plot object for :py:mod:`pgfplots`.
     """
 
-    def __get_colors(self, applications, kwarg):
-        """
-        Assign a color to each application based on supplied kwarg.
-        """
-        if isinstance(kwarg, str):
-            cmap = getattr(plt.cm, kwarg)
-        elif isinstance(kwarg, list):
-            cmap = matplotlib.colors.ListedColormap(kwarg)
-        elif isinstance(kwarg, matplotlib.colors.Colormap):
-            cmap = kwarg
-        else:
-            raise ValueError("Unsupported type provided for colormap.")
-
-        cmap = cmap.resampled(len(applications))
-        colors = cmap(np.linspace(0, 1, len(applications)))
-        return {app: color for app, color in zip(applications, colors)}
-
-    def __init__(self, df, eff=None, stream=None, **kwargs):
+    def __init__(self, df, eff=None, size=None, stream=None, **kwargs):
         super().__init__("pgfplots")
 
-        # Define 19 default markers for LaTeX plots
-        default_markers = [
-            "*, mark options={style={solid}}",
-            "*, mark options={style={solid}, scale=1.5}",
-            "triangle*, mark options={style={solid}, scale=1.5, rotate=180}",
-            "triangle*, mark options={style={solid}, scale=1.5}",
-            "triangle*, mark options={style={solid}, scale=1.5, rotate=90}",
-            "triangle*, mark options={style={solid}, scale=1.5, rotate=270}",
-            "pentagon*, mark options={style={solid}, scale=1.5}",
-            "square*, mark options={style={solid}, scale=1.5}",
-            "diamond*, mark options={style={solid}, scale=1.5}",
-            "o, mark options={style={solid}, scale=1.5}",
-            "square, mark options={style={solid}, scale=1.5}",
-            "triangle, mark options={style={solid}, scale=1.5}",
-            "diamond, mark options={style={solid}, scale=1.5}",
-            "pentagon, mark options={style={solid}, scale=1.5}",
-            "oplus, mark options={style={solid}, scale=1.5}",
-            "otimes, mark options={style={solid}, scale=1.5}",
-            "star, mark options={style={solid}, scale=1.5}",
-            "x, mark options={style={solid}, scale=1.5}",
-            "+, mark options={style={solid}, scale=1.5}",
-        ]
+        default_markers = _pgfplots_markers
 
         kwargs.setdefault("platform_legend", Legend())
         plat_legend = kwargs["platform_legend"]
@@ -108,6 +131,13 @@ class CascadePlot(CascadePlot):
                 raise ValueError(msg % (eff_column))
         _require_numeric(df, [eff_column])
 
+        # If the size is unset, default to 200pt x 200pt, otherwise set size
+        plotwidth = "200pt"
+        plotheight = "200pt"
+        if size:
+            plotwidth = size[0]
+            plotheight = size[1]
+
         # Keep only the most efficient (application, platform) results.
         key = ["problem", "platform", "application"]
         groups = df[key + [eff_column]].groupby(key)
@@ -117,7 +147,7 @@ class CascadePlot(CascadePlot):
         platforms = df["platform"].unique()
         applications = df["application"].unique()
 
-        # create a mapping between applicaiton names and TeX friendly names
+        # Create a mapping between application names and TeX friendly names
         # (without spaces and punctuation)
         map_tab = str.maketrans("", "", " !\"#$%&'()*+, -./\\:;<=>?@[]^_`{|}~")
         app_to_tex_name = {
@@ -133,7 +163,7 @@ class CascadePlot(CascadePlot):
 
         # Choose colors for each application and then convert the dictionary to
         # TeX friendly names and RGB colors
-        app_colors = self.__get_colors(applications, app_style.colors)
+        app_colors = _get_colors(applications, app_style.colors)
         app_colors_rgb = {}
         for k in app_colors:
             app_colors_rgb[app_to_tex_name[k]] = str(
@@ -145,7 +175,7 @@ class CascadePlot(CascadePlot):
 
         # Choose colors for each platform and then convert the dictionary to
         # RGB colors using the platform labels
-        plat_colors = self.__get_colors(platforms, plat_style.colors)
+        plat_colors = _get_colors(platforms, plat_style.colors)
         plat_colors_rgb = {}
         for k in plat_colors:
             plat_colors_rgb[plat_labels[k]] = str(
@@ -157,7 +187,7 @@ class CascadePlot(CascadePlot):
         if not isinstance(markers, (list, tuple)):
             raise ValueError("Unsupported type provided for app_markers")
 
-        # build a dictionary of app line specifications for TeX
+        # Build a dictionary of app line specifications for TeX
         app_line_specs = {}
         for app, mark in zip(applications, markers):
             app_line_specs[
@@ -181,7 +211,7 @@ class CascadePlot(CascadePlot):
             msg = "Unexpected efficiency column name: %s"
             raise ValueError(msg % (eff_column))
 
-        # Build an dictionary with "application name, [ data ]" for the
+        # Build a dictionary with "application name, [ data ]" for the
         # efficiency plot
         plot_effs = {}
         for app_name in applications:
@@ -203,7 +233,7 @@ class CascadePlot(CascadePlot):
             for app, app_pp in zip(pp["application"], pp[pp_column])
         }
 
-        # Build a dictionary with "application name, [ A, B, C, etc ]", etc
+        # Build a dictionary with "application name, [ A, B, C, ... ]"
         # for the platform plot
         plat_plot = {}
         for i, app_name in enumerate(applications):
@@ -215,31 +245,14 @@ class CascadePlot(CascadePlot):
             supported_alpha = [plat_labels[s] for s in supported_platforms]
             plat_plot[app_name] = supported_alpha
 
-        # Build a jinja environment that can parse the TeX template
-        latex_jinja_env = jinja2.Environment(
-            block_start_string=r"\BLOCK{",
-            block_end_string="}",
-            variable_start_string=r"\VAR{",
-            variable_end_string="}",
-            comment_start_string=r"\#{",
-            comment_end_string="}",
-            line_statement_prefix="%-",
-            line_comment_prefix="%#",
-            trim_blocks=True,
-            autoescape=True,
-            loader=jinja2.FileSystemLoader(
-                os.path.dirname(p3.__file__) + "/plot/backend/textemplates/",
-            ),
-        )
+        # Load the cascade.tex template
+        template = _get_tex_template("cascade.tex")
 
-        # Load the template.tex file
-        template = latex_jinja_env.get_template("cascade.tex")
-
-        # Render the template using the parameters generated above to a file
+        # Render the template using the parameters generated above
         self.stream = template.stream(
             plottitle="",
-            plotheight="200pt",
-            plotwidth="200pt",
+            plotwidth=plotwidth,
+            plotheight=plotheight,
             applicationcount=len(applications),
             platformcount=len(platforms),
             plotylabel=plotylabel,
@@ -270,31 +283,19 @@ class NavChart(NavChart):
     Navigation chart object for :py:mod:`matplotlib`.
     """
 
-    def __init__(self, pp, cd, eff=None, stream=None, **kwargs):
+    def __init__(
+        self,
+        pp,
+        cd,
+        eff=None,
+        size=None,
+        goal=None,
+        stream=None,
+        **kwargs,
+    ):
         super().__init__("pgfplots")
 
-        # Define 19 default markers for LaTeX plots
-        default_markers = [
-            "*, mark options={style={solid}}",
-            "*, mark options={style={solid}, scale=1.5}",
-            "triangle*, mark options={style={solid}, scale=1.5, rotate=180}",
-            "triangle*, mark options={style={solid}, scale=1.5}",
-            "triangle*, mark options={style={solid}, scale=1.5, rotate=90}",
-            "triangle*, mark options={style={solid}, scale=1.5, rotate=270}",
-            "pentagon*, mark options={style={solid}, scale=1.5}",
-            "square*, mark options={style={solid}, scale=1.5}",
-            "diamond*, mark options={style={solid}, scale=1.5}",
-            "o, mark options={style={solid}, scale=1.5}",
-            "square, mark options={style={solid}, scale=1.5}",
-            "triangle, mark options={style={solid}, scale=1.5}",
-            "diamond, mark options={style={solid}, scale=1.5}",
-            "pentagon, mark options={style={solid}, scale=1.5}",
-            "oplus, mark options={style={solid}, scale=1.5}",
-            "otimes, mark options={style={solid}, scale=1.5}",
-            "star, mark options={style={solid}, scale=1.5}",
-            "x, mark options={style={solid}, scale=1.5}",
-            "+, mark options={style={solid}, scale=1.5}",
-        ]
+        default_markers = _pgfplots_markers
 
         # Set up a default Legend, but no customisation is available yet
         kwargs.setdefault("legend", Legend())
@@ -327,11 +328,18 @@ class NavChart(NavChart):
                 raise ValueError(msg % (pp_column))
         _require_numeric(pp, [pp_column])
 
+        # If the size is unset, default to 200pt x 200pt, otherwise set size
+        plotwidth = "200pt"
+        plotheight = "200pt"
+        if size:
+            plotwidth = size[0]
+            plotheight = size[1]
+
         ppcd = pd.merge(pp, cd, on=["problem", "application"], how="inner")
 
         applications = ppcd["application"].unique()
 
-        # create a mapping between applicaiton names and TeX friendly names
+        # Create a mapping between application names and TeX friendly names
         # (without spaces and punctuation)
         map_tab = str.maketrans("", "", " !\"#$%&'()*+, -./\\:;<=>?@[]^_`{|}~")
         app_to_tex_name = {
@@ -347,7 +355,7 @@ class NavChart(NavChart):
 
         # Choose colors for each application and then convert the dictionary to
         # TeX friendly names and RGB colors
-        app_colors = self.__get_colors(applications, style.colors)
+        app_colors = _get_colors(applications, style.colors)
         app_colors_rgb = {}
         for k in app_colors:
             app_colors_rgb[app_to_tex_name[k]] = str(
@@ -358,7 +366,7 @@ class NavChart(NavChart):
         if not isinstance(markers, (list, tuple)):
             raise ValueError("Unsupported type provided for app_markers")
 
-        # build a dictionary of app line specifications for TeX
+        # Build a dictionary of app line specifications for TeX
         app_mark_specs = dict(zip(applications, markers))
 
         plotylabel = ""
@@ -367,7 +375,6 @@ class NavChart(NavChart):
         elif pp_column == "arch pp":
             plotylabel = "Performance Portability (Arch. Eff.)"
 
-        # Build a dictionary with "application name, marker"
         # Build a dictionary with "application name, coords"
         app_coords = {}
         for index, row in ppcd.iterrows():
@@ -376,52 +383,31 @@ class NavChart(NavChart):
             convergence = 1 - row["divergence"]
             app_coords[app_name] = f"({convergence}, {app_pp})"
 
-        # Build a jinja environment that can parse the TeX template
-        latex_jinja_env = jinja2.Environment(
-            block_start_string=r"\BLOCK{",
-            block_end_string="}",
-            variable_start_string=r"\VAR{",
-            variable_end_string="}",
-            comment_start_string=r"\#{",
-            comment_end_string="}",
-            line_statement_prefix="%-",
-            line_comment_prefix="%#",
-            trim_blocks=True,
-            autoescape=True,
-            loader=jinja2.FileSystemLoader(
-                os.path.dirname(p3.__file__) + "/plot/backend/textemplates/",
-            ),
-        )
+        # If a goal is set, set up the goal region variables
+        goalset = False
+        goalx = 1.0
+        goaly = 1.0
+        if goal and goal != (1, 1):
+            goalset = True
+            goalx = goal[0]
+            goaly = goal[1]
 
-        # Load the template.tex file
-        template = latex_jinja_env.get_template("navchart.tex")
+        # Load the navchart.tex template
+        template = _get_tex_template("navchart.tex")
 
+        # Render the template using the parameters generated above
         self.stream = template.stream(
-            plotheight="200pt",
-            plotwidth="200pt",
+            plotwidth=plotwidth,
+            plotheight=plotheight,
             plotylabel=plotylabel,
+            goalset=goalset,
+            goalx=goalx,
+            goaly=goaly,
             applications=app_to_tex_name,
             app_colors=app_colors_rgb,
             app_mark_specs=app_mark_specs,
             app_coords=app_coords,
         )
-
-    def __get_colors(self, applications, kwarg):
-        """
-        Assign a color to each application based on supplied kwarg.
-        """
-        if isinstance(kwarg, str):
-            cmap = getattr(plt.cm, kwarg)
-        elif isinstance(kwarg, list):
-            cmap = matplotlib.colors.ListedColormap(kwarg)
-        elif isinstance(kwarg, matplotlib.colors.Colormap):
-            cmap = kwarg
-        else:
-            raise ValueError("Unsupported type provided for colormap.")
-
-        cmap = cmap.resampled(len(applications))
-        colors = cmap(np.linspace(0, 1, len(applications)))
-        return {app: color for app, color in zip(applications, colors)}
 
     def save(self, filename):
         """

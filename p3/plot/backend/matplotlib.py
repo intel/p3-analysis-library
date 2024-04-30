@@ -20,6 +20,24 @@ from p3.plot._common import ApplicationStyle, Legend, PlatformStyle
 from p3.plot.backend import CascadePlot, NavChart
 
 
+def _get_colors(applications, kwarg):
+    """
+    Assign a color to each application based on supplied kwarg.
+    """
+    if isinstance(kwarg, str):
+        cmap = getattr(plt.cm, kwarg)
+    elif isinstance(kwarg, list):
+        cmap = matplotlib.colors.ListedColormap(kwarg)
+    elif isinstance(kwarg, matplotlib.colors.Colormap):
+        cmap = kwarg
+    else:
+        raise ValueError("Unsupported type provided for colormap.")
+
+    cmap = cmap.resampled(len(applications))
+    colors = cmap(np.linspace(0, 1, len(applications)))
+    return {app: color for app, color in zip(applications, colors)}
+
+
 class _PlatformLegendHandler(matplotlib.legend_handler.HandlerBase):
     def __init__(self, colors, labels):
         self.colors = colors
@@ -74,11 +92,8 @@ class CascadePlot(CascadePlot):
     Cascade plot object for :py:mod:`matplotlib`.
     """
 
-    def __init__(self, df, eff=None, fig=None, axes=None, **kwargs):
+    def __init__(self, df, eff=None, size=None, fig=None, axes=None, **kwargs):
         super().__init__("matplotlib")
-
-        kwargs.setdefault("size", (6, 5))
-        size = kwargs["size"]
 
         kwargs.setdefault("platform_legend", Legend())
         plat_legend = kwargs["platform_legend"]
@@ -129,6 +144,10 @@ class CascadePlot(CascadePlot):
                 raise ValueError(msg % (eff_column))
         _require_numeric(df, [eff_column])
 
+        # If the size is unset, default to 6 x 5
+        if not size:
+            size = (6, 5)
+
         # Keep only the most efficient (application, platform) results.
         key = ["problem", "platform", "application"]
         groups = df[key + [eff_column]].groupby(key)
@@ -154,7 +173,7 @@ class CascadePlot(CascadePlot):
         )
 
         # Choose colors for each application
-        app_colors = self.__get_colors(applications, app_style.colors)
+        app_colors = _get_colors(applications, app_style.colors)
 
         # Choose markers for each application
         markers = app_style.markers
@@ -169,7 +188,7 @@ class CascadePlot(CascadePlot):
         app_markers = {app: color for app, color in zip(applications, markers)}
 
         # Choose colors for each platform
-        plat_colors = self.__get_colors(platforms, plat_style.colors)
+        plat_colors = _get_colors(platforms, plat_style.colors)
 
         # Choose labels for each platform
         if len(platforms) > len(string.ascii_uppercase):
@@ -413,23 +432,6 @@ class CascadePlot(CascadePlot):
                 zorder=4,
             )
 
-    def __get_colors(self, applications, kwarg):
-        """
-        Assign a color to each application based on supplied kwarg.
-        """
-        if isinstance(kwarg, str):
-            cmap = getattr(plt.cm, kwarg)
-        elif isinstance(kwarg, list):
-            cmap = matplotlib.colors.ListedColormap(kwarg)
-        elif isinstance(kwarg, matplotlib.colors.Colormap):
-            cmap = kwarg
-        else:
-            raise ValueError("Unsupported type provided for colormap.")
-
-        cmap = cmap.resampled(len(applications))
-        colors = cmap(np.linspace(0, 1, len(applications)))
-        return {app: color for app, color in zip(applications, colors)}
-
     def save(self, filename):
         """
         Save the plot to the specified file.
@@ -446,14 +448,18 @@ class NavChart(NavChart):
     Navigation chart object for :py:mod:`matplotlib`.
     """
 
-    def __init__(self, pp, cd, eff=None, fig=None, axes=None, **kwargs):
+    def __init__(
+        self,
+        pp,
+        cd,
+        eff=None,
+        size=None,
+        goal=None,
+        fig=None,
+        axes=None,
+        **kwargs,
+    ):
         super().__init__("matplotlib")
-
-        kwargs.setdefault("size", (5, 5))
-        size = kwargs["size"]
-
-        kwargs.setdefault("goal", None)
-        goal = kwargs["goal"]
 
         kwargs.setdefault("legend", Legend())
         legend = kwargs["legend"]
@@ -490,10 +496,14 @@ class NavChart(NavChart):
                 raise ValueError(msg % (pp_column))
         _require_numeric(pp, [pp_column])
 
+        # If the size is unset, default to 5 x 5
+        if not size:
+            size = (5, 5)
+
         ppcd = pd.merge(pp, cd, on=["problem", "application"], how="inner")
 
         applications = ppcd["application"].unique()
-        app_colors = self.__get_colors(applications, style.colors)
+        app_colors = _get_colors(applications, style.colors)
 
         markers = style.markers
         if not isinstance(markers, (list, tuple)):
@@ -669,23 +679,6 @@ class NavChart(NavChart):
 
         self.fig = fig
         self.axes = axes
-
-    def __get_colors(self, applications, kwarg):
-        """
-        Assign a color to each application based on supplied kwarg.
-        """
-        if isinstance(kwarg, str):
-            cmap = getattr(plt.cm, kwarg)
-        elif isinstance(kwarg, list):
-            cmap = matplotlib.colors.ListedColormap(kwarg)
-        elif isinstance(kwarg, matplotlib.colors.Colormap):
-            cmap = kwarg
-        else:
-            raise ValueError("Unsupported type provided for colormap.")
-
-        cmap = cmap.resampled(len(applications))
-        colors = cmap(np.linspace(0, 1, len(applications)))
-        return {app: color for app, color in zip(applications, colors)}
 
     def get_figure(self):
         """

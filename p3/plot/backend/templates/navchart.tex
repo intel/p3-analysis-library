@@ -2,8 +2,16 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{pgfplots}
 
-\pgfplotsset{compat=1.18}
+\pgfplotsset{compat=1.9}
 \usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{fillbetween}
+
+\newif\ifgoalset
+\BLOCK{if goalset}
+\goalsettrue
+\BLOCK{else}
+\goalsetfalse
+\BLOCK{endif}
 
 \begin{document}
 \begin{tikzpicture}
@@ -13,6 +21,12 @@
 
     % Application Efficiency or Architectural Efficiency?
     \newcommand{\plotylabel}{\VAR{plotylabel}}
+
+    % If a goal has been set, set the x and y values here
+    \ifgoalset
+        \newcommand{\goalx}{\VAR{goalx}}
+        \newcommand{\goaly}{\VAR{goaly}}
+    \fi
 
     %%% Define colors for applications
     \BLOCK{for key, value in app_colors.items()}\definecolor{\VAR{key}}{rgb}{\VAR{value}}
@@ -89,6 +103,15 @@
         \addplot+ [forget plot, semithick, \VAR{value}, only marks, mark size=8, mark=square] coordinates { \VAR{app_coords[key]} };
 
         \BLOCK{endfor}
+
+        % Plot a goal region if a goal has been set.
+        \ifgoalset
+            \path [name path=A] (axis cs:\goalx, \goaly) -- (axis cs:1.0, \goaly) ;
+            \path [name path=B] (axis cs:\goalx, 1.0) -- (axis cs:1.0, 1.0) ;
+            \addplot [yellow] fill between [ of=A and B ] ;
+            \addplot+ [blue, thick, dashed, mark=none] coordinates { (0, \goaly) (1, \goaly) };
+            \addplot+ [blue, thick, dashed, mark=none] coordinates { (\goalx, 0) (\goalx, 1) };
+        \fi
 
     \end{axis}
 \end{tikzpicture}
