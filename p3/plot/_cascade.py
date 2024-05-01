@@ -38,7 +38,7 @@ def cascade(df, eff=None, size=None, **kwargs):
 
     **kwargs: properties, optional
         `kwargs` are used to specify properties that control various styling
-        options (e.g. size, colors and markers).
+        options (e.g. colors and markers).
 
         .. list-table:: Properties
             :widths: 10, 20, 18
