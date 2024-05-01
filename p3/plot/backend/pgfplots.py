@@ -72,9 +72,7 @@ def _get_tex_template(filename):
         line_comment_prefix="%#",
         trim_blocks=True,
         autoescape=True,
-        loader=jinja2.FileSystemLoader(
-            p3.__path__[0] + "/plot/backend/templates/",
-        ),
+        loader=jinja2.PackageLoader("p3.plot.backend"),
     )
 
     # Load the template
