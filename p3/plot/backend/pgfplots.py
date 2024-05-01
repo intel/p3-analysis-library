@@ -278,7 +278,7 @@ class CascadePlot(CascadePlot):
 
 class NavChart(NavChart):
     """
-    Navigation chart object for :py:mod:`matplotlib`.
+    Navigation chart object for :py:mod:`pgfplots`.
     """
 
     def __init__(
