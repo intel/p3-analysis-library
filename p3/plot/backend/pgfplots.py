@@ -297,7 +297,6 @@ class NavChart(NavChart):
 
         # Set up a default Legend, but no customisation is available yet
         kwargs.setdefault("legend", Legend())
-        # legend = kwargs["legend"]
 
         kwargs.setdefault("style", ApplicationStyle())
         style = kwargs["style"]
