@@ -1,3 +1,4 @@
+\BLOCK{set esc_trans = {35: '\#', 36: '\$', 37: '\%', 38: '\&', 92: '\\', 94: '\^', 95: '\_', 123: '\{', 125: '\}'} }
 \documentclass{standalone}
 \usepackage{pgfplots}
 
@@ -83,7 +84,7 @@
         \BLOCK{for key, value in plot_effs.items()}\addplot[\VAR{app_line_specs[key]}] coordinates {
             \BLOCK{for e in value}\VAR{e}
             \BLOCK{endfor}};
-        \addlegendentry{\VAR{key}}
+        \addlegendentry{\VAR{key.translate(esc_trans)}}
         \BLOCK{endfor}
 
         %%%% Plot the PP graph
@@ -103,13 +104,13 @@
             ylabel style={rotate=-180},
             yticklabel pos=right,
             xtick=data,
-            symbolic x coords={\VAR{applications}},
+            symbolic x coords={\VAR{applications.translate(esc_trans)}},
             ymin=0,
             ymax=\ymax,
             enlarge x limits={abs=10pt}
         ]
 
-        \BLOCK{for key, value in pp_bars.items()}\addplot+[ybar, \VAR{app_line_specs[key]}] coordinates { \VAR{value} };
+        \BLOCK{for key, value in pp_bars.items()}\addplot+[ybar, \VAR{app_line_specs[key]}] coordinates { \VAR{value.translate(esc_trans)} };
         \BLOCK{endfor}
 
         %%%% Plot the platform ordering
@@ -135,7 +136,7 @@
         \BLOCK{endfor}
 
         %%% Build the platform key
-        \BLOCK{for key, value in plat_labels.items()}\addlegendimage{platform legend={ \VAR{value} }} \addlegendentry{\VAR{key}}
+        \BLOCK{for key, value in plat_labels.items()}\addlegendimage{platform legend={ \VAR{value} }} \addlegendentry{\VAR{key.translate(esc_trans)}}
         \BLOCK{endfor}
 
     \end{groupplot}

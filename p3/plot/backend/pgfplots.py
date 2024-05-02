@@ -258,7 +258,7 @@ class CascadePlot(CascadePlot):
             app_colors=app_colors_rgb,
             app_line_specs=app_line_specs,
             plot_effs=plot_effs,
-            applications=", ".join(pp["application"]),
+            applications=", ".join(applications),
             pp_bars=pp_bars,
             plat_plot=plat_plot,
             plat_labels=plat_labels,

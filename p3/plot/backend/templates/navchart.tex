@@ -1,3 +1,4 @@
+\BLOCK{set esc_trans = {35: '\#', 36: '\$', 37: '\%', 38: '\&', 92: '\\', 94: '\^', 95: '\_', 123: '\{', 125: '\}'} }
 \documentclass{standalone}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{pgfplots}
@@ -99,7 +100,7 @@
         ]
 
         \BLOCK{for key, value in applications.items()}\addplot+ [semithick, \VAR{value}, mark options={fill=\VAR{value}}, mark=\VAR{app_mark_specs[key]}] coordinates { \VAR{app_coords[key]} };
-        \addlegendentry{\VAR{key}}
+        \addlegendentry{\VAR{key.translate(esc_trans)}}
         \addplot+ [forget plot, semithick, \VAR{value}, only marks, mark size=8, mark=square] coordinates { \VAR{app_coords[key]} };
 
         \BLOCK{endfor}
