@@ -4,15 +4,13 @@
 from p3._utils import _require_columns, _require_numeric
 
 
-def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
+def navchart(pp, cd, eff=None, size=None, goal=None, **kwargs):
     """
     Plot a `navigation chart`_ showing the performance portability and code
     convergence of each application in a DataFrame. The chart highlights the
     tradeoff between performance (portability) and programmer productivity,
     assisting in navigation of the P3 space and reasoning about how to reach
     development goals.
-
-    The chart is plotted using the current pyplot figure, if one exists.
 
     .. _navigation chart: https://doi.org/10.1109/MCSE.2021.3097276
 
@@ -34,8 +32,10 @@ def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
         "app" or "arch". If no value is provided, the efficiency is selected
         automatically based on the data available in `pp`.
 
-    size: 2-tuple of floats, default: (5, 5)
+    size: 2-tuple of floats, optional
         The size of the plot, in backend-specific units.
+        In the matplotlib backend, the default is (5, 5), in the pgfplots
+        backend, the default is ("200pt", "200pt")
 
     goal: tuple, optional
         User-defined goal, expressed as (convergence, portability).
@@ -93,7 +93,12 @@ def navchart(pp, cd, eff=None, size=(5, 5), goal=None, **kwargs):
         from p3.plot.backend.matplotlib import NavChart
 
         return NavChart(pp, cd, eff, size, goal, **kwargs)
+    elif backend == "pgfplots":
+        from p3.plot.backend.pgfplots import NavChart
+
+        return NavChart(pp, cd, eff, size, goal, **kwargs)
     else:
         raise ValueError(
-            "'backend' must be one of the supported backends: 'matplotlib'",
+            "'backend' must be one of the supported backends: ",
+            "'matplotlib', 'pgfplots'",
         )

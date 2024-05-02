@@ -12,6 +12,14 @@ p3.plot.backend.matplotlib module
    :undoc-members:
    :show-inheritance:
 
+p3.plot.backend.pgfplots module
+-------------------------------
+
+.. automodule:: p3.plot.backend.pgfplots
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
