@@ -4,12 +4,34 @@ Performance, Portability, and Productivity Analysis Library
 .. toctree::
    :maxdepth: 1
    :hidden:
+   :caption: Introduction
 
+   Getting Started <self>
    introduction
    data
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Tutorial
+
    examples/index
    case-studies/index
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Reference
+
    p3
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Contributing
+
+   How to Contribute <https://github.com/intel/p3-analysis-library/blob/main/CONTRIBUTING.md>
+   GitHub <https://github.com/intel/p3-analysis-library>
    notices-and-disclaimers
 
 The Performance, Portability, and Productivity Analysis Library (P3 Analysis
