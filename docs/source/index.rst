@@ -7,7 +7,7 @@ Performance, Portability, and Productivity Analysis Library
    :caption: Introduction
 
    Getting Started <self>
-   introduction
+   analysis
    data
 
 .. toctree::

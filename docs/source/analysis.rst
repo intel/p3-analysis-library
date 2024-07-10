@@ -1,5 +1,5 @@
-Introduction to P3 Analysis
-===========================
+P3 Analysis
+===========
 
 The goal of P3 analysis is to understand the interaction of application
 performance, application portability and developer productivity. Using
@@ -26,7 +26,7 @@ The terminology used by the P3 Analysis Library was first introduced in
 **Platform**
   A collection of software and hardware on which an *application* may run a
   *problem*.
- 
+
 **Application Efficiency**
   The performance of an *application*, measured relative to the best known
   performance previously demonstrated for solving the same *problem* on the
