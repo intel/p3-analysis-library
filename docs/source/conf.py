@@ -204,6 +204,7 @@ sphinx_gallery_conf = {
      'examples_dirs': ['../../examples','../../case-studies'],
      'gallery_dirs': ['examples','case-studies'],
      'image_scrapers': (tight_scraper(),),
+     'run_stale_examples': True,
 }
 
 intersphinx_mapping = {
