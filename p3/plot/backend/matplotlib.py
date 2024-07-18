@@ -522,7 +522,7 @@ class NavChart(NavChart):
         jitter = np.random.default_rng().uniform(0, 0.01, 2 * len(ppcd))
 
         fig = plt.figure(figsize=size)
-        ax = plt.gca()
+        axes = plt.gca()
         patch_size = 0.1
         for index, row in ppcd.iterrows():
             app_name = row["application"]
@@ -541,8 +541,8 @@ class NavChart(NavChart):
                 fill=False,
                 clip_on=False,
             )
-            ax.add_patch(patch)
-            ax.plot(
+            axes.add_patch(patch)
+            axes.plot(
                 convergence + jitter_x,
                 app_pp + jitter_y,
                 color=app_colors[app_name],
@@ -552,7 +552,7 @@ class NavChart(NavChart):
                 markersize=8,
                 zorder=10,
             )
-        ax.grid(True)
+        axes.grid(True)
 
         # Goal Region
         if goal and goal != (1, 1):
@@ -580,7 +580,7 @@ class NavChart(NavChart):
                 lw=2,
                 alpha=0.5,
             )
-            ax.add_patch(patch)
+            axes.add_patch(patch)
 
             # Goal Lines
             plt.axhline(y=port_min, lw=2, color="blue", ls="--")
@@ -668,12 +668,12 @@ class NavChart(NavChart):
         )
 
         if pp_column == "app pp":
-            ax.set_ylabel("Performance Portability (App. Eff.)")
+            axes.set_ylabel("Performance Portability (App. Eff.)")
         elif pp_column == "arch pp":
-            ax.set_ylabel("Performance Portability (Arch. Eff.)")
-        ax.set_xlabel("Code Convergence")
-        ax.set_ylim([0, 1])
-        ax.set_xlim([0, 1])
+            axes.set_ylabel("Performance Portability (Arch. Eff.)")
+        axes.set_xlabel("Code Convergence")
+        axes.set_ylim([0, 1])
+        axes.set_xlim([0, 1])
 
         fig.legend(**legend.kwargs)
 
