@@ -50,7 +50,7 @@ def application_efficiency(df, foms="lower"):
     if foms not in ["lower", "higher"]:
         raise ValueError("FOM interpretation must be 'lower' or 'higher'")
 
-    result = df.filter(required_columns)
+    result = df.filter(required_columns + ["date"])
 
     # Identify the best FOM for each (problem, platform) triple
     key = ["problem", "platform"]
