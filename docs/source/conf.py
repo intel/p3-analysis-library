@@ -210,4 +210,5 @@ sphinx_gallery_conf = {
 
 intersphinx_mapping = {
     "matplotlib": ('https://matplotlib.org/stable/', None),
+    "pandas": ('https://pandas.pydata.org/pandas-docs/stable/', None),
 }
