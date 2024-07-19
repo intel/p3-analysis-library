@@ -1,10 +1,10 @@
 # Copyright (c) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
-import pandas as pd
 from itertools import product
-
 from statistics import harmonic_mean
+
+import pandas as pd
 
 from p3._utils import _require_columns, _require_numeric
 
@@ -81,12 +81,12 @@ def pp(df):
     # Check that efficiencies are not given in percentages
     for eff in efficiencies:
         if not df[eff].fillna(0).between(0, 1).all():
-            raise ValueError("%s must in range [0, 1]" % eff)
+            raise ValueError(f"{eff} must in range [0, 1]")
 
     # Keep only the most efficient (application, platform) results.
     key = ["problem", "platform", "application"]
     groups = df[key + efficiencies].groupby(key)
-    df = groups.agg(max)
+    df = groups.agg("max")
     df.reset_index(inplace=True)
 
     # Add a "did not run" value for applications that did not run
@@ -109,13 +109,14 @@ def pp(df):
                     "fom": None,
                     "arch eff": None,
                     "app eff": None,
-                }
+                },
             ]
     df = pd.concat([df, pd.DataFrame(rows)], ignore_index=True)
 
     # Calculate performance portability for both types of efficiency
     key = ["problem", "application"]
-    groups = df[key + efficiencies].fillna(0.0).groupby(key)
+    df[efficiencies] = df[efficiencies].astype(float).fillna(0.0)
+    groups = df[key + efficiencies].groupby(key)
     pp = groups.agg(_hmean)
     pp.reset_index(inplace=True)
     for eff in efficiencies:

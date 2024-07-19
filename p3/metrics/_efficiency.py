@@ -55,14 +55,14 @@ def application_efficiency(df, foms="lower"):
     # Identify the best FOM for each (problem, platform) triple
     key = ["problem", "platform"]
     groups = df[key + ["fom"]].groupby(key)
-    best = groups.agg(min) if foms == "lower" else groups.agg(max)
+    best = groups.agg("min") if foms == "lower" else groups.agg("max")
     best.reset_index(inplace=True)
 
     # Calculate application efficiency
     def app_eff(row):
         value = [row["problem"], row["platform"]]
         fom = float(row["fom"])
-        best_fom = float(best.loc[(best[key] == value).all(1)]["fom"])
+        best_fom = float(best.loc[(best[key] == value).all(1)]["fom"].iloc[0])
         if foms == "lower":
             return 0.0 if numpy.isnan(fom) else (best_fom / fom)
         else:
