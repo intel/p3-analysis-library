@@ -62,7 +62,7 @@ def application_efficiency(df, foms="lower"):
     def app_eff(row):
         value = [row["problem"], row["platform"]]
         fom = float(row["fom"])
-        best_fom = float(best.loc[(best[key] == value).all(1)]["fom"])
+        best_fom = float(best.loc[(best[key] == value).all(1)]["fom"].iloc[0])
         if foms == "lower":
             return 0.0 if numpy.isnan(fom) else (best_fom / fom)
         else:
