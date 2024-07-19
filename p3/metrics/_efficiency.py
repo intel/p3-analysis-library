@@ -55,7 +55,7 @@ def application_efficiency(df, foms="lower"):
     # Identify the best FOM for each (problem, platform) triple
     key = ["problem", "platform"]
     groups = df[key + ["fom"]].groupby(key)
-    best = groups.agg(min) if foms == "lower" else groups.agg(max)
+    best = groups.agg("min") if foms == "lower" else groups.agg("max")
     best.reset_index(inplace=True)
 
     # Calculate application efficiency
