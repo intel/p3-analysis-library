@@ -146,6 +146,13 @@
      id="layer1"
      transform="translate(-10.173512,-10.630526)">
     <rect
+       style="fill:#ffffff;stroke-width:0.5;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect975"
+       width="181.09593"
+       height="178.94766"
+       x="10.173512"
+       y="10.630526" />
+    <rect
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:0.999998, 0.5;stroke-dashoffset:0"
        id="rect4247-7"
        width="161.4308"
@@ -153,14 +160,14 @@
        x="29.588638"
        y="156.18677" />
     <rect
-       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:0.999998, 0.50000000000000000;stroke-dashoffset:0"
+       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:0.999998, 0.5;stroke-dashoffset:0"
        id="rect4247-1"
        width="52.384827"
        height="91.406181"
        x="138.63461"
        y="17.372519" />
     <rect
-       style="opacity:1;fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:1, 0.50000000000000000;stroke-dashoffset:0"
+       style="opacity:1;fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:1, 0.5;stroke-dashoffset:0"
        id="rect4247"
        width="52.384827"
        height="117.33132"
@@ -170,7 +177,7 @@
        inkscape:export-ydpi="71.822113" />
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 165.59057,90.861775 V 118.31567 H 105.75574"
+       d="M 165.59057,90.861775 V 120.83977 H 101.05113"
        id="path4243"
        inkscape:connector-type="orthogonal"
        inkscape:connector-curvature="0"

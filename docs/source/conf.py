@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Configuration file for the Sphinx documentation builder.
 #
@@ -79,15 +78,13 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'furo'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    "fixed_sidebar": True,
-}
+html_theme_options = {}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -103,6 +100,8 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+
+html_title = "P3 Analysis Library"
 
 
 # -- Options for HTMLHelp output ---------------------------------------------
@@ -135,9 +134,11 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'p3-analysis-library.tex',
-     'P3 Analysis Library Documentation',
-     'Intel Corporation', 'manual'),
+    (
+        master_doc, 'p3-analysis-library.tex',
+        'P3 Analysis Library Documentation',
+        'Intel Corporation', 'manual',
+    ),
 ]
 
 
@@ -146,8 +147,10 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'p3-analysis-library', 'P3 Analysis Library Documentation',
-     [author], 1)
+    (
+        master_doc, 'p3-analysis-library', 'P3 Analysis Library Documentation',
+        [author], 1,
+    ),
 ]
 
 
@@ -157,10 +160,12 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'p3-analysis-library', 'P3 Analysis Library Documentation',
-     author, 'p3-analysis-library',
-     'A library simplifying the collection and interpretation of P3 data.',
-     'Miscellaneous'),
+    (
+        master_doc, 'p3-analysis-library', 'P3 Analysis Library Documentation',
+        author, 'p3-analysis-library',
+        'A library simplifying the collection and interpretation of P3 data.',
+        'Miscellaneous',
+    ),
 ]
 
 
@@ -186,7 +191,8 @@ epub_exclude_files = ['search.html']
 
 from sphinx_gallery.scrapers import matplotlib_scraper
 
-class tight_scraper(object):
+
+class tight_scraper:
 
     def __repr__(self):
         return self.__class__.__name__
@@ -197,7 +203,7 @@ class tight_scraper(object):
 sphinx_gallery_conf = {
      'examples_dirs': ['../../examples','../../case-studies'],
      'gallery_dirs': ['examples','case-studies'],
-     'image_scrapers': (tight_scraper(), ),
+     'image_scrapers': (tight_scraper(),),
 }
 
 intersphinx_mapping = {
