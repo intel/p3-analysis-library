@@ -82,7 +82,10 @@ data below:
 
 .. tip::
     A NaN or 0.0 performance result is interpreted by the P3 Analysis Library
-    to mean that an application did not run, or did not not run correctly.
+    to mean that an application run was in some way invalid. We can use this
+    to explicitly represent cases where applications did not compile on
+    specific platforms, did not run to completion, or ran but produced
+    numerical results that failed some sort of verification.
 
 """
 
