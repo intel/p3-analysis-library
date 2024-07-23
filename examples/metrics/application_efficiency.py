@@ -18,6 +18,9 @@ efficiency* data. With normalized data, an application's performance can be
 represented as a number in the range :math:`[0, 1]`, where :math:`1` means
 an application is achieving the best possible performance.
 
+There are multiple ways we can normalize the data to measure relative
+efficiency, and for this tutorial we will consider *application efficiency*.
+
 Application Efficiency
 ----------------------
 
