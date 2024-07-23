@@ -19,6 +19,8 @@ expects columns to have specific names. The simplest way to work with the
 library is to collect and store data in a compatible format (e.g. in a CSV
 file).
 
+.. _performance_data:
+
 Performance Data
 ################
 
