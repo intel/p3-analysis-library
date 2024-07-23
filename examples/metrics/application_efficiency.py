@@ -124,7 +124,7 @@ print(effs)
 #
 # .. tip::
 #     Calculating meaningful application efficiency results requires a minimum
-#     of two results per platform.
+#     of two results *per platform*.
 #
 # Digging Deeper: Adding More Data
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
