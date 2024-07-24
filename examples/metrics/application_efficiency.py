@@ -85,9 +85,9 @@ data below:
 """
 
 # %%
-# After loading this data into a pandas DataFrame (`df`), we can use the
-# :py:func:`p3.metrics.application_efficiency` function to calculate a table of
-# application efficiencies.
+# After loading this data into a :py:class:`pandas.DataFrame` (`df`), we can
+# use the :py:func:`p3.metrics.application_efficiency` function to calculate a
+# table of application efficiencies.
 
 #sphinx_gallery_start_ignore
 import matplotlib.pyplot as plt
