@@ -19,13 +19,8 @@ represented as a number in the range :math:`[0, 1]`, where :math:`1` means
 an application is achieving the best possible performance.
 
 There are multiple ways we can normalize the data to measure relative
-efficiency, and for this tutorial we will consider *application efficiency*.
-
-Application Efficiency
-----------------------
-
-The simplest form of performance efficiency we can work with is *application
-efficiency*, defined below:
+efficiency, and for this tutorial we will consider *application efficiency*,
+defined below:
 
 **Application Efficiency**
   The performance of an *application*, measured relative to the best known
