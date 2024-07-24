@@ -115,7 +115,8 @@ print(effs)
 # either 1.0 or 0.0. What happened? Since our dataset contains only one result
 # for MyApp on each platform, each non-zero result is the "best known" result
 # for that platform! The only exception is Platform D, which is assigned an
-# efficiency of 0.0 to reflect that it did not run.
+# efficiency of 0.0 to reflect that it either did not compile, or did not run
+# successfully.
 #
 # .. tip::
 #     Calculating meaningful application efficiency results requires a minimum
