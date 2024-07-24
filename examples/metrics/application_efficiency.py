@@ -305,3 +305,22 @@ print(effs)
 filtered = effs[(effs["application"]=="MyApp") & (effs["date"]==2024)]
 filtered.plot(kind="bar", x="platform", y="app eff", xlabel="Platform", ylabel="Application Efficiency", legend=False)
 plt.savefig("application_efficiency_bars_2024.png")
+
+# %%
+# Further Analysis
+# ----------------
+#
+# Computing application efficiency is often simply the first step of a
+# more detailed P3 analysis.
+#
+# The examples below show how we can use the visualization capabilities
+# of the P3 Analysis Library to compare the efficiency of different
+# applications running across the same platform set, or to gain insight
+# into how an application's efficiency relates to the code it uses on each
+# platform.
+#
+# .. minigallery::
+#     :add-heading: Examples
+#
+#     ../../examples/cascade/plot_simple_cascade.py
+#     ../../examples/navchart/plot_simple_navchart.py

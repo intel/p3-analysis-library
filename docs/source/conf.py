@@ -42,6 +42,7 @@ sphinx_gallery_conf = {
      'gallery_dirs': ['examples','case-studies'],
      'run_stale_examples': True,
      'filename_pattern': '/',
+     'backreferences_dir'  : 'gen_modules/backreferences',
 }
 
 intersphinx_mapping = {
