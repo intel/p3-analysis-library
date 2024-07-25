@@ -291,6 +291,14 @@ print(effs)
 # .. note::
 #     Such trade-offs are very common, especially when developers wish to
 #     maintain a single source code that targets multiple platforms.
+#     Different platforms may respond differently to the same code changes,
+#     owing to architectural differences (e.g., cache size, available
+#     parallelism) or differences in the software stack (e.g., compilers
+#     performing different optimizations).
+#     For some real-life examples, see the papers
+#     `here <https://doi.org/10.1016/j.jpdc.2012.07.005>`__
+#     and
+#     `here <https://doi.org/10.48550/arXiv.2407.11488>`__.
 #
 # Computing the correct application efficiency values for MyApp and YourApp
 # requires that our dataset contains all of our historical performance results.
