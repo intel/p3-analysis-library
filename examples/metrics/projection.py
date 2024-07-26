@@ -28,7 +28,7 @@ for Performance Portability`_":
   packages are all examples of applications.
 
 **Platform**
-  A collection of software and hardware on which an *application* may run a
+  A collection of software **and** hardware on which an *application* may run a
   *problem*. A specific processor coupled with an operating system, compiler,
   runtime, drivers, library dependencies, etc is an example of a precise
   platform definition.
@@ -116,7 +116,7 @@ The most obvious projection of this data onto P3 definitions is as follows:
   input with measurable performance and correctness.
 
 - Each machine maps to a different platform, because each cluster name
-  describes the combination of hardware and software used to run the
+  describes the combination of hardware **and** software used to run the
   experiments.
 
 .. important::
