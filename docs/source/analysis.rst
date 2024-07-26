@@ -6,6 +6,8 @@ performance, application portability and developer productivity. Using
 quantitative metrics, developers can set objective goals and measure their
 progress towards those goals.
 
+.. _terminology:
+
 Terminology
 ###########
 
