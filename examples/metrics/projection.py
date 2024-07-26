@@ -17,15 +17,21 @@ for Performance Portability`_":
 
 **Problem**
   A task with a pass/fail metric for which quantitative performance may be
-  measured.
+  measured. Multiplying an :math:`N \\times K` matrix by an :math:`K \\times M`
+  matrix to the accuracy guaranteed by IEEE 754 double precision, computing
+  :math:`\\pi` to a certain number of decimal places, and sorting an array of
+  :math:`N` elements are all examples of problems.
 
 **Application**
   Software capable of solving a *problem* with measurable correctness and
-  performance.
+  performance. Math libraries, Python scripts, C functions, and entire software
+  packages are all examples of applications.
 
 **Platform**
   A collection of software and hardware on which an *application* may run a
-  *problem*.
+  *problem*. A specific processor coupled with an operating system, compiler,
+  runtime, drivers, library dependencies, etc is an example of a precise
+  platform definition.
 
 These definitions are flexible, allowing the same performance data to be used
 for multiple case studies with different interpretations of these terms.
