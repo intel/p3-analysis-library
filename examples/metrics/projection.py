@@ -366,13 +366,13 @@ print(max2)
 # ----------
 #
 # After raw performance data has been projected onto definitions
-# of "problem", "application" and "platform", it can be passed to
+# of "problem", "application", and "platform", it can be passed to
 # any of the P3 Analysis Library functions that expect a
 # :py:class:`pandas.DataFrame`.
 #
 # The examples below show how to use projected data to compute
 # and visualize derived metrics like "application efficiency",
-# "performance portability" and "code divergence".
+# "performance portability", and "code divergence".
 #
 # .. minigallery::
 #     :add-heading: Examples
