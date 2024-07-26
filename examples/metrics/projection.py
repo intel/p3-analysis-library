@@ -17,7 +17,7 @@ for Performance Portability`_":
 
 **Problem**
   A task with a pass/fail metric for which quantitative performance may be
-  measured. Multiplying an :math:`N \\times K` matrix by an :math:`K \\times M`
+  measured. Multiplying an :math:`N \\times K` matrix by a :math:`K \\times M`
   matrix to the accuracy guaranteed by IEEE 754 double precision, computing
   :math:`\\pi` to a certain number of decimal places, and sorting an array of
   :math:`N` elements are all examples of problems.
