@@ -138,14 +138,20 @@ print(effs)
 cluster1 = effs[effs["platform"] == "Cluster 1"]
 pivot = cluster1.pivot(index="application", columns=["problem"])["app eff"]
 pivot.plot(
-    kind="bar", xlabel="Component", ylabel="Application Efficiency", title="Cluster 1",
+    kind="bar",
+    xlabel="Component",
+    ylabel="Application Efficiency",
+    title="Cluster 1",
 )
 plt.savefig("cluster1_application_efficiency_bars.png")
 
 cluster2 = effs[effs["platform"] == "Cluster 2"]
 pivot = cluster2.pivot(index="application", columns=["problem"])["app eff"]
 pivot.plot(
-    kind="bar", xlabel="Component", ylabel="Application Efficiency", title="Cluster 2",
+    kind="bar",
+    xlabel="Component",
+    ylabel="Application Efficiency",
+    title="Cluster 2",
 )
 plt.savefig("cluster2_application_efficiency_bars.png")
 
@@ -188,14 +194,18 @@ print(effs)
 # We can fold that observation into our P3 analysis by creating an entry in our
 # dataset that represents the results from a hypothetical application:
 
-hypothetical_components = proj.groupby(["problem", "platform"], as_index=False)["fom"].min()
+hypothetical_components = proj.groupby(["problem", "platform"], as_index=False)[
+    "fom"
+].min()
 hypothetical_components["application"] = "Hypothetical"
 print(hypothetical_components)
 
 # %%
 
 # Calculate the combined figure of merit for both components
-hypothetical_package = hypothetical_components.groupby(["platform", "application"], as_index=False)["fom"].sum()
+hypothetical_package = hypothetical_components.groupby(
+    ["platform", "application"], as_index=False,
+)["fom"].sum()
 hypothetical_package["problem"] = "Package"
 
 # Append the hypothetical package data to our previous results
