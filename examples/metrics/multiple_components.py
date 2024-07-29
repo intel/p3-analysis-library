@@ -164,21 +164,8 @@ plt.savefig("cluster2_application_efficiency_bars.png")
 # First, we need to compute the total time taken by each application on each
 # platform:
 
-# Calculate the combined figure of merit for both components
-sums = proj.groupby(["platform", "application"])["fom"].sum()
-
-# Format the new data to match our original table
-package = pd.DataFrame()
-for (platform, application), fom in sums.items():
-    new_row = pd.DataFrame(
-        {
-            "problem": ["Package"],
-            "platform": [platform],
-            "application": [application],
-            "fom": [fom],
-        },
-    )
-    package = pd.concat([package, new_row], ignore_index=True)
+package = proj.groupby(["platform", "application"], as_index=False)["fom"].sum()
+package["problem"] = "Package"
 print(package)
 
 # %%
@@ -201,39 +188,18 @@ print(effs)
 # We can fold that observation into our P3 analysis by creating an entry in our
 # dataset that represents the results from a hypothetical application:
 
-# Calculate the minimum value for each component on each machine
-mins = proj.groupby(["problem", "platform"])["fom"].min()
-
-# Format as-if we had per-component results for the hypothetical application
-components = pd.DataFrame()
-for (problem, platform), fom in mins.items():
-    new_row = pd.DataFrame(
-        {
-            "problem": [problem],
-            "platform": [platform],
-            "application": ["Hypothetical"],
-            "fom": [fom],
-        },
-    )
-    components = pd.concat([components, new_row], ignore_index=True)
-print(components)
+hypothetical_components = proj.groupby(["problem", "platform"], as_index=False)["fom"].min()
+hypothetical_components["application"] = "Hypothetical"
+print(hypothetical_components)
 
 # %%
 
 # Calculate the combined figure of merit for both components
-sums = components.groupby(["platform", "application"])["fom"].sum()
+hypothetical_package = hypothetical_components.groupby(["platform", "application"], as_index=False)["fom"].sum()
+hypothetical_package["problem"] = "Package"
 
 # Append the hypothetical package data to our previous results
-for (platform, application), fom in sums.items():
-    new_row = pd.DataFrame(
-        {
-            "problem": ["Package"],
-            "platform": [platform],
-            "application": [application],
-            "fom": [fom],
-        },
-    )
-    package = pd.concat([package, new_row], ignore_index=True)
+package = pd.concat([package, hypothetical_package], ignore_index=True)
 print(package)
 
 # %%
