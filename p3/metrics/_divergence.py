@@ -5,7 +5,7 @@ import collections
 import itertools as it
 
 from p3._utils import _require_columns
-from p3.data._validation import _validate_coverage_json
+from p3.data._validation import _validate_coverage_data
 
 
 def _extract_platforms(setmap):
@@ -78,7 +78,7 @@ def _coverage_string_to_json(string):
     """
     Convert a coverage string into a JSON object
     """
-    return _validate_coverage_json(string)
+    return _validate_coverage_data(string)
 
 
 def divergence(df, cov=None):
