@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 import p3.metrics
 import p3.plot
-from p3._utils import _require_columns
+from p3._utils import _require_columns, _sort_by_app_order
 from p3.metrics._divergence import _coverage_string_to_json
 
 
@@ -32,24 +32,6 @@ def _block_symlinks(path):
     if not os.path.islink(path):
         return
     raise PermissionError("Refusing to create files via symbolic link.")
-
-
-def _sort_by_app_order(df, app_order):
-    """
-    Sort the DataFrame such that the order of applications matches that
-    specified in app_order.
-    """
-
-    def index_function(row):
-        return app_order.tolist().index(row["application"])
-
-    sort_index = df.apply(index_function, axis=1)
-    sort_index.name = "sort_index"
-
-    order = df.join(sort_index).sort_values(by=["sort_index"]).index
-    df = df.loc[order]
-    df.reset_index(inplace=True, drop=True)  # add style change
-    return df
 
 
 def snapshot(df, cov=None, directory=None):

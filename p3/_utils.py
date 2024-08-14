@@ -30,3 +30,21 @@ def _require_numeric(df, columns):
         except Exception:
             msg = "Column '%s' must contain only numeric values."
             raise TypeError(msg % (column))
+
+
+def _sort_by_app_order(df, app_order):
+    """
+    Sort the DataFrame such that the order of applications matches that
+    specified in app_order.
+    """
+
+    def index_function(row):
+        return app_order.tolist().index(row["application"])
+
+    sort_index = df.apply(index_function, axis=1)
+    sort_index.name = "sort_index"
+
+    order = df.join(sort_index).sort_values(by=["sort_index"]).index
+    df = df.loc[order]
+    df.reset_index(inplace=True, drop=True)  # add style change
+    return df

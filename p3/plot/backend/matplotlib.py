@@ -15,7 +15,7 @@ import pandas as pd
 from matplotlib.path import Path
 
 import p3.metrics
-from p3._utils import _require_numeric
+from p3._utils import _require_numeric, _sort_by_app_order
 from p3.plot._common import ApplicationStyle, Legend, PlatformStyle
 from p3.plot.backend import CascadePlot, NavChart
 
@@ -149,10 +149,13 @@ class CascadePlot(CascadePlot):
             size = (6, 5)
 
         # Keep only the most efficient (application, platform) results.
+        # Ensure that the order of applications is unchanged, for the legend.
+        app_order = df["application"].unique()
         key = ["problem", "platform", "application"]
         groups = df[key + [eff_column]].groupby(key)
         df = groups.agg("max")
         df.reset_index(inplace=True)
+        df = _sort_by_app_order(df, app_order)
 
         platforms = df["platform"].unique()
         applications = df["application"].unique()
