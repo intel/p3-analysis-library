@@ -6,7 +6,7 @@ from statistics import harmonic_mean
 
 import pandas as pd
 
-from p3._utils import _require_columns, _require_numeric
+from p3._utils import _require_columns, _require_numeric, _sort_by_app_order
 
 
 def _hmean(series):
@@ -83,6 +83,8 @@ def pp(df):
         if not df[eff].fillna(0).between(0, 1).all():
             raise ValueError(f"{eff} must in range [0, 1]")
 
+    app_order = df["application"].unique()
+
     # Keep only the most efficient (application, platform) results.
     key = ["problem", "platform", "application"]
     groups = df[key + efficiencies].groupby(key)
@@ -123,5 +125,8 @@ def pp(df):
         new_column = eff.replace("eff", "pp")
         pp.rename(columns={eff: new_column}, inplace=True)
         pp = pp.astype({new_column: "float64"})
+
+    # Sort the final DataFrame to match the original application order
+    pp = _sort_by_app_order(pp, app_order)
 
     return pp
