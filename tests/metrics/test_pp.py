@@ -1,9 +1,11 @@
 # Copyright (C) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
-import pandas as pd
-from p3.metrics import pp
 import unittest
+
+import pandas as pd
+
+from p3.metrics import pp
 
 
 class TestPP(unittest.TestCase):
@@ -90,8 +92,8 @@ class TestPP(unittest.TestCase):
 
         expected_data = {
             "problem": ["test"] * 3,
-            "application": ["best", "dummy", "latest"],
-            "app pp": [1.0, 0.0, 0.4878],
+            "application": ["latest", "best", "dummy"],
+            "app pp": [0.4878, 1.0, 0.0],
             "arch pp": [0.0] * 3,
         }
         expected_df = pd.DataFrame(expected_data)
