@@ -1,0 +1,74 @@
+# This workflow tests that examples and case studies in the gallery execute
+# correctly, and saves any plots produced as artifacts for visual inspection.
+#
+# It does not test that the documentation builds correctly with Sphinx.
+
+name: Test the gallery of examples and case-studies
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+    - 'p3/**'
+    - 'examples/**'
+    - 'case-studies/**'
+    - 'pyproject.toml'
+    - 'MANIFEST.in'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+    - 'p3/**'
+    - 'examples/**'
+    - 'case-studies/**'
+    - 'pyproject.toml'
+    - 'MANIFEST.in'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install p3 and its dependencies
+      run: pip install --no-cache-dir './[dev]'
+    - name: Run examples
+      run: |
+        for dir in `find examples/* -type d`
+        do
+          cd $dir
+          for f in *.py;
+          do
+            python $f 1>/dev/null
+          done
+          cd ../../
+        done
+    - name: Save examples output
+      uses: actions/upload-artifact@v4
+      with:
+        name: examples-${{ matrix.python-version }}
+        path: examples/**/*.png
+        if-no-files-found: error
+    - name: Run case-studies
+      run: |
+        for dir in `find case-studies/* -type d`
+        do
+          cd $dir
+          for f in *.py;
+          do
+            python $f 1>/dev/null
+          done
+          cd ../../
+        done
+    - name: Save case-studies output
+      uses: actions/upload-artifact@v4
+      with:
+        name: case-studies-${{ matrix.python-version }}
+        path: case-studies/**/*.png
+        if-no-files-found: error
+permissions: read-all
