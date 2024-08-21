@@ -1,7 +1,18 @@
 # Copyright (c) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
+import pandas as pd
+
 from p3._utils import _require_columns
+
+
+def _join(series):
+    """
+    Treating all values in the series as strings, join them with a '-'
+    character, while skipping over null values.
+    """
+    values = filter(lambda x: not pd.isnull(x), series)
+    return "-".join([str(x) for x in values])
 
 
 def _collapse(df, columns, name):
@@ -10,14 +21,18 @@ def _collapse(df, columns, name):
     old columns.
     """
     if len(columns) > 1:
-        df[name] = df[columns].agg("-".join, axis=1)
+        df[name] = df[columns].agg(_join, axis=1)
         df.drop(columns=columns, inplace=True)
     elif len(columns) == 1:
         df.rename(columns={columns[0]: name}, inplace=True)
+    df[name] = df[name].astype(str)
 
 
 def projection(
-    df, problem=["problem"], application=["application"], platform=["platform"]
+    df,
+    problem=["problem"],
+    application=["application"],
+    platform=["platform"],
 ):
     """
     Project data onto definitions of problem, application and platform.
@@ -83,8 +98,7 @@ def projection(
     definitions = problem + application + platform
     _require_columns(df, definitions)
 
-    # Columns in definition(s) become part of the name, so must be strings
-    result = df.astype({col: "str" for col in definitions})
+    result = df.copy(deep=True)
 
     # Create new columns for problem, application and platform
     _collapse(result, problem, "problem")

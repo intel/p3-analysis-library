@@ -1,10 +1,12 @@
 # Copyright (C) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
+import unittest
+
 import pandas as pd
+
 from p3.data import projection
 from p3.data._projection import _collapse
-import unittest
 
 
 class TestProjection(unittest.TestCase):
@@ -20,6 +22,18 @@ class TestProjection(unittest.TestCase):
         _collapse(df, ["c1", "c2"], "c3")
 
         expected_data = {"c3": ["x-1", "y-2", "z-3"]}
+        expected_df = pd.DataFrame(expected_data)
+
+        pd.testing.assert_frame_equal(df, expected_df)
+
+    def test_collapse_null(self):
+        """Check that _collapse skips null values"""
+        data = {"c1": ["x", "y", "z"], "c2": ["1", None, "3"]}
+        df = pd.DataFrame(data)
+
+        _collapse(df, ["c1", "c2"], "c3")
+
+        expected_data = {"c3": ["x-1", "y", "z-3"]}
         expected_df = pd.DataFrame(expected_data)
 
         pd.testing.assert_frame_equal(df, expected_df)
