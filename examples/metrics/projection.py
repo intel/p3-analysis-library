@@ -25,7 +25,11 @@ for Performance Portability`_":
 **Application**
   Software capable of solving a *problem* with measurable correctness and
   performance. Math libraries, Python scripts, C functions, and entire software
-  packages are all examples of applications.
+  packages are all examples of applications; the Intel |reg| oneAPI Math Kernel
+  Library is an example of an application for solving linear algebra problems.
+
+.. |reg| unicode:: U+00AE
+   :ltrim:
 
 **Platform**
   A collection of software **and** hardware on which an *application* may run a
