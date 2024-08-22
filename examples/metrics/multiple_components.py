@@ -116,7 +116,8 @@ print(proj)
 
 # %%
 # .. note::
-#     See "`Understanding Data Projection <>_` for more information about projection.
+#     See ":ref:`Understanding Data Projection <understanding_projection>`" for
+#     more information about projection.
 #
 # Application Efficiency per Component
 # ------------------------------------
@@ -129,8 +130,9 @@ print(effs)
 
 # %%
 # .. note::
-#     See "`Working with Application Efficiency <>_` for more information about
-#     application efficiency.
+#     See ":ref:`Working with Application Efficiency
+#     <working_with_app_efficiency>`" for more information about application
+#     efficiency.
 #
 # Plotting a graph for each platform separately is a good way to visualize and
 # compare the application efficiency of each component:

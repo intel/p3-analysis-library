@@ -2,6 +2,8 @@
 # Copyright (c) 2024 Intel Corporation
 # SPDX-License-Identifier: 0BSD
 """
+.. _working_with_app_efficiency:
+
 Working with Application Efficiency
 ===================================
 
