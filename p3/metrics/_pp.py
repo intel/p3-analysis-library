@@ -120,7 +120,7 @@ def pp(df):
     # Calculate performance portability for both types of efficiency
     key = ["problem", "application"]
     df[efficiencies] = df[efficiencies].astype(float).fillna(0.0)
-    groups = df[key + efficiencies].groupby(key)
+    groups = df[key + efficiencies].groupby(key, sort=False)
     pp = groups.agg(_hmean)
     pp.reset_index(inplace=True)
     for eff in efficiencies:
