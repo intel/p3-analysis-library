@@ -61,6 +61,7 @@ def pp(df):
     ------
     ValueError
         If any of the required columns are missing from `df`.
+        If any (application, platform) pair has multiple efficiency values.
 
     TypeError
         If any of the values in the efficiency column(s) are non-numeric.
@@ -83,11 +84,14 @@ def pp(df):
         if not df[eff].fillna(0).between(0, 1).all():
             raise ValueError(f"{eff} must in range [0, 1]")
 
-    # Keep only the most efficient (application, platform) results.
-    key = ["problem", "platform", "application"]
-    groups = df[key + efficiencies].groupby(key)
-    df = groups.agg("max")
-    df.reset_index(inplace=True)
+    # Check there is only one entry per (application, platform) pair.
+    for eff in efficiencies:
+        grouped = df.groupby(["platform", "application"])
+        if not (grouped[eff].nunique() == 1).all():
+            raise ValueError(
+                "Each (application, platform) pair must be associated with "
+                + "exactly one efficiency value.",
+            )
 
     # Add a "did not run" value for applications that did not run
     rows = []

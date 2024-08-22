@@ -112,12 +112,6 @@ class CascadePlot(CascadePlot):
             plotwidth = size[0]
             plotheight = size[1]
 
-        # Keep only the most efficient (application, platform) results.
-        key = ["problem", "platform", "application"]
-        groups = df[key + [eff_column]].groupby(key)
-        df = groups.agg("max")
-        df.reset_index(inplace=True)
-
         platforms = df["platform"].unique()
         applications = df["application"].unique()
 

@@ -75,6 +75,7 @@ def cascade(df, eff=None, size=None, **kwargs):
     ValueError
         If any of the required columns are missing from `df`.
         If `eff` is set to any value other than "app" or "arch".
+        If any (application, platform) pair has multiple efficiency values.
 
     TypeError
         If any of the values in the efficiency column(s) is non-numeric.
@@ -109,6 +110,14 @@ def cascade(df, eff=None, size=None, **kwargs):
             msg = "DataFrame does not contain an '%s' column."
             raise ValueError(msg % (eff_column))
     _require_numeric(df, [eff_column])
+
+    # Check there is only one entry per (application, platform) pair.
+    grouped = df.groupby(["platform", "application"])
+    if not (grouped[eff_column].nunique() == 1).all():
+        raise ValueError(
+            "Each (application, platform) pair must be associated with "
+            + "exactly one efficiency value.",
+        )
 
     kwargs.setdefault("backend", "matplotlib")
     backend = kwargs["backend"]
