@@ -187,11 +187,21 @@ print(effs)
 # are both achieving the best-known performance when running the package as a
 # whole. This isn't *strictly* incorrect, since the values of their combined
 # figure-of-merit *are* the same, but we know from our earlier per-component
-# analysis that it would be possible to achieve better performance results.
+# analysis that it could be possible to achieve better performance results.
 #
 # Specifically, our per-component analysis shows us that an application that
 # could pick and choose the best implementation of different components for
 # different platforms would achieve better overall performance.
+#
+# .. important::
+#     Combining component implementations in this way is purely hypothetical,
+#     and there may be very good reasons (e.g., incompatible data structures)
+#     that an application is unable to use certain combinations. Although
+#     removing such invalid combinations would result in a tighter upper
+#     bound, it is much simpler to leave them in place. Including all
+#     combinations may even identify potential opportunities to combine
+#     approaches that initially appeared incompatible (e.g., by writing
+#     routines to convert between data structures).
 #
 # We can fold that observation into our P3 analysis by creating an entry in our
 # dataset that represents the results from a hypothetical application:
