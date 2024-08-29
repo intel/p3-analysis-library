@@ -75,7 +75,9 @@ def cascade(df, eff=None, size=None, **kwargs):
     ValueError
         If any of the required columns are missing from `df`.
         If `eff` is set to any value other than "app" or "arch".
-        If any (application, platform) pair has multiple efficiency values.
+        If any (application, platform) pair has multiple efficiency values,
+        since the plot shows only one efficiency value per (application,
+        platform) combination.
 
     TypeError
         If any of the values in the efficiency column(s) is non-numeric.

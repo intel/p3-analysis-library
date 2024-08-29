@@ -61,7 +61,9 @@ def pp(df):
     ------
     ValueError
         If any of the required columns are missing from `df`.
-        If any (application, platform) pair has multiple efficiency values.
+        If any (application, platform) pair has multiple efficiency values,
+        since the pp metric calculation for each application expects one
+        efficiency value per platform.
 
     TypeError
         If any of the values in the efficiency column(s) are non-numeric.
