@@ -1,9 +1,11 @@
 # Copyright (C) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
-import pandas as pd
-from p3.metrics import pp
 import unittest
+
+import pandas as pd
+
+from p3.metrics import pp
 
 
 class TestPP(unittest.TestCase):
@@ -90,8 +92,8 @@ class TestPP(unittest.TestCase):
 
         expected_data = {
             "problem": ["test"] * 3,
-            "application": ["best", "dummy", "latest"],
-            "app pp": [1.0, 0.0, 0.4878],
+            "application": ["latest", "best", "dummy"],
+            "app pp": [0.4878, 1.0, 0.0],
             "arch pp": [0.0] * 3,
         }
         expected_df = pd.DataFrame(expected_data)
@@ -135,7 +137,7 @@ class TestPP(unittest.TestCase):
         pd.testing.assert_frame_equal(result, expected_df)
 
     def test_pp_duplicates(self):
-        """p3.data.pp.duplicates"""
+        """Check that duplicates are reported as an error"""
 
         # Regression for case with duplicate result
         data = {
@@ -148,17 +150,8 @@ class TestPP(unittest.TestCase):
         }
         df = pd.DataFrame(data)
 
-        result = pp(df)
-
-        expected_data = {
-            "problem": ["test"],
-            "application": ["latest"],
-            "app pp": [1.0],
-            "arch pp": [0.5],
-        }
-        expected_df = pd.DataFrame(expected_data)
-
-        pd.testing.assert_frame_equal(result, expected_df)
+        with self.assertRaises(ValueError):
+            _ = pp(df)
 
 if __name__ == "__main__":
     unittest.main()

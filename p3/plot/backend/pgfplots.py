@@ -84,7 +84,7 @@ class CascadePlot(CascadePlot):
     Cascade plot object for :py:mod:`pgfplots`.
     """
 
-    def __init__(self, df, eff=None, size=None, stream=None, **kwargs):
+    def __init__(self, df, eff_column, size=None, stream=None, **kwargs):
         super().__init__("pgfplots")
 
         default_markers = _pgfplots_markers
@@ -105,42 +105,12 @@ class CascadePlot(CascadePlot):
         if not app_style.markers:
             app_style.markers = default_markers
 
-        # Choose the efficiency column based on eff parameter and available
-        # columns
-        efficiency_columns = []
-        for column in ["app eff", "arch eff"]:
-            if column in df:
-                efficiency_columns.append(column)
-        if len(efficiency_columns) == 0:
-            msg = (
-                "DataFrame does not contain an 'app eff' or 'arch eff' ",
-                "column.",
-            )
-            raise ValueError(msg)
-
-        if eff is None:
-            eff_column = efficiency_columns[0]
-        else:
-            if eff not in ["app", "arch"]:
-                raise ValueError("'eff' must be 'app' or 'arch'.")
-            eff_column = eff + " eff"
-            if eff_column not in df:
-                msg = "DataFrame does not contain an '%s' column."
-                raise ValueError(msg % (eff_column))
-        _require_numeric(df, [eff_column])
-
         # If the size is unset, default to 200pt x 200pt, otherwise set size
         plotwidth = "200pt"
         plotheight = "200pt"
         if size:
             plotwidth = size[0]
             plotheight = size[1]
-
-        # Keep only the most efficient (application, platform) results.
-        key = ["problem", "platform", "application"]
-        groups = df[key + [eff_column]].groupby(key)
-        df = groups.agg("max")
-        df.reset_index(inplace=True)
 
         platforms = df["platform"].unique()
         applications = df["application"].unique()
