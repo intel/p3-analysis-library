@@ -88,7 +88,7 @@ data below:
 
 # %%
 # After loading this data into a :py:class:`pandas.DataFrame` (`df`), we can
-# use the :py:func:`p3.metrics.application_efficiency` function to calculate a
+# use the :py:func:`p3analysis.metrics.application_efficiency` function to calculate a
 # table of application efficiencies.
 
 #sphinx_gallery_start_ignore
@@ -96,7 +96,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-import p3
+import p3analysis
 
 myapp_data = {
     "problem": ["Test"] * 5,
@@ -109,7 +109,7 @@ myapp_data = {
 df = pd.DataFrame(myapp_data)
 #sphinx_gallery_end_ignore
 
-effs = p3.metrics.application_efficiency(df)
+effs = p3analysis.metrics.application_efficiency(df)
 print(effs)
 
 # %%
@@ -182,7 +182,7 @@ yourapp_data = {
 df = pd.concat([df, pd.DataFrame(yourapp_data)], ignore_index=True)
 #sphinx_gallery_end_ignore
 
-effs = p3.metrics.application_efficiency(df)
+effs = p3analysis.metrics.application_efficiency(df)
 print(effs)
 
 # %%
@@ -282,7 +282,7 @@ new_myapp_data = {
 df = pd.concat([df, pd.DataFrame(new_myapp_data)], ignore_index=True)
 #sphinx_gallery_end_ignore
 
-effs = p3.metrics.application_efficiency(df)
+effs = p3analysis.metrics.application_efficiency(df)
 print(effs)
 
 # %%

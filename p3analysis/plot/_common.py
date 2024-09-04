@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 
-class Legend(object):
+class Legend:
     """
     Container for legend styling options.
     """
@@ -11,7 +11,7 @@ class Legend(object):
         self.kwargs = kwargs
 
 
-class ApplicationStyle(object):
+class ApplicationStyle:
     """
     Container for application styling options.
     """
@@ -22,7 +22,7 @@ class ApplicationStyle(object):
         self.kwargs = kwargs
 
 
-class PlatformStyle(object):
+class PlatformStyle:
     """
     Container for platform styling options.
     """

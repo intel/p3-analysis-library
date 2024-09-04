@@ -1,10 +1,10 @@
-p3.data package
-===============
+p3analysis.data package
+=======================
 
 Module contents
 ---------------
 
-.. automodule:: p3.data
+.. automodule:: p3analysis.data
    :members:
    :undoc-members:
    :show-inheritance:

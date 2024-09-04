@@ -2,8 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 import json
-import jsonschema
 import pkgutil
+
+import jsonschema
 
 
 def _validate_coverage_json(json_string: str) -> object:

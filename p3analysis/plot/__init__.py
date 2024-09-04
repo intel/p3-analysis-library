@@ -1,9 +1,9 @@
 # Copyright (c) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
-from p3.plot._cascade import cascade
-from p3.plot._navchart import navchart
-from p3.plot._common import Legend, ApplicationStyle, PlatformStyle
+from p3analysis.plot._cascade import cascade
+from p3analysis.plot._common import ApplicationStyle, Legend, PlatformStyle
+from p3analysis.plot._navchart import navchart
 
 __all__ = [
     "cascade",

@@ -8,14 +8,14 @@ on:
   push:
     branches: [ "main" ]
     paths:
-    - 'p3/**'
+    - 'p3analysis/**'
     - 'tests/**'
     - 'pyproject.toml'
     - 'MANIFEST.in'
   pull_request:
     branches: [ "main" ]
     paths:
-    - 'p3/**'
+    - 'p3analysis/**'
     - 'tests/**'
     - 'pyproject.toml'
     - 'MANIFEST.in'
@@ -31,7 +31,7 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install p3 and its dependencies
+    - name: Install p3analysis and its dependencies
       run: pip install --no-cache-dir './[dev]'
     - name: Run unittest
       run: python -m unittest discover -s tests --verbose

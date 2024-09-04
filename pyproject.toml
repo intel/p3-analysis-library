@@ -14,7 +14,7 @@ authors = [
 description = "Performance, Portability and Productivity Analysis Library"
 dynamic = ["version", "readme"]
 keywords = ["performance", "portability", "productivity"]
-name = "p3"
+name = "p3analysis"
 requires-python = ">=3.9"
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -37,8 +37,8 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["p3*"]
+include = ["p3analysis*"]
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"]}
-version = {attr = "p3.__version__"}
+version = {attr = "p3analysis.__version__"}

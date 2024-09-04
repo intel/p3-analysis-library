@@ -23,7 +23,7 @@ Performance, Portability, and Productivity Analysis Library
    :hidden:
    :caption: Reference
 
-   p3
+   p3analysis
 
 .. toctree::
    :maxdepth: 1
@@ -38,11 +38,11 @@ The Performance, Portability, and Productivity Analysis Library (P3 Analysis
 Library) enables a simpler workflow for the collection and interpretation of P3
 data.
 
-- Compute :doc:`metrics <p3.metrics>` like "performance portability" and
+- Compute :doc:`metrics <p3analysis.metrics>` like "performance portability" and
   "code divergence" to quantify the trade-offs between performance, portability
   and productivity made by applications targeting multiple platforms.
 
-- :doc:`Plot <p3.plot>` cascades and navigation charts to visualize and gain
+- :doc:`Plot <p3analysis.plot>` cascades and navigation charts to visualize and gain
   deeper insight into the "performance portability" and "code divergence"
   scores achieved by different applications.
 

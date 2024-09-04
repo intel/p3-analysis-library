@@ -1,19 +1,20 @@
 # Copyright (C) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
+import unittest
+
 import matplotlib
 import pandas as pd
-from p3.plot import cascade
-from p3.plot import ApplicationStyle, PlatformStyle
-import unittest
+
+from p3analysis.plot import ApplicationStyle, PlatformStyle, cascade
 
 
 class TestCascade(unittest.TestCase):
     """
-    Test p3.plot.cascade functionality.
+    Test p3analysis.plot.cascade functionality.
     """
 
     def test_required_columns(self):
-        """p3.plot.cascade.required_columns"""
+        """p3analysis.plot.cascade.required_columns"""
 
         df = pd.DataFrame()
         with self.assertRaises(ValueError):
@@ -31,7 +32,7 @@ class TestCascade(unittest.TestCase):
             cascade(df, eff="invalid")
 
     def test_options(self):
-        """p3.plot.cascade.options"""
+        """p3analysis.plot.cascade.options"""
 
         data = {
             "problem": ["test"] * 2,

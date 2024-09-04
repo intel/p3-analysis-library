@@ -15,8 +15,8 @@ not achieve very high levels of architectural efficiency, setting a lower
 maximum value for the y-axis can improve readability.
 
 Instead of trying to expose all possible customization options as arguments to
-:py:func:`p3.plot.cascade`, the function returns a
-:py:class:`p3.plot.CascadePlot` object that provides direct access to library
+:py:func:`p3analysis.plot.cascade`, the function returns a
+:py:class:`p3analysis.plot.CascadePlot` object that provides direct access to library
 internals. When using the :py:mod:`matplotlib` backend it is possible to
 access the :py:class:`matplotlib.axes.Axes` that were used and subsequently
 call any number of :py:mod:`matplotlib` functions. In our example, we can
@@ -28,19 +28,19 @@ use :py:meth:`matplotlib.axes.Axes.set_ylim` to update the y-axis.
 
 .. TIP::
    If you have any trouble customizing a plot, or the
-   :py:class:`~p3.plot.backend.CascadePlot` object does not provide access to
+   :py:class:`~p3analysis.plot.backend.CascadePlot` object does not provide access to
    the internals you are looking for, then please `open an issue
    <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
-
-import pandas as pd
-
-import p3
 
 # Initialize synthetic performance efficiency data
 # (not shown, but available in script download)
 # sphinx_gallery_start_ignore
 from collections import defaultdict
+
+import pandas as pd
+
+import p3analysis
 
 data = defaultdict(list)
 for (i, platform) in enumerate(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]):
@@ -68,10 +68,10 @@ for (i, platform) in enumerate(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
 df = pd.DataFrame(data)
 
 # Generate a cascade plot with custom style options
-legend = p3.plot.Legend(loc="center left", bbox_to_anchor=(0.91, 0.225), ncols=2)
-pstyle = p3.plot.PlatformStyle(colors="GnBu")
-astyle = p3.plot.ApplicationStyle(markers=["x", "s", "p", "h", "H", "v"])
-cascade = p3.plot.cascade(df, size=(6, 5), platform_legend=legend, platform_style=pstyle, application_style=astyle)
+legend = p3analysis.plot.Legend(loc="center left", bbox_to_anchor=(0.91, 0.225), ncols=2)
+pstyle = p3analysis.plot.PlatformStyle(colors="GnBu")
+astyle = p3analysis.plot.ApplicationStyle(markers=["x", "s", "p", "h", "H", "v"])
+cascade = p3analysis.plot.cascade(df, size=(6, 5), platform_legend=legend, platform_style=pstyle, application_style=astyle)
 
 # Further customize the cascade plot using matplotlib
 # In this example, we adjust the range of the y-axis to improve readability

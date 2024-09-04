@@ -94,7 +94,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-import p3
+import p3analysis
 
 data = {
     "component": ["Component 1", "Component 2"] * 4,
@@ -106,7 +106,7 @@ data = {
 df = pd.DataFrame(data)
 # sphinx_gallery_end_ignore
 
-proj = p3.data.projection(
+proj = p3analysis.data.projection(
     df,
     problem=["component"],
     application=["implementation"],
@@ -125,7 +125,7 @@ print(proj)
 # Having projected the performance data onto P3 definitions, we can now compute
 # the application efficiency for each component:
 
-effs = p3.metrics.application_efficiency(proj)
+effs = p3analysis.metrics.application_efficiency(proj)
 print(effs)
 
 # %%
@@ -179,7 +179,7 @@ print(package)
 # %%
 # Then, we can use this data to compute application efficiency, as below:
 
-effs = p3.metrics.application_efficiency(package)
+effs = p3analysis.metrics.application_efficiency(package)
 print(effs)
 
 # %%
@@ -229,7 +229,7 @@ print(package)
 # by mixing and matching different implementations. And if we now re-compute
 # application efficiency with this data included:
 
-effs = p3.metrics.application_efficiency(package)
+effs = p3analysis.metrics.application_efficiency(package)
 print(effs)
 
 # %%

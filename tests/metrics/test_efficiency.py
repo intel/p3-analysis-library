@@ -1,25 +1,27 @@
 # Copyright (C) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
-import pandas as pd
-from p3.metrics import application_efficiency
 import unittest
+
+import pandas as pd
+
+from p3analysis.metrics import application_efficiency
 
 
 class TestEfficiency(unittest.TestCase):
     """
-    Test p3.data.efficiency functionality.
+    Test p3analysis.data.efficiency functionality.
     """
 
     def test_required_columns(self):
-        """p3.data.efficiency.required_columns"""
+        """p3analysis.data.efficiency.required_columns"""
         df = pd.DataFrame()
 
         with self.assertRaises(ValueError):
             application_efficiency(df)
 
     def test_foms(self):
-        """p3.data.efficiency.foms"""
+        """p3analysis.data.efficiency.foms"""
         data = {"problem": [], "platform": [], "application": [], "fom": []}
         df = pd.DataFrame(data)
 
@@ -27,7 +29,7 @@ class TestEfficiency(unittest.TestCase):
             application_efficiency(df, foms="invalid")
 
     def test_side_effects(self):
-        """p3.data.efficiency.side_effects"""
+        """p3analysis.data.efficiency.side_effects"""
         data = {
             "problem": ["test"] * 10,
             "platform": ["A", "B", "C", "D", "E"] * 2,
@@ -47,7 +49,7 @@ class TestEfficiency(unittest.TestCase):
             pd.testing.assert_frame_equal(df, result)
 
     def test_efficiency(self):
-        """p3.data.efficiency"""
+        """p3analysis.data.efficiency"""
 
         # Test foms = lower
         # fom interpretations are time
@@ -63,7 +65,7 @@ class TestEfficiency(unittest.TestCase):
         result = application_efficiency(df, foms="lower")
 
         eff_data = {
-            "app eff": [1.0, 0.8, 0.5, 0.0, 0.2] + [1.0, 1.0, 1.0, 1.0, 1.0]
+            "app eff": [1.0, 0.8, 0.5, 0.0, 0.2] + [1.0, 1.0, 1.0, 1.0, 1.0],
         }
         expected_data = data.copy()
         expected_data.update(eff_data)
@@ -84,7 +86,7 @@ class TestEfficiency(unittest.TestCase):
         result = application_efficiency(df, foms="higher")
 
         eff_data = {
-            "app eff": [1.0, 0.8, 0.5, 0.0, 0.2] + [1.0, 1.0, 1.0, 1.0, 1.0]
+            "app eff": [1.0, 0.8, 0.5, 0.0, 0.2] + [1.0, 1.0, 1.0, 1.0, 1.0],
         }
         expected_data = data.copy()
         expected_data.update(eff_data)

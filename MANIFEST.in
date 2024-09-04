@@ -1,5 +1,5 @@
-include p3/data/coverage-0.1.0.schema
-include p3/data/coverage-0.2.0.schema
-include p3/data/coverage-0.3.0.schema
-include p3/plot/backend/templates/cascade.tex
-include p3/plot/backend/templates/navchart.tex
+include p3analysis/data/coverage-0.1.0.schema
+include p3analysis/data/coverage-0.2.0.schema
+include p3analysis/data/coverage-0.3.0.schema
+include p3analysis/plot/backend/templates/cascade.tex
+include p3analysis/plot/backend/templates/navchart.tex

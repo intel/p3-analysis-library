@@ -1,7 +1,7 @@
 # Copyright (c) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
-from p3._utils import _require_columns, _require_numeric
+from p3analysis._utils import _require_columns, _require_numeric
 
 
 def navchart(pp, cd, eff=None, size=None, goal=None, **kwargs):
@@ -54,16 +54,16 @@ def navchart(pp, cd, eff=None, size=None, goal=None, **kwargs):
               - Description
 
             * - `legend`
-              - p3.plot.Legend
+              - p3analysis.plot.Legend
               - Styling options for platform legend.
 
             * - `style`
-              - p3.plot.ApplicationStyle
+              - p3analysis.plot.ApplicationStyle
               - Styling options for applications.
 
     Returns
     -------
-    ~p3.plot.backend.NavChart
+    ~p3analysis.plot.backend.NavChart
         An object providing direct access to backend-specific components
         of the navigation chart.
 
@@ -90,11 +90,11 @@ def navchart(pp, cd, eff=None, size=None, goal=None, **kwargs):
     kwargs.setdefault("backend", "matplotlib")
     backend = kwargs["backend"]
     if backend == "matplotlib":
-        from p3.plot.backend.matplotlib import NavChart
+        from p3analysis.plot.backend.matplotlib import NavChart
 
         return NavChart(pp, cd, eff, size, goal, **kwargs)
     elif backend == "pgfplots":
-        from p3.plot.backend.pgfplots import NavChart
+        from p3analysis.plot.backend.pgfplots import NavChart
 
         return NavChart(pp, cd, eff, size, goal, **kwargs)
     else:

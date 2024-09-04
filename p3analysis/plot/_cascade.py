@@ -6,7 +6,7 @@
 # Copyright (c) 2020 Performance Portability authors
 # SPDX-License-Identifier: MIT
 
-from p3._utils import _require_columns, _require_numeric
+from p3analysis._utils import _require_columns, _require_numeric
 
 
 def cascade(df, eff=None, size=None, **kwargs):
@@ -49,24 +49,24 @@ def cascade(df, eff=None, size=None, **kwargs):
               - Description
 
             * - `platform_legend`
-              - p3.plot.Legend
+              - p3analysis.plot.Legend
               - Styling options for platform legend.
 
             * - `application_legend`
-              - p3.plot.Legend
+              - p3analysis.plot.Legend
               - Styling options for application legend.
 
             * - `platform_style`
-              - p3.plot.PlatformStyle
+              - p3analysis.plot.PlatformStyle
               - Styling options for platforms.
 
             * - `application_style`
-              - p3.plot.ApplicationStyle
+              - p3analysis.plot.ApplicationStyle
               - Styling options for applications.
 
     Returns
     -------
-    ~p3.plot.backend.CascadePlot
+    ~p3analysis.plot.backend.CascadePlot
         An object providing direct access to backend-specific components
         of the cascade plot.
 
@@ -124,11 +124,11 @@ def cascade(df, eff=None, size=None, **kwargs):
     kwargs.setdefault("backend", "matplotlib")
     backend = kwargs["backend"]
     if backend == "matplotlib":
-        from p3.plot.backend.matplotlib import CascadePlot
+        from p3analysis.plot.backend.matplotlib import CascadePlot
 
         return CascadePlot(df, eff_column, size, **kwargs)
     elif backend == "pgfplots":
-        from p3.plot.backend.pgfplots import CascadePlot
+        from p3analysis.plot.backend.pgfplots import CascadePlot
 
         return CascadePlot(df, eff_column, size, **kwargs)
     else:
