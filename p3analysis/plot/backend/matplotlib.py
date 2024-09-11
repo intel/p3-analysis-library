@@ -14,10 +14,10 @@ import numpy as np
 import pandas as pd
 from matplotlib.path import Path
 
-import p3.metrics
-from p3._utils import _require_numeric
-from p3.plot._common import ApplicationStyle, Legend, PlatformStyle
-from p3.plot.backend import CascadePlot, NavChart
+import p3analysis.metrics
+from p3analysis._utils import _require_numeric
+from p3analysis.plot._common import ApplicationStyle, Legend, PlatformStyle
+from p3analysis.plot.backend import CascadePlot, NavChart
 
 
 def _get_colors(applications, kwarg):
@@ -386,7 +386,7 @@ class CascadePlot(CascadePlot):
         ax.yaxis.tick_right()
         ax.grid(visible=True)
 
-        pp = p3.metrics.pp(df)
+        pp = p3analysis.metrics.pp(df)
 
         edgecolors = [colors[app] for app in pp["application"]]
         ax.bar(

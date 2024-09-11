@@ -41,5 +41,5 @@ The terminology used by the P3 Analysis Library was first introduced in
 Some of these definitions are flexible, allowing the same performance data
 to be used for multiple case studies with different interpretations of these
 terms. The library is designed with this flexibility in mind (see
-:py:func:`p3.data.projection`); concrete definitions are not required when
+:py:func:`p3analysis.data.projection`); concrete definitions are not required when
 collecting data.

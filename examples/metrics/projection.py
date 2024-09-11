@@ -136,7 +136,7 @@ The most obvious projection of this data onto P3 definitions is as follows:
 # %%
 # After loading our data into a :py:class:`pandas.DataFrame`
 # (``df``), we can use the
-# :py:func:`p3.data.projection` function to perform this
+# :py:func:`p3analysis.data.projection` function to perform this
 # projection, renaming the columns as described above.
 
 # sphinx_gallery_start_ignore
@@ -144,7 +144,7 @@ The most obvious projection of this data onto P3 definitions is as follows:
 import matplotlib.pyplot as plt
 import pandas as pd
 
-import p3
+import p3analysis
 
 rename_data = {
     "size": ["128x128x128", "256x256x256"] * 4,
@@ -156,7 +156,7 @@ rename_data = {
 df = pd.DataFrame(rename_data)
 # sphinx_gallery_end_ignore
 
-proj = p3.data.projection(
+proj = p3analysis.data.projection(
     df,
     problem=["size"],
     application=["implementation"],
@@ -166,7 +166,7 @@ print(proj)
 
 # %%
 # Following projection, our performance data is now ready to be passed to
-# functions in the :py:mod:`p3.metrics` module.
+# functions in the :py:mod:`p3analysis.metrics` module.
 
 # %%
 # Using Projection to Combine Columns
@@ -304,7 +304,7 @@ print(proj)
 # Neither of these options is more correct than the other. Rather, they
 # represent different studies.
 #
-# Both projections can be performed with the :py:func:`p3.data.projection`
+# Both projections can be performed with the :py:func:`p3analysis.data.projection`
 # function, by passing different arguments.
 #
 # For the first projection, we now need to specify the names of two columns
@@ -322,7 +322,7 @@ combine_data = {
 df = pd.concat([df, pd.DataFrame(combine_data)], ignore_index=True)
 # sphinx_gallery_end_ignore
 
-proj1 = p3.data.projection(
+proj1 = p3analysis.data.projection(
     df,
     problem=["size", "precision"],
     application=["implementation"],
@@ -337,7 +337,7 @@ print(proj1)
 # For the second projection, we just need to specify "size", exactly as we did
 # before:
 
-proj2 = p3.data.projection(
+proj2 = p3analysis.data.projection(
     df,
     problem=["size"],
     application=["implementation"],

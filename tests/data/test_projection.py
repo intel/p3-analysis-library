@@ -5,17 +5,17 @@ import unittest
 
 import pandas as pd
 
-from p3.data import projection
-from p3.data._projection import _collapse
+from p3analysis.data import projection
+from p3analysis.data._projection import _collapse
 
 
 class TestProjection(unittest.TestCase):
     """
-    Test p3.data.projection functionality.
+    Test p3analysis.data.projection functionality.
     """
 
     def test_collapse(self):
-        """p3.data.projection.collapse"""
+        """p3analysis.data.projection.collapse"""
         data = {"c1": ["x", "y", "z"], "c2": ["1", "2", "3"]}
         df = pd.DataFrame(data)
 
@@ -39,7 +39,7 @@ class TestProjection(unittest.TestCase):
         pd.testing.assert_frame_equal(df, expected_df)
 
     def test_required_columns(self):
-        """p3.data.projection.required_columns"""
+        """p3analysis.data.projection.required_columns"""
         df = pd.DataFrame()
 
         with self.assertRaises(ValueError):
@@ -58,7 +58,7 @@ class TestProjection(unittest.TestCase):
             projection(df, platform=[1])
 
     def test_side_effects(self):
-        """p3.data.projection.side_effects"""
+        """p3analysis.data.projection.side_effects"""
         data = {
             "c1": ["x", "y"],
             "c2": ["1", "2"],
@@ -77,7 +77,7 @@ class TestProjection(unittest.TestCase):
             pd.testing.assert_frame_equal(df, result)
 
     def test_projection(self):
-        """p3.data.projection"""
+        """p3analysis.data.projection"""
         data = {
             "c1": ["x", "y"],
             "c2": ["1", "2"],
@@ -101,7 +101,7 @@ class TestProjection(unittest.TestCase):
         pd.testing.assert_frame_equal(result, expected_df, check_like=True)
 
     def test_empty_projection(self):
-        """p3.data.empty_projection"""
+        """p3analysis.data.empty_projection"""
         data = {"problem": ["x"], "platform": ["X"], "application": ["A"]}
         df = pd.DataFrame(data)
 

@@ -6,7 +6,7 @@ from statistics import harmonic_mean
 
 import pandas as pd
 
-from p3._utils import _require_columns, _require_numeric
+from p3analysis._utils import _require_columns, _require_numeric
 
 
 def _hmean(series):

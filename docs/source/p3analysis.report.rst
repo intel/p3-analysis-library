@@ -1,10 +1,10 @@
-p3.metrics package
-==================
+p3analysis.report package
+=========================
 
 Module contents
 ---------------
 
-.. automodule:: p3.metrics
+.. automodule:: p3analysis.report
    :members:
    :undoc-members:
    :show-inheritance:

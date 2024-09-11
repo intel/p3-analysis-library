@@ -6,10 +6,10 @@ import os
 
 import matplotlib.pyplot as plt
 
-import p3.metrics
-import p3.plot
-from p3._utils import _require_columns
-from p3.metrics._divergence import _coverage_string_to_json
+import p3analysis.metrics
+import p3analysis.plot
+from p3analysis._utils import _require_columns
+from p3analysis.metrics._divergence import _coverage_string_to_json
 
 
 def _tmpdir(prefix):
@@ -57,8 +57,8 @@ def snapshot(df, cov=None, directory=None):
     Generate an HTML report representing a snapshot of P3 characteristics.
 
     The report includes:
-    - A cascade plot (see :py:func:`p3.plot.cascade`)
-    - A navigation chart (see :py:func:`p3.plot.navchart`)
+    - A cascade plot (see :py:func:`p3analysis.plot.cascade`)
+    - A navigation chart (see :py:func:`p3analysis.plot.navchart`)
     - A table breaking down the lines of code shared between applications
 
     .. _Code Base Investigator: https://github.com/intel/code-base-investigator
@@ -141,7 +141,7 @@ def snapshot(df, cov=None, directory=None):
     app_order = df["application"].unique()
 
     # Calculate the efficiencies using all available data
-    effs = p3.metrics.application_efficiency(df)
+    effs = p3analysis.metrics.application_efficiency(df)
 
     # Limit the plots to the latest results
     snap = effs.drop_duplicates(
@@ -152,20 +152,20 @@ def snapshot(df, cov=None, directory=None):
     snap = _sort_by_app_order(snap, app_order)
 
     plt.figure(figsize=(6, 5))
-    p3.plot.cascade(snap)
+    p3analysis.plot.cascade(snap)
     with open("cascade.png", "xb", opener=_safe_opener) as fp:
         plt.savefig(fp, bbox_inches="tight")
 
     plt.clf()
 
-    pp = p3.metrics.pp(snap)
+    pp = p3analysis.metrics.pp(snap)
     pp = _sort_by_app_order(pp, app_order)
 
-    div = p3.metrics.divergence(df, cov)
+    div = p3analysis.metrics.divergence(df, cov)
     div = _sort_by_app_order(div, app_order)
 
     plt.figure(figsize=(5, 5))
-    p3.plot.navchart(pp, div)
+    p3analysis.plot.navchart(pp, div)
     plt.tight_layout()
     with open("navchart.png", "xb", opener=_safe_opener) as fp:
         plt.savefig(fp, bbox_inches="tight")

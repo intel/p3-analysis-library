@@ -16,12 +16,14 @@ The original data is available from https://github.com/UoB-HPC/BabelStream.
 # Load Data into Pandas
 # ---------------------
 
-# import libraries
-import pandas as pd
-import p3
-
 #sphinx_gallery_start_ignore
 import os
+
+# import libraries
+import pandas as pd
+
+import p3analysis
+
 dpath = os.path.realpath(os.getcwd())
 performance_csv = os.path.join(dpath, "performance.csv")
 coverage_csv = os.path.join(dpath, "coverage.csv")
@@ -40,11 +42,11 @@ df_cov = pd.read_csv(coverage_csv)
 # %%
 # Project Labels into Expected Forms
 # ----------------------------------
-# The :py:func:`p3.data.projection` method can be used to project column names
+# The :py:func:`p3analysis.data.projection` method can be used to project column names
 # from the original data into names required by the P3 Analysis Library.
 
-df = p3.data.projection(
-    df, problem=["name"], platform=["arch"], application=["language"]
+df = p3analysis.data.projection(
+    df, problem=["name"], platform=["arch"], application=["language"],
 )
 
 # %%
@@ -74,7 +76,7 @@ df = p3.data.projection(
 # (problem, platform) combination; any row with an `app eff` of 1 represents
 # an application achieving the best-known performance.
 
-effs = p3.metrics.application_efficiency(df)
+effs = p3analysis.metrics.application_efficiency(df)
 print(effs)
 
 # %%
@@ -85,7 +87,7 @@ print(effs)
 # has a non-zero divergence, as it is the only implementation containing
 # different code paths for different platforms.
 
-div = p3.metrics.divergence(df, df_cov)
+div = p3analysis.metrics.divergence(df, df_cov)
 print(div)
 
 # %%
@@ -96,14 +98,14 @@ print(div)
 # to achieve a non-zero performance portability score. For BabelStream,
 # Language 0 is the only programming model that runs across all 11 platforms.
 
-pp = p3.metrics.pp(effs)
+pp = p3analysis.metrics.pp(effs)
 print(pp)
 
 # %%
 # Generate a Navigation Chart
 # ---------------------------
 
-navchart = p3.plot.navchart(pp, div)
+navchart = p3analysis.plot.navchart(pp, div)
 navchart.save("navchart.png")
 
 # %%

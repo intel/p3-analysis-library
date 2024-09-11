@@ -3,7 +3,7 @@
 
 import pandas as pd
 
-from p3._utils import _require_columns
+from p3analysis._utils import _require_columns
 
 
 def _join(series):
@@ -38,8 +38,8 @@ def projection(
     Project data onto definitions of problem, application and platform.
 
     The result of a projection is a DataFrame suitable for use with
-    functionality provided by the :py:mod:`p3.metrics`, :py:mod:`p3.plot` and
-    :py:mod:`p3.report` modules.
+    functionality provided by the :py:mod:`p3analysis.metrics`,
+    :py:mod:`p3analysis.plot` and :py:mod:`p3analysis.report` modules.
 
     Parameters
     ----------
@@ -79,7 +79,7 @@ def projection(
     ...                    'M': ['1024', '1024'],
     ...                    'N': ['1024', '1024'],
     ...                    'K': ['1024', '1024']})
-    >>> df = p3.data.projection(df,
+    >>> df = p3analysis.data.projection(df,
     ...                         problem=['kernel', 'M', 'N', 'K'],
     ...                         application=['language', 'branch'],
     ...                         platform=['architecture', 'compiler'])

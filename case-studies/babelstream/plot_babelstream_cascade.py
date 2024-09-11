@@ -20,12 +20,14 @@ readily available in the dataset.
 # Load Data into Pandas
 # ---------------------
 
-# import libraries
-import pandas as pd
-import p3
-
 #sphinx_gallery_start_ignore
 import os
+
+# import libraries
+import pandas as pd
+
+import p3analysis
+
 dpath = os.path.realpath(os.getcwd())
 performance_csv = os.path.join(dpath, "performance.csv")
 #sphinx_gallery_end_ignore
@@ -36,11 +38,11 @@ df = pd.read_csv(performance_csv)
 # %%
 # Project Labels into Expected Forms
 # ----------------------------------
-# The :py:func:`p3.data.projection` method can be used to project column names
+# The :py:func:`p3analysis.data.projection` method can be used to project column names
 # from the original data into names required by the P3 Analysis Library.
 
-df = p3.data.projection(
-    df, problem=["name"], platform=["arch"], application=["language"]
+df = p3analysis.data.projection(
+    df, problem=["name"], platform=["arch"], application=["language"],
 )
 
 # %%
@@ -67,14 +69,14 @@ df = p3.data.projection(
 # (problem, platform) combination; any row with an `app eff` of 1 represents
 # an application achieving the best-known performance.
 
-effs = p3.metrics.application_efficiency(df)
+effs = p3analysis.metrics.application_efficiency(df)
 print(effs)
 
 # %%
 # Generate a Cascade Plot
 # -----------------------
 
-cascade = p3.plot.cascade(effs)
+cascade = p3analysis.plot.cascade(effs)
 cascade.save("cascade.png")
 
 # %%

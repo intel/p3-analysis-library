@@ -2,14 +2,16 @@
 # SPDX-License-Identifier: MIT
 
 import json
-import pandas as pd
-from p3.metrics import divergence
 import unittest
+
+import pandas as pd
+
+from p3analysis.metrics import divergence
 
 
 class TestDivergence(unittest.TestCase):
     """
-    Test p3.data.divergence functionality.
+    Test p3analysis.data.divergence functionality.
     """
 
     def test_required_columns(self):
@@ -36,8 +38,8 @@ class TestDivergence(unittest.TestCase):
                     "file": "file.cpp",
                     "id": "0",
                     "lines": [0],
-                }
-            ]
+                },
+            ],
         )
         cov = pd.DataFrame({"coverage_key": [key], "coverage": [json_string]})
 
@@ -68,8 +70,8 @@ class TestDivergence(unittest.TestCase):
                     "file": "foo.cpp",
                     "id": "0",
                     "lines": [[0, 9]],
-                }
-            ]
+                },
+            ],
         )
 
         source2_json_string = json.dumps(
@@ -84,14 +86,14 @@ class TestDivergence(unittest.TestCase):
                     "id": "1",
                     "lines": [[0, 9]],
                 },
-            ]
+            ],
         )
 
         cov = pd.DataFrame(
             {
                 "coverage_key": ["source1", "source2"],
                 "coverage": [source1_json_string, source2_json_string],
-            }
+            },
         )
 
         result = divergence(df, cov)
@@ -122,8 +124,8 @@ class TestDivergence(unittest.TestCase):
                     "file": "file.cpp",
                     "id": "0",
                     "lines": [0],
-                }
-            ]
+                },
+            ],
         )
         cov = pd.DataFrame({"coverage_key": [key], "coverage": [json_string]})
 
@@ -155,8 +157,8 @@ class TestDivergence(unittest.TestCase):
                     "file": "foo.cpp",
                     "id": "0",
                     "lines": [[0, 9]],
-                }
-            ]
+                },
+            ],
         )
 
         # Second file called "foo.cpp" has a different id ("1").
@@ -168,14 +170,14 @@ class TestDivergence(unittest.TestCase):
                     "id": "1",
                     "lines": [[0, 9]],
                 },
-            ]
+            ],
         )
 
         cov = pd.DataFrame(
             {
                 "coverage_key": ["source1", "source2"],
                 "coverage": [source1_json_string, source2_json_string],
-            }
+            },
         )
 
         result = divergence(df, cov)

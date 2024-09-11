@@ -14,8 +14,8 @@ similar values, while annotations can be useful to draw attention to certain
 points and/or provide some additional context.
 
 Instead of trying to expose all possible customization options as arguments to
-:py:func:`p3.plot.navchart`, the function returns a
-:py:class:`p3.plot.NavChart` object that provides direct access to library
+:py:func:`p3analysis.plot.navchart`, the function returns a
+:py:class:`p3analysis.plot.NavChart` object that provides direct access to library
 internals. When using the :py:mod:`matplotlib` backend it is possible to
 access the :py:class:`matplotlib.axes.Axes` that were used and subsequently
 call any number of :py:mod:`matplotlib` functions. In our example, we can
@@ -29,20 +29,20 @@ use :py:meth:`matplotlib.axes.Axes.set_xticks` and
 
 .. TIP::
    If you have any trouble customizing a navigation chart, or the
-   :py:class:`~p3.plot.backend.NavChart` object does not provide access to the
+   :py:class:`~p3analysis.plot.backend.NavChart` object does not provide access to the
    internals you are looking for, then please `open an issue
    <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
-
-import matplotlib.pyplot as plt
-import pandas as pd
-
-import p3
 
 # Initialize synthetic data
 # (not shown, but available in script download)
 # sphinx_gallery_start_ignore
 from collections import defaultdict
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+import p3analysis
 
 pp_data = defaultdict(list)
 cd_data = defaultdict(list)
@@ -64,17 +64,19 @@ pp = pd.DataFrame(pp_data)
 cd = pd.DataFrame(cd_data)
 
 # Generate a navigation chart with custom style options
-legend = p3.plot.Legend(loc="center left", bbox_to_anchor=(1.0, 0.5))
-astyle = p3.plot.ApplicationStyle(markers=["x", "*", "s", "o", "P"])
-navchart = p3.plot.navchart(pp, cd, size=(5, 5), legend=legend, style=astyle)
+legend = p3analysis.plot.Legend(loc="center left", bbox_to_anchor=(1.0, 0.5))
+astyle = p3analysis.plot.ApplicationStyle(markers=["x", "*", "s", "o", "P"])
+navchart = p3analysis.plot.navchart(pp, cd, size=(5, 5), legend=legend, style=astyle)
 
 # Further customize the navigation chart using matplotlib
 # In this example, we add a label and adjust the ticks
 ax = navchart.get_axes()
-ax.annotate("Balances performance and code re-use.",
-            xy=(0.7, 0.7),
-            xytext=(0.2, 0.55),
-            arrowprops=dict(facecolor='black', shrink=0.05))
+ax.annotate(
+    "Balances performance and code re-use.",
+    xy=(0.7, 0.7),
+    xytext=(0.2, 0.55),
+    arrowprops=dict(facecolor='black', shrink=0.05),
+)
 ax.set_xticks([x * 0.1 for x in range(0, 11)])
 ax.set_yticks([y * 0.1 for y in range(0, 11)])
 

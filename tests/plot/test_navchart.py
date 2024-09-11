@@ -1,19 +1,20 @@
 # Copyright (C) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
+import unittest
+
 import matplotlib
 import pandas as pd
-from p3.plot import navchart
-from p3.plot import ApplicationStyle
-import unittest
+
+from p3analysis.plot import ApplicationStyle, navchart
 
 
 class TestNavchart(unittest.TestCase):
     """
-    Test p3.plot.navchart functionality.
+    Test p3analysis.plot.navchart functionality.
     """
 
     def test_required_columns(self):
-        """p3.plot.navchart.required_columns"""
+        """p3analysis.plot.navchart.required_columns"""
 
         pp = pd.DataFrame()
         cd = pd.DataFrame()
@@ -28,13 +29,13 @@ class TestNavchart(unittest.TestCase):
             navchart(pp, cd, eff="arch")
 
         pp = pd.DataFrame(
-            columns=["problem", "platform", "application", "app pp"]
+            columns=["problem", "platform", "application", "app pp"],
         )
         with self.assertRaises(ValueError):
             navchart(pp, cd, eff="invalid")
 
     def test_options(self):
-        """p3.plot.navchart.options"""
+        """p3analysis.plot.navchart.options"""
 
         perf = {
             "problem": ["test"] * 2,

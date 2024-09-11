@@ -3,7 +3,7 @@
 
 import numpy
 
-from p3._utils import _require_columns, _require_numeric
+from p3analysis._utils import _require_columns, _require_numeric
 
 
 def application_efficiency(df, foms="lower"):

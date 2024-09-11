@@ -5,23 +5,23 @@ import unittest
 
 import pandas as pd
 
-from p3.metrics import pp
+from p3analysis.metrics import pp
 
 
 class TestPP(unittest.TestCase):
     """
-    Test p3.data.pp functionality.
+    Test p3analysis.data.pp functionality.
     """
 
     def test_required_columns(self):
-        """p3.data.pp.required_columns"""
+        """p3analysis.data.pp.required_columns"""
         df = pd.DataFrame()
 
         with self.assertRaises(ValueError):
             pp(df)
 
     def test_effs(self):
-        """p3.data.pp.effs"""
+        """p3analysis.data.pp.effs"""
         data = {
             "problem": ["test"],
             "platform": ["test"],
@@ -47,7 +47,7 @@ class TestPP(unittest.TestCase):
             pp(df)
 
     def test_side_effects(self):
-        """p3.data.pp.side_effects"""
+        """p3analysis.data.pp.side_effects"""
         data = {
             "problem": ["test"] * 15,
             "platform": ["A", "B", "C", "D", "E"] * 3,
@@ -72,7 +72,7 @@ class TestPP(unittest.TestCase):
             pd.testing.assert_frame_equal(df, result)
 
     def test_pp(self):
-        """p3.data.pp"""
+        """p3analysis.data.pp"""
 
         data = {
             "problem": ["test"] * 15,
@@ -111,7 +111,7 @@ class TestPP(unittest.TestCase):
             pp(df)
 
     def test_pp_single(self):
-        """p3.data.pp.single"""
+        """p3analysis.data.pp.single"""
 
         # Regression for trivial case with one record
         data = {

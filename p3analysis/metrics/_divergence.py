@@ -4,8 +4,8 @@
 import collections
 import itertools as it
 
-from p3._utils import _require_columns
-from p3.data._validation import _validate_coverage_json
+from p3analysis._utils import _require_columns
+from p3analysis.data._validation import _validate_coverage_json
 
 
 def _extract_platforms(setmap):

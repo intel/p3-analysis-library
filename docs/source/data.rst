@@ -37,7 +37,7 @@ The following fields have special meaning:
 
 It is recommended not to store *application*, *problem* and *platform* fields
 when results are initially collected, and to instead construct them using the
-:py:func:`p3.data.projection` function. This makes it simpler to re-use the
+:py:func:`p3analysis.data.projection` function. This makes it simpler to re-use the
 same data across multiple analyses using different meanings of *application*,
 *problem*, and *platform*.
 

@@ -13,10 +13,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-import p3.metrics
-from p3._utils import _require_numeric
-from p3.plot._common import ApplicationStyle, Legend, PlatformStyle
-from p3.plot.backend import CascadePlot, NavChart
+import p3analysis.metrics
+from p3analysis._utils import _require_numeric
+from p3analysis.plot._common import ApplicationStyle, Legend, PlatformStyle
+from p3analysis.plot.backend import CascadePlot, NavChart
 
 # Define 19 default markers for LaTeX plots
 _pgfplots_markers = [
@@ -72,7 +72,7 @@ def _get_tex_template(filename):
         line_comment_prefix="%#",
         trim_blocks=True,
         autoescape=True,
-        loader=jinja2.PackageLoader("p3.plot.backend"),
+        loader=jinja2.PackageLoader("p3analysis.plot.backend"),
     )
 
     # Load the template
@@ -194,7 +194,7 @@ class CascadePlot(CascadePlot):
 
         # Build a dictionary with "application name, (application name, qp)"
         # for the pp bar plot
-        pp = p3.metrics.pp(df)
+        pp = p3analysis.metrics.pp(df)
         pp_column = eff_column.replace("eff", "pp")
         pp_bars = {
             app: f"({app}, {app_pp})"
