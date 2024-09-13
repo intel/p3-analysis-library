@@ -5,6 +5,7 @@ import unittest
 
 import pandas as pd
 
+from p3analysis._utils import _cast_to_numeric
 from p3analysis.metrics import application_efficiency
 
 
@@ -141,6 +142,7 @@ class TestEfficiency(unittest.TestCase):
         expected_data.update(eff_data)
         expected_df = pd.DataFrame(expected_data)
 
+        expected_df = _cast_to_numeric(expected_df, ["fom", "app eff"])
         pd.testing.assert_frame_equal(result, expected_df)
 
 

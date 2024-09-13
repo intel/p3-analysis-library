@@ -19,14 +19,15 @@ def _require_columns(df, columns):
             raise ValueError(msg % (column, str(columns)))
 
 
-def _require_numeric(df, columns):
+def _cast_to_numeric(df, columns):
     """
-    Check that the named columns are numeric.
+    Check that the named columns are numeric, and cast them.
     """
-
+    result = df.copy(deep=True)
     for column in columns:
         try:
-            pd.to_numeric(df[column])
+            result[column] = pd.to_numeric(df[column])
         except Exception:
             msg = "Column '%s' must contain only numeric values."
             raise TypeError(msg % (column))
+    return result

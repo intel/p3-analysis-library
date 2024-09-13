@@ -3,7 +3,7 @@
 
 import numpy
 
-from p3analysis._utils import _require_columns, _require_numeric
+from p3analysis._utils import _cast_to_numeric, _require_columns
 
 
 def application_efficiency(df, foms="lower"):
@@ -45,7 +45,7 @@ def application_efficiency(df, foms="lower"):
     """
     required_columns = ["problem", "platform", "application", "fom"]
     _require_columns(df, required_columns)
-    _require_numeric(df, ["fom"])
+    df = _cast_to_numeric(df, ["fom"])
 
     if foms not in ["lower", "higher"]:
         raise ValueError("FOM interpretation must be 'lower' or 'higher'")

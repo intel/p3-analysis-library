@@ -6,7 +6,7 @@ from statistics import harmonic_mean
 
 import pandas as pd
 
-from p3analysis._utils import _require_columns, _require_numeric
+from p3analysis._utils import _cast_to_numeric, _require_columns
 
 
 def _hmean(series):
@@ -79,7 +79,7 @@ def pp(df):
     if len(efficiencies) == 0:
         msg = "DataFrame must contain a column named 'arch eff' or 'app eff'."
         raise ValueError(msg)
-    _require_numeric(df, efficiencies)
+    df = _cast_to_numeric(df, efficiencies)
 
     # Check that efficiencies are not given in percentages
     for eff in efficiencies:

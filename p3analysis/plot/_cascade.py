@@ -8,7 +8,7 @@
 
 import copy
 
-from p3analysis._utils import _require_columns, _require_numeric
+from p3analysis._utils import _cast_to_numeric, _require_columns
 
 
 def cascade(
@@ -115,7 +115,7 @@ def cascade(
         if eff_column not in df:
             msg = "DataFrame does not contain an '%s' column."
             raise ValueError(msg % (eff_column))
-    _require_numeric(df, [eff_column])
+    df = _cast_to_numeric(df, [eff_column])
 
     # Check there is only one entry per (application, platform) pair.
     grouped = df.groupby(["platform", "application"])

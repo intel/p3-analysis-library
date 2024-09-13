@@ -3,7 +3,7 @@
 
 import copy
 
-from p3analysis._utils import _require_columns, _require_numeric
+from p3analysis._utils import _cast_to_numeric, _require_columns
 
 
 def navchart(
@@ -86,7 +86,7 @@ def navchart(
 
     _require_columns(pp, ["problem", "application"])
     _require_columns(cd, ["problem", "application", "divergence"])
-    _require_numeric(cd, ["divergence"])
+    cd = _cast_to_numeric(cd, ["divergence"])
 
     if len(cd["problem"].unique()) > 1:
         raise NotImplementedError(
