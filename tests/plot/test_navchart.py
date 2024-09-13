@@ -47,6 +47,30 @@ class TestNavchart(unittest.TestCase):
         })
         navchart(pp, cd)
 
+    def test_required_column_types(self):
+        """Check that navchart() validates column types."""
+        pp = pd.DataFrame({
+            "problem": ["problem"],
+            "platform": ["platform"],
+            "application": ["application"],
+            "app pp": [1.0],
+        })
+        cd = pd.DataFrame({
+            "problem": ["problem"],
+            "application": ["application"],
+            "divergence": [0.0],
+        })
+
+        with self.assertRaises(TypeError):
+            tmp = pp
+            tmp["app pp"] = "non-numeric"
+            navchart(tmp, cd)
+
+        with self.assertRaises(TypeError):
+            tmp = cd
+            tmp["divergence"] = "non-numeric"
+            navchart(pp, tmp)
+
     def test_options(self):
         """p3analysis.plot.navchart.options"""
 

@@ -20,6 +20,19 @@ class TestPP(unittest.TestCase):
         with self.assertRaises(ValueError):
             pp(df)
 
+    def test_required_column_types(self):
+        """Check that pp() validates column types."""
+        data = {
+            "problem": ["problem"],
+            "platform": ["platform"],
+            "application": ["application"],
+            "arch eff": ["non-numeric"],
+        }
+        df = pd.DataFrame(data)
+
+        with self.assertRaises(TypeError):
+            pp(df)
+
     def test_effs(self):
         """p3analysis.data.pp.effs"""
         data = {

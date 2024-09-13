@@ -20,6 +20,19 @@ class TestEfficiency(unittest.TestCase):
         with self.assertRaises(ValueError):
             application_efficiency(df)
 
+    def test_required_column_types(self):
+        """Check that application_efficiency() validates column types."""
+        data = {
+            "problem": ["problem"],
+            "platform": ["platform"],
+            "application": ["application"],
+            "fom": ["non-numeric"],
+        }
+        df = pd.DataFrame(data)
+
+        with self.assertRaises(TypeError):
+            application_efficiency(df)
+
     def test_foms(self):
         """p3analysis.data.efficiency.foms"""
         data = {"problem": [], "platform": [], "application": [], "fom": []}
