@@ -121,6 +121,28 @@ class TestEfficiency(unittest.TestCase):
         with self.assertRaises(TypeError):
             application_efficiency(df, foms="higher")
 
+    def test_non_numeric(self):
+        """Check that non-numeric data is correctly cast to numeric."""
+        # This is the same correctness test as above, but values are strings.
+        data = {
+            "problem": ["test"] * 10,
+            "platform": ["A", "B", "C", "D", "E"] * 2,
+            "application": ["latest"] * 5 + ["best"] * 5,
+            "fom": ["4", "8", "4", 0, "20"] + ["4", "10", "8", "20", "100"],
+        }
+        df = pd.DataFrame(data)
+
+        result = application_efficiency(df, foms="higher")
+
+        eff_data = {
+            "app eff": [1.0, 0.8, 0.5, 0.0, 0.2] + [1.0, 1.0, 1.0, 1.0, 1.0],
+        }
+        expected_data = data.copy()
+        expected_data.update(eff_data)
+        expected_df = pd.DataFrame(expected_data)
+
+        pd.testing.assert_frame_equal(result, expected_df)
+
 
 if __name__ == "__main__":
     unittest.main()
