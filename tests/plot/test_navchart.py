@@ -34,6 +34,19 @@ class TestNavchart(unittest.TestCase):
         with self.assertRaises(ValueError):
             navchart(pp, cd, eff="invalid")
 
+        pp = pd.DataFrame({
+            "problem": ["problem"],
+            "platform": ["platform"],
+            "application": ["application"],
+            "app pp": [1.0],
+        })
+        cd = pd.DataFrame({
+            "problem": ["problem"],
+            "application": ["application"],
+            "divergence": [0.0],
+        })
+        navchart(pp, cd)
+
     def test_options(self):
         """p3analysis.plot.navchart.options"""
 
