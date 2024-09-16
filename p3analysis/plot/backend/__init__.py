@@ -10,6 +10,7 @@ Contains backend-specific interfaces for customizing plots.
    <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
 
+import itertools
 import string
 
 __all__ = [
@@ -62,9 +63,15 @@ def _get_platform_labels(platforms: list[str]) -> dict[str, str]:
     dict[str, str]:
         A mapping from platform names to unique labels.
     """
-    if len(platforms) > len(string.ascii_uppercase):
+    if len(platforms) <= len(string.ascii_uppercase):
+        labels = string.ascii_uppercase
+    elif len(platforms) <= len(string.ascii_uppercase) ** 2:
+        labels = []
+        for x, y in itertools.product(string.ascii_uppercase, repeat=2):
+            labels.append(f"{x}{y}")
+    else:
         raise RuntimeError(
             "The number of platforms supported by cascade plots is "
-            + f"currently limited to {len(string.ascii_uppercase)}.",
+            + f"currently limited to {len(string.ascii_uppercase)**2}.",
         )
-    return dict(zip(platforms, string.ascii_uppercase))
+    return dict(zip(platforms, labels))
