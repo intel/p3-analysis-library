@@ -9,7 +9,18 @@
 from p3analysis._utils import _require_columns, _require_numeric
 
 
-def cascade(df, eff=None, size=None, **kwargs):
+def cascade(
+    df,
+    eff=None,
+    *,
+    size=None,
+    platform_legend=None,
+    application_legend=None,
+    platform_style=None,
+    application_style=None,
+    backend="matplotlib",
+    **kwargs,
+):
     """
     Plot a `cascade`_ summarizing the efficiency and performance
     portability of each application in a DataFrame, highlighting
@@ -36,33 +47,24 @@ def cascade(df, eff=None, size=None, **kwargs):
         backend the size controls only the top left plot, where the default
         is ("200pt", "200pt")
 
+    platform_legend: p3analysis.plot.Legend, optional
+        Styling options for platform legend.
+
+    application_legend: p3analysis.plot.Legend, optional
+        Styling options for application legend.
+
+    platform_style: p3analysis.plot.PlatformStyle, optional
+        Styling options for platforms.
+
+    application_style: p3analysis.plot.ApplicationStyle, optional
+        Styling options for applications.
+
+    backend: str, {"matplotlib", "pgfplots"}, default: "matplotlib"
+        Backend to use to produce the plot.
+
     **kwargs: properties, optional
-        `kwargs` are used to specify properties that control various styling
-        options (e.g. colors and markers).
-
-        .. list-table:: Properties
-            :widths: 10, 20, 18
-            :header-rows: 1
-
-            * - Property
-              - Type
-              - Description
-
-            * - `platform_legend`
-              - p3analysis.plot.Legend
-              - Styling options for platform legend.
-
-            * - `application_legend`
-              - p3analysis.plot.Legend
-              - Styling options for application legend.
-
-            * - `platform_style`
-              - p3analysis.plot.PlatformStyle
-              - Styling options for platforms.
-
-            * - `application_style`
-              - p3analysis.plot.ApplicationStyle
-              - Styling options for applications.
+        `kwargs` are used to specify properties that control various
+        backend-specific plotting options.
 
     Returns
     -------
@@ -121,8 +123,18 @@ def cascade(df, eff=None, size=None, **kwargs):
             + "exactly one efficiency value.",
         )
 
-    kwargs.setdefault("backend", "matplotlib")
-    backend = kwargs["backend"]
+    # Add styling options, if provided, into kwargs.
+    # Permits different backends to set different defaults.
+    kwargs = dict(kwargs)
+    if platform_legend:
+        kwargs["platform_legend"] = platform_legend
+    if application_legend:
+        kwargs["application_legend"] = application_legend
+    if platform_style:
+        kwargs["platform_style"] = platform_style
+    if application_style:
+        kwargs["application_style"] = application_style
+
     if backend == "matplotlib":
         from p3analysis.plot.backend.matplotlib import CascadePlot
 
