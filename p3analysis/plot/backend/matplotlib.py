@@ -55,6 +55,10 @@ class _PlatformLegendHandler(matplotlib.legend_handler.HandlerBase):
     ):
         artist = []
 
+        # Make adjustments for large numbers of platforms.
+        if len(self.labels) > 26:
+            width *= 1.5
+
         # Draw a box using the platform's assigned color
         name = orig_handle.get_label()
         color = self.colors[name]
