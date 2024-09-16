@@ -10,6 +10,8 @@ Contains backend-specific interfaces for customizing plots.
    <https://github.com/intel/p3-analysis-library/issues/new/choose>`_.
 """
 
+import string
+
 __all__ = [
     "Plot",
     "CascadePlot",
@@ -51,3 +53,18 @@ class NavChart(Plot):
 
     def __init__(self, backend):
         super().__init__(backend)
+
+
+def _get_platform_labels(platforms: list[str]) -> dict[str, str]:
+    """
+    Returns
+    -------
+    dict[str, str]:
+        A mapping from platform names to unique labels.
+    """
+    if len(platforms) > len(string.ascii_uppercase):
+        raise RuntimeError(
+            "The number of platforms supported by cascade plots is "
+            + f"currently limited to {len(string.ascii_uppercase)}.",
+        )
+    return dict(zip(platforms, string.ascii_uppercase))

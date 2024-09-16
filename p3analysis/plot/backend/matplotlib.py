@@ -5,8 +5,6 @@ Contains objects for interacting with plots produced using the
 :py:mod:`matplotlib` backend.
 """
 
-import string
-
 import matplotlib
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
@@ -17,7 +15,7 @@ from matplotlib.path import Path
 import p3analysis.metrics
 from p3analysis._utils import _require_numeric
 from p3analysis.plot._common import ApplicationStyle, Legend, PlatformStyle
-from p3analysis.plot.backend import CascadePlot, NavChart
+from p3analysis.plot.backend import CascadePlot, NavChart, _get_platform_labels
 
 
 def _get_colors(applications, kwarg):
@@ -168,12 +166,7 @@ class CascadePlot(CascadePlot):
         plat_colors = _get_colors(platforms, plat_style.colors)
 
         # Choose labels for each platform
-        if len(platforms) > len(string.ascii_uppercase):
-            raise RuntimeError(
-                "The number of platforms supported by cascade plots is "
-                + f"currently limited to {len(string.ascii_uppercase)}.",
-            )
-        plat_labels = dict(zip(platforms, string.ascii_uppercase))
+        plat_labels = _get_platform_labels(platforms)
 
         # Plot the efficiency cascade in the top-left (0, 0)
         app_handles = self.__efficiency_cascade(
