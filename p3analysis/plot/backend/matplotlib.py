@@ -125,12 +125,15 @@ class CascadePlot(CascadePlot):
                 "filled_markers",
             )
 
-        # If the size is unset, default to 6 x 5
-        if not size:
-            size = (6, 5)
-
         platforms = df["platform"].unique()
         applications = df["application"].unique()
+
+        # If the size is unset, try to pick a sensible default.
+        if not size:
+            if len(platforms) <= 26:
+                size = (6, 5)
+            else:
+                size = (12, 10)
 
         # Create a 2x2 grid of subplots sharing axes
         fig = plt.figure(figsize=size)
