@@ -467,7 +467,7 @@ class NavChart(NavChart):
         else:
             if eff not in ["app", "arch"]:
                 raise ValueError("'eff' must be 'app' or 'arch'.")
-            pp_column = eff + " eff"
+            pp_column = eff + " pp"
             if pp_column not in pp:
                 msg = "DataFrame does not contain an '%s' column."
                 raise ValueError(msg % (pp_column))
