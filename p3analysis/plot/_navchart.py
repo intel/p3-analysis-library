@@ -1,6 +1,8 @@
 # Copyright (c) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
+import copy
+
 from p3analysis._utils import _require_columns, _require_numeric
 
 
@@ -93,7 +95,7 @@ def navchart(
 
     # Add styling options, if provided, into kwargs.
     # Permits different backends to set different defaults.
-    kwargs = dict(kwargs)
+    kwargs = copy.deepcopy(kwargs)
     if legend:
         kwargs["legend"] = legend
     if style:

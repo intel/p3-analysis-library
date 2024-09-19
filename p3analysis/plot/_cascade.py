@@ -6,6 +6,8 @@
 # Copyright (c) 2020 Performance Portability authors
 # SPDX-License-Identifier: MIT
 
+import copy
+
 from p3analysis._utils import _require_columns, _require_numeric
 
 
@@ -125,7 +127,7 @@ def cascade(
 
     # Add styling options, if provided, into kwargs.
     # Permits different backends to set different defaults.
-    kwargs = dict(kwargs)
+    kwargs = copy.deepcopy(kwargs)
     if platform_legend:
         kwargs["platform_legend"] = platform_legend
     if application_legend:
