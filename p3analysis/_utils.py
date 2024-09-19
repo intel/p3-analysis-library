@@ -23,6 +23,7 @@ def _cast_to_numeric(df, columns):
     """
     Check that the named columns are numeric, and cast them.
     """
+    _require_columns(df, columns)
     result = df.copy(deep=True)
     for column in columns:
         try:
