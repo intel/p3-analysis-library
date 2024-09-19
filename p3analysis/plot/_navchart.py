@@ -1,10 +1,23 @@
 # Copyright (c) 2022-2023 Intel Corporation
 # SPDX-License-Identifier: MIT
 
+import copy
+
 from p3analysis._utils import _require_columns, _require_numeric
 
 
-def navchart(pp, cd, eff=None, size=None, goal=None, **kwargs):
+def navchart(
+    pp,
+    cd,
+    eff=None,
+    *,
+    size=None,
+    goal=None,
+    legend=None,
+    style=None,
+    backend="matplotlib",
+    **kwargs,
+):
     """
     Plot a `navigation chart`_ showing the performance portability and code
     convergence of each application in a DataFrame. The chart highlights the
@@ -41,25 +54,18 @@ def navchart(pp, cd, eff=None, size=None, goal=None, **kwargs):
         User-defined goal, expressed as (convergence, portability).
         The region between this point and (1, 1) will be highlighted.
 
+    legend: p3analysis.plot.Legend, optional
+        Styling options for platform legend.
+
+    style: p3analysis.plot.ApplicationStyle, optional
+        Styling options for applications.
+
+    backend: str, {"matplotlib", "pgfplots"}, default: "matplotlib"
+        Backend to use to produce the plot.
+
     **kwargs: properties, optional
-        `kwargs` are used to specify properties that control various styling
-        options (e.g. colors and markers).
-
-        .. list-table:: Properties
-            :widths: 10, 20, 18
-            :header-rows: 1
-
-            * - Property
-              - Type
-              - Description
-
-            * - `legend`
-              - p3analysis.plot.Legend
-              - Styling options for platform legend.
-
-            * - `style`
-              - p3analysis.plot.ApplicationStyle
-              - Styling options for applications.
+        `kwargs` are used to specify properties that control various
+        backend-specific plotting options.
 
     Returns
     -------
@@ -87,8 +93,14 @@ def navchart(pp, cd, eff=None, size=None, goal=None, **kwargs):
             "Handling multiple problems is currently not implemented.",
         )
 
-    kwargs.setdefault("backend", "matplotlib")
-    backend = kwargs["backend"]
+    # Add styling options, if provided, into kwargs.
+    # Permits different backends to set different defaults.
+    kwargs = copy.deepcopy(kwargs)
+    if legend:
+        kwargs["legend"] = legend
+    if style:
+        kwargs["style"] = style
+
     if backend == "matplotlib":
         from p3analysis.plot.backend.matplotlib import NavChart
 
