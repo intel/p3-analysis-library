@@ -5,8 +5,6 @@ Contains objects for interacting with plots produced using the
 :py:mod:`matplotlib` backend.
 """
 
-import string
-
 import matplotlib
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
@@ -17,7 +15,7 @@ from matplotlib.path import Path
 import p3analysis.metrics
 from p3analysis._utils import _cast_to_numeric
 from p3analysis.plot._common import ApplicationStyle, Legend, PlatformStyle
-from p3analysis.plot.backend import CascadePlot, NavChart
+from p3analysis.plot.backend import CascadePlot, NavChart, _get_platform_labels
 
 
 def _get_colors(applications, kwarg):
@@ -56,6 +54,10 @@ class _PlatformLegendHandler(matplotlib.legend_handler.HandlerBase):
         trans,
     ):
         artist = []
+
+        # Make adjustments for large numbers of platforms.
+        if len(self.labels) > 26:
+            width *= 1.5
 
         # Draw a box using the platform's assigned color
         name = orig_handle.get_label()
@@ -127,12 +129,15 @@ class CascadePlot(CascadePlot):
                 "filled_markers",
             )
 
-        # If the size is unset, default to 6 x 5
-        if not size:
-            size = (6, 5)
-
         platforms = df["platform"].unique()
         applications = df["application"].unique()
+
+        # If the size is unset, try to pick a sensible default.
+        if not size:
+            if len(platforms) <= 26:
+                size = (6, 5)
+            else:
+                size = (12, 10)
 
         # Create a 2x2 grid of subplots sharing axes
         fig = plt.figure(figsize=size)
@@ -168,12 +173,7 @@ class CascadePlot(CascadePlot):
         plat_colors = _get_colors(platforms, plat_style.colors)
 
         # Choose labels for each platform
-        if len(platforms) > len(string.ascii_uppercase):
-            raise RuntimeError(
-                "The number of platforms supported by cascade plots is "
-                + f"currently limited to {len(string.ascii_uppercase)}.",
-            )
-        plat_labels = dict(zip(platforms, string.ascii_uppercase))
+        plat_labels = _get_platform_labels(platforms)
 
         # Plot the efficiency cascade in the top-left (0, 0)
         app_handles = self.__efficiency_cascade(

@@ -5,8 +5,6 @@ Contains objects for interacting with plots produced using the
 :py:mod:`pgfplots` backend.
 """
 
-import string
-
 import jinja2
 import matplotlib
 import matplotlib.pyplot as plt
@@ -16,7 +14,7 @@ import pandas as pd
 import p3analysis.metrics
 from p3analysis._utils import _cast_to_numeric
 from p3analysis.plot._common import ApplicationStyle, Legend, PlatformStyle
-from p3analysis.plot.backend import CascadePlot, NavChart
+from p3analysis.plot.backend import CascadePlot, NavChart, _get_platform_labels
 
 # Define 19 default markers for LaTeX plots
 _pgfplots_markers = [
@@ -139,7 +137,7 @@ class CascadePlot(CascadePlot):
             ).strip("()")
 
         # Build a dictionary of platforms to labels
-        plat_labels = dict(zip(platforms, string.ascii_uppercase))
+        plat_labels = _get_platform_labels(platforms)
 
         # Choose colors for each platform and then convert the dictionary to
         # RGB colors using the platform labels
@@ -161,9 +159,6 @@ class CascadePlot(CascadePlot):
             app_line_specs[
                 app
             ] = f"{app_to_tex_name[app]}, thick, solid, mark={mark}"
-
-        # Choose labels for each platform
-        plat_labels = dict(zip(platforms, string.ascii_uppercase))
 
         # Set the number of rows in the platform key (if set)
         # NOTE: This is different to matplotlib because PGF plots uses columns,
