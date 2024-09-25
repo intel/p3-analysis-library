@@ -15,7 +15,7 @@ import pandas as pd
 from matplotlib.path import Path
 
 import p3analysis.metrics
-from p3analysis._utils import _require_numeric
+from p3analysis._utils import _cast_to_numeric
 from p3analysis.plot._common import ApplicationStyle, Legend, PlatformStyle
 from p3analysis.plot.backend import CascadePlot, NavChart
 
@@ -471,7 +471,7 @@ class NavChart(NavChart):
             if pp_column not in pp:
                 msg = "DataFrame does not contain an '%s' column."
                 raise ValueError(msg % (pp_column))
-        _require_numeric(pp, [pp_column])
+        pp = _cast_to_numeric(pp, [pp_column])
 
         # If the size is unset, default to 5 x 5
         if not size:

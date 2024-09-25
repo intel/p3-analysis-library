@@ -5,6 +5,7 @@ import unittest
 
 import pandas as pd
 
+from p3analysis._utils import _cast_to_numeric
 from p3analysis.metrics import application_efficiency
 
 
@@ -18,6 +19,19 @@ class TestEfficiency(unittest.TestCase):
         df = pd.DataFrame()
 
         with self.assertRaises(ValueError):
+            application_efficiency(df)
+
+    def test_required_column_types(self):
+        """Check that application_efficiency() validates column types."""
+        data = {
+            "problem": ["problem"],
+            "platform": ["platform"],
+            "application": ["application"],
+            "fom": ["non-numeric"],
+        }
+        df = pd.DataFrame(data)
+
+        with self.assertRaises(TypeError):
             application_efficiency(df)
 
     def test_foms(self):
@@ -107,6 +121,29 @@ class TestEfficiency(unittest.TestCase):
         df = pd.DataFrame(invalid_data)
         with self.assertRaises(TypeError):
             application_efficiency(df, foms="higher")
+
+    def test_non_numeric(self):
+        """Check that non-numeric data is correctly cast to numeric."""
+        # This is the same correctness test as above, but values are strings.
+        data = {
+            "problem": ["test"] * 10,
+            "platform": ["A", "B", "C", "D", "E"] * 2,
+            "application": ["latest"] * 5 + ["best"] * 5,
+            "fom": ["4", "8", "4", 0, "20"] + ["4", "10", "8", "20", "100"],
+        }
+        df = pd.DataFrame(data)
+
+        result = application_efficiency(df, foms="higher")
+
+        eff_data = {
+            "app eff": [1.0, 0.8, 0.5, 0.0, 0.2] + [1.0, 1.0, 1.0, 1.0, 1.0],
+        }
+        expected_data = data.copy()
+        expected_data.update(eff_data)
+        expected_df = pd.DataFrame(expected_data)
+
+        expected_df = _cast_to_numeric(expected_df, ["fom", "app eff"])
+        pd.testing.assert_frame_equal(result, expected_df)
 
 
 if __name__ == "__main__":

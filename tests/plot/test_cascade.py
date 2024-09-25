@@ -31,6 +31,19 @@ class TestCascade(unittest.TestCase):
         with self.assertRaises(ValueError):
             cascade(df, eff="invalid")
 
+    def test_required_column_types(self):
+        """Check that cascade() validates column types."""
+        data = {
+            "problem": ["problem"],
+            "platform": ["platform"],
+            "application": ["application"],
+            "app eff": ["non-numeric"],
+        }
+        df = pd.DataFrame(data)
+
+        with self.assertRaises(TypeError):
+            cascade(df, eff="app")
+
     def test_options(self):
         """p3analysis.plot.cascade.options"""
 
