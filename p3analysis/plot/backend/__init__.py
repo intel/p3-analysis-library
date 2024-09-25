@@ -58,6 +58,11 @@ class NavChart(Plot):
 
 def _get_platform_labels(platforms: list[str]) -> dict[str, str]:
     """
+    Parameters
+    ----------
+    platforms : list[str]
+        A list of platform names to associate with labels.
+
     Returns
     -------
     dict[str, str]:
