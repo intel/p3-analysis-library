@@ -50,6 +50,11 @@ data.
 Installation
 ############
 
+.. warning::
+   As we prepare the P3 Analysis Library for its 1.0 release, we have updated
+   the online documentation to reflect the latest development version.
+   This documentation should be considered *unstable*.
+
 The latest release of the P3 Analysis Library is version 0.1.0-alpha. To
 download and install this release, run the following::
 
