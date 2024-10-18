@@ -1,0 +1,84 @@
+
+
+.. _sphx_glr_examples_metrics:
+
+Metrics
+-------
+
+Generating metrics from raw P3 data is a pre-requisite for generating specific
+plots. Understanding how to manipulate and prepare raw P3 data enables the
+exploration of more complex "what if" scenarios and more detailed analyses.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Projecting data onto P3 definitions.">
+
+.. only:: html
+
+  .. image:: /examples/metrics/images/thumb/sphx_glr_projection_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_metrics_projection.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Understanding Data Projection</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Understanding relative performance.">
+
+.. only:: html
+
+  .. image:: /examples/metrics/images/thumb/sphx_glr_application_efficiency_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_metrics_application_efficiency.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Working with Application Efficiency</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Viewing applications as composites.">
+
+.. only:: html
+
+  .. image:: /examples/metrics/images/thumb/sphx_glr_multiple_components_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_metrics_multiple_components.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Handling Software with Multiple Components</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /examples/metrics/projection
+   /examples/metrics/application_efficiency
+   /examples/metrics/multiple_components
+

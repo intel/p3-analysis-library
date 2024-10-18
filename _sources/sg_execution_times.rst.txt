@@ -1,0 +1,61 @@
+
+:orphan:
+
+.. _sphx_glr_sg_execution_times:
+
+
+Computation times
+=================
+**00:03.295** total execution time for 9 files **from all galleries**:
+
+.. container::
+
+  .. raw:: html
+
+    <style scoped>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+    } );
+    </script>
+
+  .. list-table::
+   :header-rows: 1
+   :class: table table-striped sg-datatable
+
+   * - Example
+     - Time
+     - Mem (MB)
+   * - :ref:`sphx_glr_examples_cascade_plot_simple_cascade.py` (``../../examples/cascade/plot_simple_cascade.py``)
+     - 00:00.866
+     - 0.0
+   * - :ref:`sphx_glr_case-studies_babelstream_plot_babelstream_navchart.py` (``../../case-studies/babelstream/plot_babelstream_navchart.py``)
+     - 00:00.813
+     - 0.0
+   * - :ref:`sphx_glr_case-studies_babelstream_plot_babelstream_cascade.py` (``../../case-studies/babelstream/plot_babelstream_cascade.py``)
+     - 00:00.419
+     - 0.0
+   * - :ref:`sphx_glr_examples_cascade_plot_customized_cascade.py` (``../../examples/cascade/plot_customized_cascade.py``)
+     - 00:00.378
+     - 0.0
+   * - :ref:`sphx_glr_examples_metrics_multiple_components.py` (``../../examples/metrics/multiple_components.py``)
+     - 00:00.244
+     - 0.0
+   * - :ref:`sphx_glr_examples_metrics_application_efficiency.py` (``../../examples/metrics/application_efficiency.py``)
+     - 00:00.210
+     - 0.0
+   * - :ref:`sphx_glr_examples_navchart_plot_customized_navchart.py` (``../../examples/navchart/plot_customized_navchart.py``)
+     - 00:00.204
+     - 0.0
+   * - :ref:`sphx_glr_examples_navchart_plot_simple_navchart.py` (``../../examples/navchart/plot_simple_navchart.py``)
+     - 00:00.140
+     - 0.0
+   * - :ref:`sphx_glr_examples_metrics_projection.py` (``../../examples/metrics/projection.py``)
+     - 00:00.021
+     - 0.0

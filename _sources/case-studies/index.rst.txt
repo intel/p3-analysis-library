@@ -11,6 +11,9 @@ Complete end-to-end examples showcasing library capabilities with real data.
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 
@@ -30,6 +33,7 @@ bandwidth. Implementations are available using multiple programming languages.
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -38,7 +42,7 @@ bandwidth. Implementations are available using multiple programming languages.
 .. only:: html
 
   .. image:: /case-studies/babelstream/images/thumb/sphx_glr_plot_babelstream_cascade_thumb.png
-    :alt: BabelStream Cascade Plot
+    :alt:
 
   :ref:`sphx_glr_case-studies_babelstream_plot_babelstream_cascade.py`
 
@@ -55,7 +59,7 @@ bandwidth. Implementations are available using multiple programming languages.
 .. only:: html
 
   .. image:: /case-studies/babelstream/images/thumb/sphx_glr_plot_babelstream_navchart_thumb.png
-    :alt: BabelStream Navigation Chart
+    :alt:
 
   :ref:`sphx_glr_case-studies_babelstream_plot_babelstream_navchart.py`
 
@@ -65,6 +69,8 @@ bandwidth. Implementations are available using multiple programming languages.
     </div>
 
 
+.. thumbnail-parent-div-close
+
 .. raw:: html
 
     </div>
@@ -73,6 +79,7 @@ bandwidth. Implementations are available using multiple programming languages.
 .. toctree::
    :hidden:
    :includehidden:
+
 
    /case-studies/babelstream/index.rst
 

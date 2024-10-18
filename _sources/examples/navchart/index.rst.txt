@@ -15,6 +15,7 @@ programmer productivity.
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -23,7 +24,7 @@ programmer productivity.
 .. only:: html
 
   .. image:: /examples/navchart/images/thumb/sphx_glr_plot_simple_navchart_thumb.png
-    :alt: Simple Navigation Chart
+    :alt:
 
   :ref:`sphx_glr_examples_navchart_plot_simple_navchart.py`
 
@@ -35,6 +36,25 @@ programmer productivity.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="A customized navigation chart.">
+
+.. only:: html
+
+  .. image:: /examples/navchart/images/thumb/sphx_glr_plot_customized_navchart_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_navchart_plot_customized_navchart.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Customized Navigation Chart</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
     </div>
 
 
@@ -42,4 +62,5 @@ programmer productivity.
    :hidden:
 
    /examples/navchart/plot_simple_navchart
+   /examples/navchart/plot_customized_navchart
 

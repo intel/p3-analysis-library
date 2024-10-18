@@ -25,15 +25,14 @@ performance (portability) and programmer productivity, assisting in navigation
 of the P3 space and reasoning about how to reach development goals.
 """
 
-import matplotlib.pyplot as plt
-import pandas as pd
-
-import p3
-
 # Initialize synthetic data
 # (not shown, but available in script download)
 # sphinx_gallery_start_ignore
 from collections import defaultdict
+
+import pandas as pd
+
+import p3analysis
 
 pp_data = defaultdict(list)
 cd_data = defaultdict(list)
@@ -55,6 +54,5 @@ pp = pd.DataFrame(pp_data)
 cd = pd.DataFrame(cd_data)
 
 # Generate a navigation chart
-fig = plt.figure(figsize=(5, 5))
-ax = p3.plot.navchart(pp, cd)
-plt.savefig("navchart.png")
+navchart = p3analysis.plot.navchart(pp, cd, size=(5, 5))
+navchart.save("navchart.png")

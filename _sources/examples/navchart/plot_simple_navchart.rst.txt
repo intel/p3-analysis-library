@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_navchart_plot_simple_navchart.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_examples_navchart_plot_simple_navchart.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -40,7 +40,7 @@ A navigation chart is a useful way to visualize the trade-offs between
 performance (portability) and programmer productivity, assisting in navigation
 of the P3 space and reasoning about how to reach development goals.
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-44
+.. GENERATED FROM PYTHON SOURCE LINES 27-38
 
 
 
@@ -53,13 +53,8 @@ of the P3 space and reasoning about how to reach development goals.
 
 
 
-.. code-block:: default
+.. code-block:: Python
 
-
-    import matplotlib.pyplot as plt
-    import pandas as pd
-
-    import p3
 
     # Initialize synthetic data
     # (not shown, but available in script download)
@@ -69,14 +64,13 @@ of the P3 space and reasoning about how to reach development goals.
     cd = pd.DataFrame(cd_data)
 
     # Generate a navigation chart
-    fig = plt.figure(figsize=(5, 5))
-    ax = p3.plot.navchart(pp, cd)
-    plt.savefig("navchart.png")
+    navchart = p3analysis.plot.navchart(pp, cd, size=(5, 5))
+    navchart.save("navchart.png")
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.189 seconds)
+   **Total running time of the script:** (0 minutes 0.140 seconds)
 
 
 .. _sphx_glr_download_examples_navchart_plot_simple_navchart.py:
@@ -85,14 +79,17 @@ of the P3 space and reasoning about how to reach development goals.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: plot_simple_navchart.ipynb <plot_simple_navchart.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_simple_navchart.py <plot_simple_navchart.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: plot_simple_navchart.ipynb <plot_simple_navchart.ipynb>`
+      :download:`Download zipped: plot_simple_navchart.zip <plot_simple_navchart.zip>`
 
 
 .. only:: html

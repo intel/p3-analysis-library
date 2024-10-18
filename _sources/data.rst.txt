@@ -19,6 +19,8 @@ expects columns to have specific names. The simplest way to work with the
 library is to collect and store data in a compatible format (e.g. in a CSV
 file).
 
+.. _performance_data:
+
 Performance Data
 ################
 
@@ -35,7 +37,7 @@ The following fields have special meaning:
 
 It is recommended not to store *application*, *problem* and *platform* fields
 when results are initially collected, and to instead construct them using the
-:py:func:`p3.data.projection` function. This makes it simpler to re-use the
+:py:func:`p3analysis.data.projection` function. This makes it simpler to re-use the
 same data across multiple analyses using different meanings of *application*,
 *problem*, and *platform*.
 

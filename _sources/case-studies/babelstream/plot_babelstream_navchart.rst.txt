@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_case-studies_babelstream_plot_babelstream_navchart.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_case-studies_babelstream_plot_babelstream_navchart.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -32,15 +32,10 @@ The original data is available from https://github.com/UoB-HPC/BabelStream.
 Load Data into Pandas
 ---------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 18-29
+.. GENERATED FROM PYTHON SOURCE LINES 18-24
 
-.. code-block:: default
+.. code-block:: Python
 
-
-    # import libraries
-    import pandas as pd
-    import matplotlib.pyplot as plt
-    import p3
 
 
     # Load data from BabelStream results
@@ -54,27 +49,27 @@ Load Data into Pandas
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-40
+.. GENERATED FROM PYTHON SOURCE LINES 37-41
 
 Note that, unlike a `cascade plot`_, plotting a navigation chart requires
 both performance and coverage data.
 
 .. _cascade plot: ../plot_babelstream_cascade
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-46
+.. GENERATED FROM PYTHON SOURCE LINES 43-47
 
 Project Labels into Expected Forms
 ----------------------------------
-The :py:func:`p3.data.projection` method can be used to project column names
+The :py:func:`p3analysis.data.projection` method can be used to project column names
 from the original data into names required by the P3 Analysis Library.
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-51
+.. GENERATED FROM PYTHON SOURCE LINES 47-52
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    df = p3.data.projection(
-        df, problem=["name"], platform=["arch"], application=["language"]
+    df = p3analysis.data.projection(
+        df, problem=["name"], platform=["arch"], application=["language"],
     )
 
 
@@ -84,7 +79,7 @@ from the original data into names required by the P3 Analysis Library.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-65
+.. GENERATED FROM PYTHON SOURCE LINES 53-66
 
 Our BabelStream data contains only one problem, and the "name" field is
 always "BabelStream". Other BabelStream case studies may feature multiple
@@ -100,7 +95,7 @@ is written in.
 
 .. _here: ../../introduction.html#terminology
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-77
+.. GENERATED FROM PYTHON SOURCE LINES 68-78
 
 Calculate P3 Metrics
 --------------------
@@ -113,12 +108,12 @@ at utilizing a given platform. In the below, any row with an 'app eff' of
 (problem, platform) combination; any row with an `app eff` of 1 represents
 an application achieving the best-known performance.
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-81
+.. GENERATED FROM PYTHON SOURCE LINES 78-82
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    effs = p3.metrics.application_efficiency(df)
+    effs = p3analysis.metrics.application_efficiency(df)
     print(effs)
 
 
@@ -189,7 +184,7 @@ an application achieving the best-known performance.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-88
+.. GENERATED FROM PYTHON SOURCE LINES 83-89
 
 Code Divergence
 ^^^^^^^^^^^^^^^
@@ -198,12 +193,12 @@ targeted by a specific application. For BabelStream, only Language 0
 has a non-zero divergence, as it is the only implementation containing
 different code paths for different platforms.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-92
+.. GENERATED FROM PYTHON SOURCE LINES 89-93
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    div = p3.metrics.divergence(df, df_cov)
+    div = p3analysis.metrics.divergence(df, df_cov)
     print(div)
 
 
@@ -224,7 +219,7 @@ different code paths for different platforms.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-99
+.. GENERATED FROM PYTHON SOURCE LINES 94-100
 
 Performance Portability
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -233,12 +228,12 @@ using all platforms in the set. An application must run across all platforms
 to achieve a non-zero performance portability score. For BabelStream,
 Language 0 is the only programming model that runs across all 11 platforms.
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-103
+.. GENERATED FROM PYTHON SOURCE LINES 100-104
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    pp = p3.metrics.pp(effs)
+    pp = p3analysis.metrics.pp(effs)
     print(pp)
 
 
@@ -259,19 +254,18 @@ Language 0 is the only programming model that runs across all 11 platforms.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-106
+.. GENERATED FROM PYTHON SOURCE LINES 105-107
 
 Generate a Navigation Chart
 ---------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 106-111
+.. GENERATED FROM PYTHON SOURCE LINES 107-111
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    fig = plt.figure(figsize=(5, 5))
-    ax = p3.plot.navchart(pp, div)
-    plt.savefig("navchart.png")
+    navchart = p3analysis.plot.navchart(pp, div)
+    navchart.save("navchart.png")
 
 
 
@@ -307,7 +301,7 @@ where they do not run.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.498 seconds)
+   **Total running time of the script:** (0 minutes 0.813 seconds)
 
 
 .. _sphx_glr_download_case-studies_babelstream_plot_babelstream_navchart.py:
@@ -316,14 +310,17 @@ where they do not run.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: plot_babelstream_navchart.ipynb <plot_babelstream_navchart.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_babelstream_navchart.py <plot_babelstream_navchart.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: plot_babelstream_navchart.ipynb <plot_babelstream_navchart.ipynb>`
+      :download:`Download zipped: plot_babelstream_navchart.zip <plot_babelstream_navchart.zip>`
 
 
 .. only:: html

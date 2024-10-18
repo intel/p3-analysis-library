@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_case-studies_babelstream_plot_babelstream_cascade.py>`
-        to download the full example code
+        :ref:`Go to the end <sphx_glr_download_case-studies_babelstream_plot_babelstream_cascade.py>`
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -36,15 +36,10 @@ readily available in the dataset.
 Load Data into Pandas
 ---------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-32
+.. GENERATED FROM PYTHON SOURCE LINES 22-27
 
-.. code-block:: default
+.. code-block:: Python
 
-
-    # import libraries
-    import pandas as pd
-    import matplotlib.pyplot as plt
-    import p3
 
 
     # Load performance data from BabelStream results
@@ -57,20 +52,20 @@ Load Data into Pandas
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-42
+.. GENERATED FROM PYTHON SOURCE LINES 39-43
 
 Project Labels into Expected Forms
 ----------------------------------
-The :py:func:`p3.data.projection` method can be used to project column names
+The :py:func:`p3analysis.data.projection` method can be used to project column names
 from the original data into names required by the P3 Analysis Library.
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-47
+.. GENERATED FROM PYTHON SOURCE LINES 43-48
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    df = p3.data.projection(
-        df, problem=["name"], platform=["arch"], application=["language"]
+    df = p3analysis.data.projection(
+        df, problem=["name"], platform=["arch"], application=["language"],
     )
 
 
@@ -80,7 +75,7 @@ from the original data into names required by the P3 Analysis Library.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-61
+.. GENERATED FROM PYTHON SOURCE LINES 49-62
 
 Our BabelStream data contains only one problem, and the "name" field is
 always "BabelStream". Other BabelStream case studies may feature multiple
@@ -96,7 +91,7 @@ is written in.
 
 .. _here: ../../introduction.html#terminology
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-70
+.. GENERATED FROM PYTHON SOURCE LINES 64-71
 
 Calculate Application Efficiencies
 ----------------------------------
@@ -106,12 +101,12 @@ at utilizing a given platform. In the below, any row with an 'app eff' of
 (problem, platform) combination; any row with an `app eff` of 1 represents
 an application achieving the best-known performance.
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-74
+.. GENERATED FROM PYTHON SOURCE LINES 71-75
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    effs = p3.metrics.application_efficiency(df)
+    effs = p3analysis.metrics.application_efficiency(df)
     print(effs)
 
 
@@ -182,19 +177,18 @@ an application achieving the best-known performance.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-77
+.. GENERATED FROM PYTHON SOURCE LINES 76-78
 
 Generate a Cascade Plot
 -----------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-82
+.. GENERATED FROM PYTHON SOURCE LINES 78-82
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    fig = plt.figure(figsize=(6, 5))
-    ax = p3.plot.cascade(effs) 
-    plt.savefig("cascade.png", bbox_inches="tight")
+    cascade = p3analysis.plot.cascade(effs)
+    cascade.save("cascade.png")
 
 
 
@@ -228,7 +222,7 @@ without a 0 for performance portability in the bar chart.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.680 seconds)
+   **Total running time of the script:** (0 minutes 0.419 seconds)
 
 
 .. _sphx_glr_download_case-studies_babelstream_plot_babelstream_cascade.py:
@@ -237,14 +231,17 @@ without a 0 for performance portability in the bar chart.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: plot_babelstream_cascade.ipynb <plot_babelstream_cascade.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_babelstream_cascade.py <plot_babelstream_cascade.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: plot_babelstream_cascade.ipynb <plot_babelstream_cascade.ipynb>`
+      :download:`Download zipped: plot_babelstream_cascade.zip <plot_babelstream_cascade.zip>`
 
 
 .. only:: html

@@ -14,6 +14,7 @@ application, highlighting differences in platform support.
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -22,7 +23,7 @@ application, highlighting differences in platform support.
 .. only:: html
 
   .. image:: /examples/cascade/images/thumb/sphx_glr_plot_simple_cascade_thumb.png
-    :alt: Simple Cascade
+    :alt:
 
   :ref:`sphx_glr_examples_cascade_plot_simple_cascade.py`
 
@@ -34,6 +35,25 @@ application, highlighting differences in platform support.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="A customized cascade plot.">
+
+.. only:: html
+
+  .. image:: /examples/cascade/images/thumb/sphx_glr_plot_customized_cascade_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_cascade_plot_customized_cascade.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Customized Cascade</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
     </div>
 
 
@@ -41,4 +61,5 @@ application, highlighting differences in platform support.
    :hidden:
 
    /examples/cascade/plot_simple_cascade
+   /examples/cascade/plot_customized_cascade
 
