@@ -24,7 +24,7 @@ class TestValidation(unittest.TestCase):
         with self.assertRaises(ValueError):
             _validate_coverage_json(json_string)
 
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             json_object = [{"file": "path", "id": "sha", "used_lines": [["1"]], "unused_lines": []}]
             _validate_coverage_json(json_object)
 
