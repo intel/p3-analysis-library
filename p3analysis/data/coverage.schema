@@ -16,19 +16,7 @@
       "lines": {
         "type": "array",
         "items": {
-            "oneOf": [
-                {
-                    "type": "integer"
-                },
-                {
-                    "type": "array",
-                    "contains": {
-                        "type": "integer"
-                    },
-                    "minContains": 2,
-                    "maxContains": 2
-                }
-            ]
+            "type": "integer"
         }
       }
     },
