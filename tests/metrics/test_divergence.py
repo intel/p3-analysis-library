@@ -69,7 +69,7 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "foo.cpp",
                     "id": "0",
-                    "lines": [[0, 9]],
+                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                 },
             ],
         )
@@ -79,12 +79,12 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "foo.cpp",
                     "id": "0",
-                    "lines": [[0, 9]],
+                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                 },
                 {
                     "file": "bar.cpp",
                     "id": "1",
-                    "lines": [[0, 9]],
+                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                 },
             ],
         )
@@ -156,7 +156,7 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "foo.cpp",
                     "id": "0",
-                    "lines": [[0, 9]],
+                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                 },
             ],
         )
@@ -168,7 +168,7 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "foo.cpp",
                     "id": "1",
-                    "lines": [[0, 9]],
+                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                 },
             ],
         )
