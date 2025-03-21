@@ -13,7 +13,13 @@
       "id": {
         "type": "string"
       },
-      "lines": {
+      "used_lines": {
+        "type": "array",
+        "items": {
+            "type": "integer"
+        }
+      },
+      "unused_lines": {
         "type": "array",
         "items": {
             "type": "integer"
@@ -23,7 +29,8 @@
     "required": [
       "file",
       "id",
-      "lines"
+      "used_lines",
+      "unused_lines"
     ]
   }
 }
