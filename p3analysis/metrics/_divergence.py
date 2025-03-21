@@ -56,7 +56,7 @@ def _coverage_to_divergence(maps):
     for p, coverage in enumerate(maps):
         for entry in coverage:
             unique_fn = (entry["file"], entry["id"])
-            for line in entry["lines"]:
+            for line in entry["used_lines"]:
                 linemap[(unique_fn, line)].add(p)
 
     setmap = collections.defaultdict(int)

@@ -37,7 +37,8 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "file.cpp",
                     "id": "0",
-                    "lines": [0],
+                    "used_lines": [0],
+                    "unused_lines": [],
                 },
             ],
         )
@@ -69,7 +70,8 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "foo.cpp",
                     "id": "0",
-                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "used_lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "unused_lines": [],
                 },
             ],
         )
@@ -79,12 +81,14 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "foo.cpp",
                     "id": "0",
-                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "used_lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "unused_lines": [],
                 },
                 {
                     "file": "bar.cpp",
                     "id": "1",
-                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "used_lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "unused_lines": [],
                 },
             ],
         )
@@ -123,7 +127,8 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "file.cpp",
                     "id": "0",
-                    "lines": [0],
+                    "used_lines": [0],
+                    "unused_lines": [],
                 },
             ],
         )
@@ -156,7 +161,8 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "foo.cpp",
                     "id": "0",
-                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "used_lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "unused_lines": [],
                 },
             ],
         )
@@ -168,7 +174,8 @@ class TestDivergence(unittest.TestCase):
                 {
                     "file": "foo.cpp",
                     "id": "1",
-                    "lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "used_lines": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    "unused_lines": [],
                 },
             ],
         )
