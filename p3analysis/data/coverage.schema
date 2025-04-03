@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/intel/p3-analysis-library/main/p3/data/coverage.schema",
+  "title": "Coverage",
+  "description": "Lines of code used in each file of a code base.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "file": {
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "used_lines": {
+        "type": "array",
+        "items": {
+            "type": "integer"
+        }
+      },
+      "unused_lines": {
+        "type": "array",
+        "items": {
+            "type": "integer"
+        }
+      }
+    },
+    "required": [
+      "file",
+      "id",
+      "used_lines",
+      "unused_lines"
+    ]
+  }
+}

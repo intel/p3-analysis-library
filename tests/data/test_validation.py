@@ -13,19 +13,19 @@ class TestValidation(unittest.TestCase):
 
     def test_coverage_json_valid(self):
         """p3analysis.data.validation.coverage_json_valid"""
-        json_string = '[{"file": "path", "id": "sha", "lines": [1, 2, [3, 5]]}]'
+        json_string = '[{"file": "path", "id": "sha", "used_lines": [1, 2, 3, 5], "unused_lines": []}]'
         result_object = _validate_coverage_json(json_string)
-        expected_object = [{"file": "path", "id": "sha", "lines": [1, 2, [3, 5]]}]
+        expected_object = [{"file": "path", "id": "sha", "used_lines": [1, 2, 3, 5], "unused_lines": []}]
         self.assertTrue(result_object == expected_object)
 
     def test_coverage_json_invalid(self):
         """p3analysis.data.validation.coverage_json_invalid"""
-        json_string = '[{"file": "path", "id": "sha", "lines": [["1"]]}]'
+        json_string = '[{"file": "path", "id": "sha", "used_lines": [["1"]], "unused_lines": []}]'
         with self.assertRaises(ValueError):
             _validate_coverage_json(json_string)
 
         with self.assertRaises(TypeError):
-            json_object = [{"file": "path", "id": "sha", "lines": [["1"]]}]
+            json_object = [{"file": "path", "id": "sha", "used_lines": [["1"]], "unused_lines": []}]
             _validate_coverage_json(json_object)
 
 
