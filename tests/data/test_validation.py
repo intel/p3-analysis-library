@@ -17,11 +17,11 @@ class TestValidation(unittest.TestCase):
 
         json_string = '[{"file": "path", "id": "sha", "used_lines": [1, 2, 3, 5], "unused_lines": []}]'
         result_object = _validate_coverage_json(json_string)
-        self.assertTrue(result_object == expected_object)
+        self.assertEqual(result_object, expected_object)
 
         json_object = expected_object
         result_object = _validate_coverage_json(json_object)
-        self.assertTrue(result_object == expected_object)
+        self.assertEqual(result_object, expected_object)
 
     def test_coverage_json_invalid(self):
         """p3analysis.data.validation.coverage_json_invalid"""
