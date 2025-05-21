@@ -3,18 +3,17 @@
 
 import json
 import pkgutil
-from typing import Any
 
 import jsonschema
 
 
-def _validate_coverage_json(json_data: Any) -> object:
+def _validate_coverage_json(json_data: str | dict | list) -> object:
     """
     Validate coverage JSON against schema.
 
     Parameters
     ----------
-    json_data : Any
+    json_data : str | dict | list
         The JSON string or object to validate.
 
     Returns
@@ -26,11 +25,16 @@ def _validate_coverage_json(json_data: Any) -> object:
     ------
     ValueError
         If the JSON fails to validate.
+
+    TypeError
+        If the JSON data is not a string, dict or list.
     """
     if isinstance(json_data, str):
         instance = json.loads(json_data)
-    else:
+    elif isinstance(json_data, dict | list):
         instance = json_data
+    else:
+        raise TypeError("JSON data must be a string, dict, or list")
 
     schema_string = pkgutil.get_data(__name__, "coverage.schema")
     if not schema_string:

@@ -33,6 +33,13 @@ class TestValidation(unittest.TestCase):
             json_object = [{"file": "path", "id": "sha", "used_lines": [["1"]], "unused_lines": []}]
             _validate_coverage_json(json_object)
 
+        # Check that we only accept strings, lists and dicts.
+        with self.assertRaises(TypeError):
+            _validate_coverage_json(3)
+
+        # Check that we rejects dicts based on schema rather than type.
+        with self.assertRaises(ValueError):
+            _validate_coverage_json({})
 
 if __name__ == "__main__":
     unittest.main()
