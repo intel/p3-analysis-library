@@ -7,32 +7,34 @@ import pkgutil
 import jsonschema
 
 
-def _validate_coverage_json(json_string: str) -> object:
+def _validate_coverage_json(json_data: str | dict | list) -> object:
     """
-    Validate coverage JSON string against schema.
+    Validate coverage JSON against schema.
 
     Parameters
     ----------
-    json_string : String
-        The JSON string to validate.
+    json_data : str | dict | list
+        The JSON string or object to validate.
 
     Returns
     -------
     Object
-        A Python object corresponding to the JSON string.
+        A Python object corresponding to the JSON provided.
 
     Raises
     ------
     ValueError
-        If the JSON string fails to validate.
+        If the JSON fails to validate.
 
     TypeError
-        If the JSON string is not a string.
+        If the JSON data is not a string, dict or list.
     """
-    if not isinstance(json_string, str):
-        raise TypeError("Coverage must be a JSON string.")
-
-    instance = json.loads(json_string)
+    if isinstance(json_data, str):
+        instance = json.loads(json_data)
+    elif isinstance(json_data, dict | list):
+        instance = json_data
+    else:
+        raise TypeError("JSON data must be a string, dict, or list")
 
     schema_string = pkgutil.get_data(__name__, "coverage.schema")
     if not schema_string:
@@ -44,7 +46,7 @@ def _validate_coverage_json(json_string: str) -> object:
     try:
         jsonschema.validate(instance=instance, schema=schema)
     except jsonschema.exceptions.ValidationError:
-        msg = "Coverage string failed schema validation"
+        msg = "Coverage data failed schema validation"
         raise ValueError(msg)
     except jsonschema.exceptions.SchemaError:
         msg = "coverage.schema is not a valid schema"
