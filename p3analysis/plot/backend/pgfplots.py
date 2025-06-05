@@ -184,7 +184,7 @@ class CascadePlot(CascadePlot):
             app_df = app_df.sort_values(by=[eff_column], ascending=False)
             yvalues = app_df[eff_column]
             supported_platforms = list(app_df["platform"])
-            xvalues = np.arange(1, len(supported_platforms) + 1)
+            xvalues = range(1, len(supported_platforms) + 1)
             plot_effs[app_name] = tuple(zip(xvalues, yvalues))
 
         # Build a dictionary with "application name, (application name, qp)"
